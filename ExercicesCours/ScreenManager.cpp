@@ -2,10 +2,13 @@
 #include "ScreenManager.h"
 
 
-
-
+#include <iomanip>
+#include <fstream>
 #include <windows.h>
 #include <iostream>
+#include <string>
+
+using namespace std;
 
 ScreenManager::ScreenManager() {
 
@@ -41,9 +44,11 @@ void ScreenManager::Init() {
 	for (int currentX = 0; currentX < SCREEN_WIDTH; currentX++) {
 		for (int currentY = 0; currentY < SCREEN_HEIGHT; currentY++) {
 			buffer[currentX + currentY * SCREEN_WIDTH].Char.UnicodeChar = 0x2588;
-			buffer[currentX + currentY * SCREEN_WIDTH].Attributes = FOREGROUND_GREEN;
+			//buffer[currentX + currentY * SCREEN_WIDTH].Attributes = FOREGROUND_GREEN;
 		}
-	}
+	}	
+
+	
 }
 
 
@@ -57,7 +62,6 @@ bool ScreenManager::GetExitGame() {
 }
 
 void ScreenManager::Update() {
-
 		ReadConsoleInput(readHandle, &InputRecord, 1, &Events);
 
 
@@ -71,8 +75,10 @@ void ScreenManager::Update() {
 				EXITGAME = TRUE;
 				break;
 
-			case VK_SPACE:
-				
+			case VK_SPACE:		
+
+					
+
 				break;
 
 
@@ -120,7 +126,13 @@ void ScreenManager::Update() {
 				coord.X = InputRecord.Event.MouseEvent.dwMousePosition.X;
 				coord.Y = InputRecord.Event.MouseEvent.dwMousePosition.Y;	
 
-				SetTextCoord(coord.X, coord.Y, 'X');
+				DisplaySpriteFromString("Sprite/Tree.txt", coord.X, coord.Y, FOREGROUND_RED);
+
+				/*SetTextCoord(coord.X-1, coord.Y, '\\', FOREGROUND_RED);
+				SetTextCoord(coord.X, coord.Y, 'o', FOREGROUND_RED);
+				SetTextCoord(coord.X+1, coord.Y, '/', FOREGROUND_RED);*/
+
+
 
 				//SetConsoleCursorPosition(hout, coord);
 				//SetConsoleTextAttribute(hout, rand() % 7 + 9);
@@ -175,4 +187,32 @@ void ScreenManager::SetTextCoord(int x, int y, char c)
 {
 	buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
 }
+
+void ScreenManager::SetTextCoord(int x, int y, char c, int color)
+{
+	buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
+	buffer[x + y * SCREEN_WIDTH].Attributes = color;
+}
+
+void ScreenManager::DisplaySpriteFromString(string filename, int coordX, int coordY, int color)
+{
+	std::ifstream inFile;
+	inFile.open(filename);
+	std::string line;
+	int y = 0;
+
+	char c;
+	while (getline(inFile, line)) {
+		for (int x = 0; x < line.length(); x++)
+		{
+			if (line[x] != 'W') {
+				SetTextCoord(coordX + x, coordY + y, line[x], color);
+			}
+			
+		}
+		y++;
+	}
+}
+
+
 
