@@ -27,7 +27,14 @@
     <ClInclude Include="GameObject.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="Player.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ClickableObject.h">
+=======
     <ClInclude Include="InputManager.h">
+>>>>>>> master
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,7 +54,14 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="Player.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ClickableObject.cpp">
+=======
     <ClCompile Include="InputManager.cpp">
+>>>>>>> master
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

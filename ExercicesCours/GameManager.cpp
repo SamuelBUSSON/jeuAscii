@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "GameManager.h"
+#include <algorithm>
 
 
 GameManager::GameManager() {
@@ -26,6 +27,11 @@ void GameManager::Run() {
 		Update();
 	}
 }
+
+std::set<GameObject, ZIndexComparison> GameManager::GetGameObjects() {
+	return gameObjects;
+}
+
 
 void GameManager::Update()
 {

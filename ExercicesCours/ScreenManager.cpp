@@ -29,6 +29,7 @@ void ScreenManager::Init() {
 	SetConsoleWindowInfo(writeHandle, TRUE, &bufferArea);
 
 	SetConsoleScreenBufferSize(writeHandle, bufferSize);
+
 	/*
 	CONSOLE_FONT_INFOEX customFont;
 	customFont.cbSize = sizeof(CONSOLE_FONT_INFOEX);
@@ -37,7 +38,11 @@ void ScreenManager::Init() {
 	customFont.dwFontSize.Y = 12;
 	customFont.FontFamily = FF_ROMAN;
 	customFont.FontWeight = FW_NORMAL;
-	SetCurrentConsoleFontEx(writeHandle, false, &customFont);*/
+
+	SetCurrentConsoleFontEx(writeHandle, false, &customFont);
+	
+	SetCurrentConsoleFontEx(writeHandle, false, &customFont);
+	*/
 
 	for (int currentX = 0; currentX < SCREEN_WIDTH; currentX++) {
 		for (int currentY = 0; currentY < SCREEN_HEIGHT; currentY++) {

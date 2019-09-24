@@ -5,20 +5,23 @@
 
 class GameObject {
 
-	int posX;
-	int posY;
-
-
+private:
 	int spriteWidth;
 	int spriteHeight;
 	char* sprite;
+
+protected:
+	int posX;
+	int posY;
 
 public:
 	GameObject(int x, int y);
 	~GameObject();
 
 	void Init();
-	void Update();
+
+	inline const int GetX() const { return posX; }
+	inline const int GetY() const { return posY; }
 };
 
 #endif

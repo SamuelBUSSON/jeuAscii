@@ -8,12 +8,9 @@ GameObject::GameObject(int x, int y)
 
 
 GameObject::~GameObject() {
+
 }
 
 void GameObject::Init() {
-
-}
-
-void GameObject::Update() {
 
 }
