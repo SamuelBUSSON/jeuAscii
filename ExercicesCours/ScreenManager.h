@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef DEF_SCREENMANAGER
+#define DEF_SCREENMANAGER
+
 #include <windows.h>
 
 #define SCREEN_WIDTH 80
@@ -35,3 +39,5 @@ public:
 	void Update();
 	void SetTextCoord(int x, int y, char c);
 };
+
+#endif

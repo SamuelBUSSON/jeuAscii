@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef DEF_GAMEOBJECT
+#define DEF_GAMEOBJECT
+
 class GameObject {
 
 	int posX;
@@ -17,3 +21,4 @@ public:
 	void Update();
 };
 
+#endif

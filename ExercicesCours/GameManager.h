@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef DEF_GAMEMANAGER
+#define DEF_GAMEMANAGER
+
 #include "ScreenManager.h"
 
 class GameManager {
@@ -16,3 +19,4 @@ public:
 	void Run();
 };
 
+#endif
