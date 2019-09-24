@@ -20,8 +20,8 @@ public:
 
 	void Init();
 
-	inline int GetX() { return posX; }
-	inline int GetY() { return posY; }
+	inline const int GetX() const { return posX; }
+	inline const int GetY() const { return posY; }
 };
 
 #endif

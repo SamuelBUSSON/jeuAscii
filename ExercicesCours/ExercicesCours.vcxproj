@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ClickableObject.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="pch.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="ScreenManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ClickableObject.cpp" />
     <ClCompile Include="ExercicesCours.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />

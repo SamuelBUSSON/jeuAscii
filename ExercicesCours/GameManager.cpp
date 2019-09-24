@@ -25,11 +25,7 @@ void GameManager::Run() {
 	}
 }
 
-std::set<GameObject> GameManager::GetGameObjects() {
-	std::sort(gameObjects.begin(), gameObjects.end(), ZIndexCompare);
-	return gameObjects;
-}
 
-bool ZIndexCompare(GameObject objectA, GameObject objectB) {
-	return objectA.GetX() > objectB.GetY();
+std::set<GameObject, ZIndexComparison> GameManager::GetGameObjects() {
+	return gameObjects;
 }
