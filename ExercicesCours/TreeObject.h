@@ -12,8 +12,7 @@ public:
 	TreeObject(int x, int y);
 	~TreeObject();
 
-	virtual void OnClick() override;
-
+	void OnClick() override;
 	void OnBreak() override;
 };
 
