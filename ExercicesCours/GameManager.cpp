@@ -5,6 +5,7 @@
 GameManager::GameManager() {
 
 	screenManager = new ScreenManager();
+	inputManager = new InputManager();
 }
 
 
@@ -14,12 +15,13 @@ GameManager::~GameManager() {
 
 void GameManager::Init() {
 	screenManager->Init();
+	inputManager->Init();
 }
 
 void GameManager::Run() {
 
 	while (!screenManager->GetExitGame()) 	{
 		screenManager->SampleDisplay();
-		screenManager->Update();
+		inputManager->Update();
 	}
 }

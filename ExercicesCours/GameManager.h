@@ -4,11 +4,13 @@
 #define DEF_GAMEMANAGER
 
 #include "ScreenManager.h"
+#include "InputManager.h"
 
 class GameManager {
 private:
-	ScreenManager* screenManager;
 
+	ScreenManager* screenManager;
+	InputManager* inputManager;
 
 
 public:

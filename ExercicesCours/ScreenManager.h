@@ -10,8 +10,8 @@
 #include <iostream>
 #include <string>
 
-#define SCREEN_WIDTH 200
-#define SCREEN_HEIGHT 60
+#define SCREEN_WIDTH 100
+#define SCREEN_HEIGHT 40
 
 class ScreenManager {
 
@@ -20,10 +20,6 @@ private:
 
 	HANDLE writeHandle;
 	HANDLE readHandle;
-
-	COORD coord;
-	INPUT_RECORD InputRecord;
-	DWORD Events;
 
 
 	CHAR_INFO buffer[SCREEN_WIDTH * SCREEN_HEIGHT];
@@ -41,7 +37,7 @@ public:
 
 	void SampleDisplay();
 	bool GetExitGame();
-	void Update();
+	//void Update();
 	void SetTextCoord(int x, int y, char c);
 	void SetTextCoord(int x, int y, char c, int color);
 	void DisplaySpriteFromString(std::string filename, int coordX, int coordY, int color);
