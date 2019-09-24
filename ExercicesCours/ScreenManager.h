@@ -1,8 +1,12 @@
 #pragma once
+#include <iomanip>
+#include <fstream>
 #include <windows.h>
+#include <iostream>
+#include <string>
 
-#define SCREEN_WIDTH 80
-#define SCREEN_HEIGHT 40
+#define SCREEN_WIDTH 200
+#define SCREEN_HEIGHT 60
 
 class ScreenManager {
 
@@ -34,4 +38,6 @@ public:
 	bool GetExitGame();
 	void Update();
 	void SetTextCoord(int x, int y, char c);
+	void SetTextCoord(int x, int y, char c, int color);
+	void DisplaySpriteFromString(std::string filename, int coordX, int coordY, int color);
 };
