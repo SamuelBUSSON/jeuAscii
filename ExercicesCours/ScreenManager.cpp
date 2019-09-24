@@ -54,7 +54,7 @@ void ScreenManager::SampleDisplay()
 {
 	ReadMap();
 
-	SetTextCoord(currentMapCoordX, currentMapCoordY, 'o');
+	SetTextCoord(40, 20, 'o');
 
 
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
@@ -110,7 +110,7 @@ void ScreenManager::ReadMap()
 			{
 				if (i >= currentMapCoordX - (CAM_WIDTH / 2) && i <= currentMapCoordX + (CAM_WIDTH / 2))
 				{
-					SetTextCoord(((CAM_WIDTH / 2) + i), ((CAM_HEIGHT / 2) + numberLine), line[i], FOREGROUND_RED | FOREGROUND_INTENSITY);
+					SetTextCoord(((CAM_WIDTH / 2) + i% (CAM_WIDTH / 2)), ((CAM_HEIGHT / 2) + numberLine % (CAM_HEIGHT / 2)), line[i], FOREGROUND_RED | FOREGROUND_INTENSITY);
 				}
 			}
 		}
