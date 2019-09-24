@@ -19,7 +19,6 @@ public:
 	~GameObject();
 
 	void Init();
-	void Update();
 };
 
 #endif

@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef DEF_PLAYER
+#define DEF_PLAYER
+
 #include "GameObject.h"
 
 class Player : public GameObject
@@ -13,3 +17,4 @@ public:
 	void MoveDown();
 };
 
+#endif
