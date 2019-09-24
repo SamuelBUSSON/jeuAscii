@@ -1,6 +1,11 @@
 #pragma once
+
+#ifndef DEF_SCREENMANAGER
+#define DEF_SCREENMANAGER
+
 #include <iomanip>
 #include <fstream>
+
 #include <windows.h>
 #include <iostream>
 #include <string>
@@ -40,4 +45,7 @@ public:
 	void SetTextCoord(int x, int y, char c);
 	void SetTextCoord(int x, int y, char c, int color);
 	void DisplaySpriteFromString(std::string filename, int coordX, int coordY, int color);
+
 };
+
+#endif
