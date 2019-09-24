@@ -40,7 +40,7 @@ void ScreenManager::Init() {
 
 
 	SetCurrentConsoleFontEx(writeHandle, false, &customFont);
-
+	
 	for (int currentX = 0; currentX < SCREEN_WIDTH; currentX++) {
 		for (int currentY = 0; currentY < SCREEN_HEIGHT; currentY++) {
 			buffer[currentX + currentY * SCREEN_WIDTH].Char.UnicodeChar = 0x2588;

@@ -8,6 +8,7 @@ GameObject::GameObject(int x, int y)
 
 
 GameObject::~GameObject() {
+
 }
 
 void GameObject::Init() {
