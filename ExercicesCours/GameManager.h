@@ -5,6 +5,7 @@
 
 #include "ScreenManager.h"
 #include "GameObject.h"
+#include "InputManager.h"
 #include <set>
 
 
@@ -22,6 +23,9 @@ private:
 	ScreenManager* screenManager;
 	std::set<GameObject, ZIndexComparison> gameObjects;
 
+	InputManager* inputManager;
+	bool exit_game = false;
+
 
 public:
 	GameManager();
@@ -30,6 +34,7 @@ public:
 	void Init();
 	void Run();
 	std::set<GameObject, ZIndexComparison> GetGameObjects();
+	void Update();
 };
 
 
