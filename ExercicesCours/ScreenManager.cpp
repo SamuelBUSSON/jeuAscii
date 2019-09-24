@@ -1,31 +1,27 @@
-#include <windows.h>
+#include "pch.h"
 #include "ScreenManager.h"
+
+
+
+
+#include <windows.h>
+#include <iostream>
 
 ScreenManager::ScreenManager() {
 
+	writeHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	readHandle = GetStdHandle(STD_INPUT_HANDLE);
 }
 
 ScreenManager::~ScreenManager() {
 
 }
 
+void ScreenManager::Init() {
 
-void ScreenManager::SampleDisplay() {
+	DWORD fdwMode = ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT | ENABLE_EXTENDED_FLAGS;
 
-	const int SCREEN_WIDTH = 80;
-	const int SCREEN_HEIGHT = 40;
-
-	HANDLE writeHandle;
-	HANDLE readHandle;
-
-	writeHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	readHandle = GetStdHandle(STD_INPUT_HANDLE);
-
-	CHAR_INFO buffer[SCREEN_WIDTH * SCREEN_HEIGHT];
-
-	COORD bufferSize = { SCREEN_WIDTH, SCREEN_HEIGHT };
-	COORD initialBufferCoord = { 0, 0 };
-	SMALL_RECT bufferArea = { 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1 };
+	SetConsoleMode(readHandle, fdwMode);
 
 	SetConsoleWindowInfo(writeHandle, TRUE, &bufferArea);
 
@@ -37,6 +33,135 @@ void ScreenManager::SampleDisplay() {
 			buffer[currentX + currentY * SCREEN_WIDTH].Attributes = FOREGROUND_GREEN;
 		}
 	}
+}
 
+
+void ScreenManager::SampleDisplay() 
+{
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
 }
+
+bool ScreenManager::GetExitGame() {
+	return EXITGAME;
+}
+
+void ScreenManager::Update() {
+
+		ReadConsoleInput(readHandle, &InputRecord, 1, &Events);
+
+
+		switch (InputRecord.EventType) {
+		case KEY_EVENT: // keyboard input 
+
+
+			switch (InputRecord.Event.KeyEvent.wVirtualKeyCode)
+			{
+			case VK_ESCAPE:
+				EXITGAME = TRUE;
+				break;
+
+			case VK_SPACE:
+				
+				break;
+
+
+			case VK_RETURN:
+
+				break;
+
+			case VK_LEFT:
+				// left key   move player left
+				//std::cout << "VK_LEFT   = " << InputRecord.Event.KeyEvent.wVirtualKeyCode << " \n";
+
+				break;
+
+			case VK_RIGHT:
+				// right key   move player right
+				//std::cout << "VK_RIGHT   = " << InputRecord.Event.KeyEvent.wVirtualKeyCode << " \n";
+
+				break;
+
+			case VK_UP:
+				// up key   move player up
+				//std::cout << "VK_UP   = " << InputRecord.Event.KeyEvent.wVirtualKeyCode << " \n";
+
+
+				break;
+
+			case VK_DOWN:
+				// up key   move player down
+				//std::cout << "VK_DOWN   = " << InputRecord.Event.KeyEvent.wVirtualKeyCode << " \n";
+
+
+				break;
+
+
+
+			}//switch
+
+			//---------------------------------------------------------------------------------
+			break;
+
+		case MOUSE_EVENT: // mouse input 
+
+			if (InputRecord.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+			{
+				coord.X = InputRecord.Event.MouseEvent.dwMousePosition.X;
+				coord.Y = InputRecord.Event.MouseEvent.dwMousePosition.Y;	
+
+				SetTextCoord(coord.X, coord.Y, 'X');
+
+				//SetConsoleCursorPosition(hout, coord);
+				//SetConsoleTextAttribute(hout, rand() % 7 + 9);
+
+				/*if ((InputRecord.Event.MouseEvent.dwMousePosition.X == buttonX) &&
+					(InputRecord.Event.MouseEvent.dwMousePosition.Y == buttonY)) {
+
+					clearscreen();
+					gotoxy(1, 1);
+					setcolor(7);
+					drawpixel(buttonX, buttonY, 1);
+					setcolor(3);
+					cout << " mybutton was pressed \n";
+					setcolor(7);
+					Sleep(500);
+					drawpixel(buttonX, buttonY, 1);
+					gotoxy(buttonX + 2, buttonY);
+					setcolor(3);
+					cout << "<----- a button      \n";
+
+
+				}*/
+
+				//std::cout << "Hello world at " << InputRecord.Event.MouseEvent.dwMousePosition.X << " x " << InputRecord.Event.MouseEvent.dwMousePosition.Y << " ";
+
+			}// mouse 
+
+			break;
+
+		case WINDOW_BUFFER_SIZE_EVENT: // scrn buf. resizing 
+			;
+			break;
+
+		case FOCUS_EVENT:  // disregard focus events 
+
+		case MENU_EVENT:   // disregard menu events 
+
+			break;
+
+		default:
+			std::cout << "Unknown event type \n";
+			break;
+		}
+
+
+
+		//FlushConsoleInputBuffer(hin);
+	
+}
+
+void ScreenManager::SetTextCoord(int x, int y, char c)
+{
+	buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
+}
+
