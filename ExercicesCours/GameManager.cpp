@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "GameManager.h"
+#include <algorithm>
 
 
 GameManager::GameManager() {
@@ -22,4 +23,13 @@ void GameManager::Run() {
 		screenManager->SampleDisplay();
 		screenManager->Update();
 	}
+}
+
+std::set<GameObject> GameManager::GetGameObjects() {
+	std::sort(gameObjects.begin(), gameObjects.end(), ZIndexCompare);
+	return gameObjects;
+}
+
+bool ZIndexCompare(GameObject objectA, GameObject objectB) {
+	return objectA.GetX() > objectB.GetY();
 }

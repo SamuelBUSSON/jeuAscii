@@ -19,6 +19,9 @@ public:
 	~GameObject();
 
 	void Init();
+
+	inline int GetX() { return posX; }
+	inline int GetY() { return posY; }
 };
 
 #endif
