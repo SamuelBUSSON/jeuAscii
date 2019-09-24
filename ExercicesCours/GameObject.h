@@ -3,11 +3,18 @@
 #ifndef DEF_GAMEOBJECT
 #define DEF_GAMEOBJECT
 
+
+struct Hitbox {
+	int originX, originY, width, height;
+};
+
 class GameObject {
 
 private:
 	int spriteWidth;
 	int spriteHeight;
+
+	struct Hitbox hitbox;
 	char* sprite;
 
 protected:
@@ -21,8 +28,11 @@ public:
 	void Init();
 	virtual void OnClick();
 
-	inline const int GetX() const { return posX; }
-	inline const int GetY() const { return posY; }
+	bool HitboxIsOnCoords(int x, int y);
+
+
+	inline int GetX() const { return posX; }
+	inline int GetY() const { return posY; }
 };
 
 #endif

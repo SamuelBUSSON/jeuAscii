@@ -10,6 +10,7 @@
     <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="BreakableObject.cpp" />
     <ClCompile Include="TreeObject.cpp" />
+    <ClCompile Include="StoneObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
@@ -20,5 +21,6 @@
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="BreakableObject.h" />
     <ClInclude Include="TreeObject.h" />
+    <ClInclude Include="StoneObject.h" />
   </ItemGroup>
 </Project>

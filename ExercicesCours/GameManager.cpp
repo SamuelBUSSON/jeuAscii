@@ -28,7 +28,8 @@ void GameManager::Run() {
 	}
 }
 
-std::set<GameObject, ZIndexComparison> GameManager::GetGameObjects() {
+std::list<GameObject> GameManager::GetGameObjects() {
+	gameObjects.sort(ZIndexComparison());
 	return gameObjects;
 }
 
@@ -108,5 +109,19 @@ void GameManager::Update()
 	default:
 		std::cout << "Unknown event type \n";
 		break;
+	}
+}
+
+/*
+	Retourne l'objet situé à la position [x, y]
+	Si plusieurs objets sont à cette position alors la fonction retourne l'objet le plus bas 
+*/
+GameObject* GameManager::GetGameObjectAtCoords(int x, int y) {
+
+	for (GameObject &object : gameObjects) {
+		if (object.HitboxIsOnCoords(x, y)) {
+			return &object;
+			break;
+		}
 	}
 }

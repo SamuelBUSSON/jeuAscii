@@ -18,3 +18,12 @@ void GameObject::Init() {
 void GameObject::OnClick() {
 
 }
+
+bool GameObject::HitboxIsOnCoords(int x, int y) {
+	return (
+		x >= hitbox.originX &&
+		x <= hitbox.originX + hitbox.width &&
+		y >= hitbox.originY &&
+		y <= hitbox.originY + hitbox.height
+	);
+}

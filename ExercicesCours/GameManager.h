@@ -6,7 +6,7 @@
 #include "ScreenManager.h"
 #include "GameObject.h"
 #include "InputManager.h"
-#include <set>
+#include <list>
 
 
 
@@ -21,7 +21,7 @@ struct ZIndexComparison {
 class GameManager {
 private:
 	ScreenManager* screenManager;
-	std::set<GameObject, ZIndexComparison> gameObjects;
+	std::list<GameObject> gameObjects;
 
 	InputManager* inputManager;
 	bool exit_game = false;
@@ -33,8 +33,10 @@ public:
 
 	void Init();
 	void Run();
-	std::set<GameObject, ZIndexComparison> GetGameObjects();
 	void Update();
+
+	GameObject* GetGameObjectAtCoords(int x, int y);
+	std::list<GameObject> GetGameObjects();
 };
 
 
