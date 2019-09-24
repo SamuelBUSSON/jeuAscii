@@ -8,7 +8,7 @@
 class Player : public GameObject
 {
 public:
-	Player();
+	Player(int x, int y);
 	~Player();
 
 	void MoveLeft();

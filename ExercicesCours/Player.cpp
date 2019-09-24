@@ -2,7 +2,9 @@
 #include "Player.h"
 
 
-Player::Player() {
+Player::Player(int x, int y)
+: GameObject(x, y) {
+
 }
 
 
