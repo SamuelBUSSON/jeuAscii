@@ -14,3 +14,7 @@ GameObject::~GameObject() {
 void GameObject::Init() {
 
 }
+
+void GameObject::OnClick() {
+
+}

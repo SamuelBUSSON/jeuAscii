@@ -151,16 +151,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ClickableObject.h" />
+    <ClInclude Include="BreakableObject.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ScreenManager.h" />
+    <ClInclude Include="TreeObject.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ClickableObject.cpp" />
+    <ClCompile Include="BreakableObject.cpp" />
     <ClCompile Include="ExercicesCours.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -173,6 +174,7 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
+    <ClCompile Include="TreeObject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

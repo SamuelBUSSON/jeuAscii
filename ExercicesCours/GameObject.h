@@ -19,6 +19,7 @@ public:
 	~GameObject();
 
 	void Init();
+	virtual void OnClick();
 
 	inline const int GetX() const { return posX; }
 	inline const int GetY() const { return posY; }
