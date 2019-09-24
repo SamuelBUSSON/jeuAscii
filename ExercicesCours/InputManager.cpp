@@ -32,77 +32,90 @@ void InputManager::Update() {
 	ReadConsoleInput(readHandle, &InputRecord, 1, &Events);
 
 
+	
 	switch (InputRecord.EventType) {
-	case KEY_EVENT:
+		case KEY_EVENT:
 
-		switch (InputRecord.Event.KeyEvent.wVirtualKeyCode)
-		{
-		case VK_ESCAPE:
-			break;
+			switch (InputRecord.Event.KeyEvent.wVirtualKeyCode)
+			{
+			case VK_ESCAPE:
+				break;
 
-		case VK_SPACE:
+			case VK_SPACE:
 
-			break;
+				break;
 
 
-		case VK_RETURN:
+			case VK_RETURN:
 
-			break;
+				break;
 
-		case VK_LEFT:
+			case VK_LEFT:
 		
 
-			break;
+				break;
 
-		case VK_RIGHT:
+			case VK_RIGHT:
 			
 
+				break;
+
+			case VK_UP:
+
+
+				break;
+
+			case VK_DOWN:
+
+
+				break;
+
+			default:
+
+
+				break;
+
+
+
+			}//switch
+
+			//---------------------------------------------------------------------------------
 			break;
 
-		case VK_UP:
+		case MOUSE_EVENT: // mouse input 
 
-
-			break;
-
-		case VK_DOWN:
-
-
-			break;
-
-
-
-		}//switch
-
-		//---------------------------------------------------------------------------------
-		break;
-
-	case MOUSE_EVENT: // mouse input 
-
-		if (InputRecord.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED)
-		{
-			coord.X = InputRecord.Event.MouseEvent.dwMousePosition.X;
-			coord.Y = InputRecord.Event.MouseEvent.dwMousePosition.Y;
+			if (InputRecord.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+			{
+				coord.X = InputRecord.Event.MouseEvent.dwMousePosition.X;
+				coord.Y = InputRecord.Event.MouseEvent.dwMousePosition.Y;
 			
 
-		}// mouse 
+			}// mouse 
 
-		break;
+			break;
 
-	case WINDOW_BUFFER_SIZE_EVENT: // scrn buf. resizing 
-		;
-		break;
+		case WINDOW_BUFFER_SIZE_EVENT: // scrn buf. resizing 
+			;
+			break;
 
-	case FOCUS_EVENT:  // disregard focus events 
+		case FOCUS_EVENT:  // disregard focus events 
 
-	case MENU_EVENT:   // disregard menu events 
+		case MENU_EVENT:   // disregard menu events 
 
-		break;
+			break;
 
-	default:
-		std::cout << "Unknown event type \n";
-		break;
+		default:
+			std::cout << "Unknown event type \n";
+			break;
 	}
 
 	FlushConsoleInputBuffer(readHandle);
+}
+
+INPUT_RECORD InputManager::GetInputEvent()
+{
+	ReadConsoleInput(readHandle, &InputRecord, 1, &Events);
+
+	return InputRecord;
 }
 

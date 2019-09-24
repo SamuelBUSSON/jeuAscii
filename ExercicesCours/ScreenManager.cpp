@@ -29,7 +29,7 @@ void ScreenManager::Init() {
 	SetConsoleWindowInfo(writeHandle, TRUE, &bufferArea);
 
 	SetConsoleScreenBufferSize(writeHandle, bufferSize);
-
+	/*
 	CONSOLE_FONT_INFOEX customFont;
 	customFont.cbSize = sizeof(CONSOLE_FONT_INFOEX);
 	customFont.nFont = 0;
@@ -37,9 +37,7 @@ void ScreenManager::Init() {
 	customFont.dwFontSize.Y = 12;
 	customFont.FontFamily = FF_ROMAN;
 	customFont.FontWeight = FW_NORMAL;
-
-
-	SetCurrentConsoleFontEx(writeHandle, false, &customFont);
+	SetCurrentConsoleFontEx(writeHandle, false, &customFont);*/
 
 	for (int currentX = 0; currentX < SCREEN_WIDTH; currentX++) {
 		for (int currentY = 0; currentY < SCREEN_HEIGHT; currentY++) {
@@ -54,104 +52,17 @@ void ScreenManager::Init() {
 
 void ScreenManager::SampleDisplay() 
 {
+	ReadMap();
+
+	SetTextCoord(currentMapCoordX, currentMapCoordY, 'o');
+
+
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
 }
 
 bool ScreenManager::GetExitGame() {
 	return EXITGAME;
 }
-/*
-void ScreenManager::Update() {
-		ReadConsoleInput(readHandle, &InputRecord, 1, &Events);
-
-
-		switch (InputRecord.EventType) {
-		case KEY_EVENT: // keyboard input 
-
-
-			switch (InputRecord.Event.KeyEvent.wVirtualKeyCode)
-			{
-			case VK_ESCAPE:
-				EXITGAME = TRUE;
-				break;
-
-			case VK_SPACE:		
-
-					
-
-				break;
-
-
-			case VK_RETURN:
-
-				break;
-
-			case VK_LEFT:
-				// left key   move player left
-				//std::cout << "VK_LEFT   = " << InputRecord.Event.KeyEvent.wVirtualKeyCode << " \n";
-
-				break;
-
-			case VK_RIGHT:
-				// right key   move player right
-				//std::cout << "VK_RIGHT   = " << InputRecord.Event.KeyEvent.wVirtualKeyCode << " \n";
-
-				break;
-
-			case VK_UP:
-				// up key   move player up
-				//std::cout << "VK_UP   = " << InputRecord.Event.KeyEvent.wVirtualKeyCode << " \n";
-
-
-				break;
-
-			case VK_DOWN:
-				// up key   move player down
-				//std::cout << "VK_DOWN   = " << InputRecord.Event.KeyEvent.wVirtualKeyCode << " \n";
-
-
-				break;
-
-
-
-			}//switch
-
-			//---------------------------------------------------------------------------------
-			break;
-
-		case MOUSE_EVENT: // mouse input 
-
-			if (InputRecord.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED)
-			{
-				coord.X = InputRecord.Event.MouseEvent.dwMousePosition.X;
-				coord.Y = InputRecord.Event.MouseEvent.dwMousePosition.Y;	
-
-				DisplaySpriteFromString("Sprite/Tree.txt", coord.X, coord.Y, FOREGROUND_RED);				
-
-			}// mouse 
-
-			break;
-
-		case WINDOW_BUFFER_SIZE_EVENT: // scrn buf. resizing 
-			;
-			break;
-
-		case FOCUS_EVENT:  // disregard focus events 
-
-		case MENU_EVENT:   // disregard menu events 
-
-			break;
-
-		default:
-			std::cout << "Unknown event type \n";
-			break;
-		}
-
-
-
-		//FlushConsoleInputBuffer(hin);
-	
-}*/
 
 void ScreenManager::SetTextCoord(int x, int y, char c)
 {
@@ -181,6 +92,56 @@ void ScreenManager::DisplaySpriteFromString(string filename, int coordX, int coo
 			
 		}
 		y++;
+	}
+}
+
+void ScreenManager::ReadMap()
+{
+	std::ifstream inFile;
+	inFile.open("Sprite/Map.txt");
+	std::string line;
+	int numberLine = 0;
+
+	char c;
+	while (getline(inFile, line)) {
+		if (numberLine >= currentMapCoordY - (CAM_HEIGHT/2) && numberLine <= currentMapCoordY + (CAM_HEIGHT / 2))
+		{
+			for (int i = 0; i < line.length(); i++)
+			{
+				if (i >= currentMapCoordX - (CAM_WIDTH / 2) && i <= currentMapCoordX + (CAM_WIDTH / 2))
+				{
+					SetTextCoord(((CAM_WIDTH / 2) + i), ((CAM_HEIGHT / 2) + numberLine), line[i], FOREGROUND_RED | FOREGROUND_INTENSITY);
+				}
+			}
+		}
+
+		numberLine++;
+	}
+}
+
+void ScreenManager::GoLeft()
+{
+	currentMapCoordX--;
+	if (currentMapCoordX <= 0) {
+		currentMapCoordX = 0;
+	}
+}
+
+void ScreenManager::GoRight()
+{
+	currentMapCoordX++;
+}
+
+void ScreenManager::GoDown()
+{
+	currentMapCoordY++;
+}
+
+void ScreenManager::GoUp()
+{
+	currentMapCoordY--;
+	if (currentMapCoordY <= 0) {
+		currentMapCoordY = 0;
 	}
 }
 

@@ -11,6 +11,7 @@ private:
 
 	ScreenManager* screenManager;
 	InputManager* inputManager;
+	bool exit_game = false;
 
 
 public:
@@ -19,6 +20,7 @@ public:
 
 	void Init();
 	void Run();
+	void Update();
 };
 
 #endif

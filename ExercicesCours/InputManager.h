@@ -7,6 +7,7 @@
 #include <fstream>
 
 #include <windows.h>
+#include "ScreenManager.h"
 
 #include <iostream>
 #include <string>
@@ -22,6 +23,8 @@ private :
 	INPUT_RECORD InputRecord;
 	DWORD Events;
 
+	ScreenManager* sm;
+
 
 public:
 	InputManager();
@@ -29,6 +32,7 @@ public:
 
 	void Init();
 	void Update();
+	INPUT_RECORD GetInputEvent();
 
 };
 

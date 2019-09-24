@@ -13,6 +13,9 @@
 #define SCREEN_WIDTH 100
 #define SCREEN_HEIGHT 40
 
+#define CAM_WIDTH 40
+#define CAM_HEIGHT 20
+
 class ScreenManager {
 
 private:
@@ -28,6 +31,9 @@ private:
 	COORD initialBufferCoord = { 0, 0 };
 	SMALL_RECT bufferArea = { 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1 };
 
+	int currentMapCoordX = 0;
+	int currentMapCoordY = 0;
+
 
 public:
 	ScreenManager();
@@ -41,6 +47,13 @@ public:
 	void SetTextCoord(int x, int y, char c);
 	void SetTextCoord(int x, int y, char c, int color);
 	void DisplaySpriteFromString(std::string filename, int coordX, int coordY, int color);
+	void ReadMap();
+
+
+	void GoLeft();
+	void GoRight();
+	void GoUp();
+	void GoDown();
 
 };
 
