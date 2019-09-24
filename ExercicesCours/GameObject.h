@@ -5,13 +5,14 @@
 
 class GameObject {
 
-	int posX;
-	int posY;
-
-
+private:
 	int spriteWidth;
 	int spriteHeight;
 	char* sprite;
+
+protected:
+	int posX;
+	int posY;
 
 public:
 	GameObject(int x, int y);
