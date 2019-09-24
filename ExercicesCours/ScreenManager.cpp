@@ -126,11 +126,7 @@ void ScreenManager::Update() {
 				coord.X = InputRecord.Event.MouseEvent.dwMousePosition.X;
 				coord.Y = InputRecord.Event.MouseEvent.dwMousePosition.Y;	
 
-				//DisplaySpriteFromString("Sprite/Tree.txt", coord.X, coord.Y, coord.X | coord.Y);
-				SetTextCoord(coord.X - 1, coord.Y, coord.X -1, coord.X - 1);
-				SetTextCoord(coord.X , coord.Y, coord.X, coord.X);
-				SetTextCoord(coord.X + 1, coord.Y, coord.X + 1, coord.X + 1);
-				SetTextCoord(coord.X + 2, coord.Y, coord.X + 2, coord.X + 2);
+				DisplaySpriteFromString("Sprite/Tree.txt", coord.X, coord.Y, FOREGROUND_RED);
 
 				/*SetTextCoord(coord.X-1, coord.Y, '\\', FOREGROUND_RED);
 				SetTextCoord(coord.X, coord.Y, 'o', FOREGROUND_RED);
@@ -209,7 +205,10 @@ void ScreenManager::DisplaySpriteFromString(string filename, int coordX, int coo
 	while (getline(inFile, line)) {
 		for (int x = 0; x < line.length(); x++)
 		{
-			SetTextCoord(coordX + x, coordY + y, line[x], color);
+			if (line[x] != 'W') {
+				SetTextCoord(coordX + x, coordY + y, line[x], color);
+			}
+			
 		}
 		y++;
 	}
