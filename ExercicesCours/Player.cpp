@@ -4,7 +4,8 @@
 
 Player::Player(int x, int y)
 : GameObject(x, y) {
-
+	health = PLAYER_HEALTH;
+	food = PLAYER_FOOD;
 }
 
 
