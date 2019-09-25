@@ -1,3 +1,17 @@
+Sprite/Maps/Map2.txt,Sprite/Maps/Map6.txt,Sprite/Maps/Map8.txt,Sprite/Maps/Map4.txt,
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMM           MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                    5                               M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
 
 
 
@@ -7,22 +21,18 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                                      
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMM           MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM

@@ -9,7 +9,6 @@
 #include <string>
 #include <vector>
 
-
 using namespace std;
 
 
@@ -28,11 +27,11 @@ const vector<string> explode(const string& s, const char& c)
 	return v;
 }
 
+
 ScreenManager::ScreenManager() {
 
 	writeHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	cm.currentMapName = "Sprite/Maps/Map1.txt";
-	
+	currentMap.currentMapName = "Sprite/Maps/Map1.txt";
 }
 
 ScreenManager::~ScreenManager() {
@@ -44,6 +43,7 @@ void ScreenManager::Init() {
 	SetConsoleWindowInfo(writeHandle, TRUE, &bufferArea);
 
 	SetConsoleScreenBufferSize(writeHandle, bufferSize);
+
 
 	/*
 	CONSOLE_FONT_INFOEX customFont;
@@ -78,12 +78,13 @@ void ScreenManager::ClearScreen() {
 
 void ScreenManager::SampleDisplay(std::list<GameObject *> gameObjects) 
 {
-	cameraPosX = playerPosX - CAM_WIDTH / 2;
-	cameraPosY = playerPosY - CAM_HEIGHT / 2;
+	//cameraPosX = playerPosX - CAM_WIDTH / 2;
+	//cameraPosY = playerPosY - CAM_HEIGHT / 2;
 
 	ReadMap();
 	DisplayPlayer();
 	DisplayGameObjects(gameObjects);
+	DrawBorder();
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
 }
 
@@ -93,7 +94,12 @@ bool ScreenManager::GetExitGame() {
 
 void ScreenManager::SetTextCoord(int x, int y, char c)
 {
-	buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
+/*	x = x - cameraPosX;
+	y = y - cameraPosY;*/
+
+	if (x + y * SCREEN_WIDTH <= SCREEN_WIDTH * SCREEN_HEIGHT) {
+		buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
+	}
 }
 
 char ScreenManager::GetTextCoord(int x, int y)
@@ -106,15 +112,17 @@ void ScreenManager::SetTextCoord(int x, int y, char c, int color)
 	x = x - cameraPosX;
 	y = y - cameraPosY;
 	
-	if (x >= 0 &&
-		y >= 0 &&
-		x < SCREEN_WIDTH &&
-		y < SCREEN_HEIGHT) {
+	if (x + y * SCREEN_WIDTH <= SCREEN_WIDTH * SCREEN_HEIGHT) {
 		buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
 		buffer[x + y * SCREEN_WIDTH].Attributes = color;
 	}
 
+}
 
+void ScreenManager::SetTextCoordFixed(int x, int y, char c, int color)
+{
+	buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
+	buffer[x + y * SCREEN_WIDTH].Attributes = color;
 }
 
 void ScreenManager::Clear() 
@@ -168,100 +176,122 @@ void ScreenManager::DisplaySpriteFromString(string filename, int coordX, int coo
 }
 
 void ScreenManager::ReadMap()
-{
+{	
+	
 	std::ifstream inFile;
-	inFile.open("Sprite/Maps/Map1.txt");
+	inFile.open(currentMap.currentMapName);
 	std::string line;
-	int numberLine = 0;
 
+	int numberLine = 0;	
+
+	
+	
+	char c;
+	while (getline(inFile, line)) {	
+
+		if (numberLine == 0) 
+		{
+			vector<string> v = explode(line, ',');
+			if (v.size() >= 4) {
+				currentMap.topMap = v[0];
+				currentMap.rightMap = v[1];
+				currentMap.bottomMap = v[2];
+				currentMap.leftMap = v[3];
+
+			}
+		}
+
+
+
+		/*if (numberLine >= playerPosY - CAM_HEIGHT/2 && numberLine <= playerPosY + CAM_HEIGHT/2)
+		{*/
+			for (int x = 0; x < line.length(); x++)
+			{
+				/*if(x >= playerPosX - CAM_WIDTH/2 && x <= playerPosX + CAM_WIDTH / 2)
+				{*/
+					SetTextCoord(x + 1, numberLine, line[x], FOREGROUND_GREEN);
+				//}
+			}
+		//}
+		numberLine++;
+	}
+
+	
+}
+
+void ScreenManager::DrawBorder() {
 	//Draw border
 	for (int i = 0; i <= CAM_WIDTH + 1; i++)
 	{
-		for (int y = 0; y < CAM_HEIGHT -1 ; y++)
+		for (int y = 0; y < CAM_HEIGHT - 1; y++)
 		{
 			if (i == 0 || i == CAM_WIDTH + 1 || y == 0 || y == CAM_HEIGHT - 2) {
-				SetTextCoord(i, y, ' ', BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY);
-			}			
-		}
-	}
-
-	char c;
-	while (getline(inFile, line)) {
-		if (numberLine == 0) 
-		{
-			vector<string> v{ explode(line, ',') };
-			if (v.size() >= 4) {
-				cm.topMap = v[0];
-				cm.rightMap = v[1];
-				cm.bottomMap = v[2];
-				cm.leftMap = v[3];
+				SetTextCoordFixed(i, y, ' ', FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 			}
 		}
-		else 
-		{
-			for (int x = 0; x < line.length(); x++)
-			{
-				SetTextCoord(x + 1, numberLine, line[x], FOREGROUND_GREEN);
-			}
-		}		
-		numberLine++;
 	}
 }
 
 void ScreenManager::GoLeft()
 {
 	playerPosX--;
-	if (playerPosX <= 1) {
-		playerPosX = 1;
-	}
-
-	if (GetTextCoord( playerPosX - 1 , playerPosY) == 'M') {
-		playerPosX++;
-	}
-
 }
 
 void ScreenManager::GoRight()
 {
 	playerPosX++;
-	if (playerPosX >= CAM_WIDTH - 1) {
-		playerPosX = CAM_WIDTH - 1;
-	}
-
-	if (GetTextCoord(playerPosX + 1, playerPosY) == 'M') {
-		playerPosX--;
-	}
 }
 
 void ScreenManager::GoDown()
 {
 	playerPosY++;
-	if (playerPosY >= CAM_HEIGHT - 3) {
-		playerPosY = CAM_HEIGHT - 3;
-	}
-
-	if (GetTextCoord(playerPosX, playerPosY) == 'M') {
-		playerPosY--;
-	}
 }
 
 void ScreenManager::GoUp()
 {
 	playerPosY--;
-	if (playerPosY <= 1) {
-		playerPosY = 1;
-	}
-
-	if (GetTextCoord(playerPosX, playerPosY) == 'M') {
-		playerPosY++;
-	}
 }
 
 void ScreenManager::DisplayPlayer() 
 {
 	SetTextCoord(playerPosX, playerPosY, 'O', FOREGROUND_RED);
 	SetTextCoord(playerPosX-1, playerPosY, '\\', FOREGROUND_RED);
-	SetTextCoord(playerPosX+1, playerPosY, '/', FOREGROUND_RED);
+    SetTextCoord(playerPosX+1, playerPosY, '/', FOREGROUND_RED);
+}
+
+
+void ScreenManager::CheckPlayerPosition() 
+{
+	if (playerPosY >= YDOORTOP && playerPosY <= YDOORBOT)
+	{
+		if (playerPosX >= CAM_WIDTH - 2) 
+		{
+			playerPosX = 3;
+			currentMap.currentMapName = currentMap.rightMap;
+		}
+		if (playerPosX <= 2)
+		{
+			playerPosX = CAM_WIDTH - 3;
+			currentMap.currentMapName = currentMap.leftMap;
+		}
+	}
+	
+	if (playerPosX >= XDOORLEFT && playerPosX <= XDOORRIGHT) 
+	{
+		if (playerPosY <= 1) 
+		{
+			playerPosY = CAM_HEIGHT - 2;
+			currentMap.currentMapName = currentMap.topMap;
+		}
+
+		if (playerPosY >= CAM_HEIGHT - 1) 
+		{
+			playerPosY = 2;
+			currentMap.currentMapName = currentMap.bottomMap;
+		}
+	}
+
+	
 }
 
 void ScreenManager::DisplayGameObjects(std::list<GameObject *> gameObjects) {

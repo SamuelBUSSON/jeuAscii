@@ -1,3 +1,17 @@
+Sprite/Maps/Map6.txt, , ,Sprite/Maps/Map8.txt,
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMM           MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                            9                       M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
                                                                      M
                                                                      M
                                                                      M
@@ -7,31 +21,18 @@
                                                                      M
                                                                      M
                                                                      M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
-                                                                     M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM

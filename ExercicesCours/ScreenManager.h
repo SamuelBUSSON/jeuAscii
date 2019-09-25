@@ -19,9 +19,15 @@
 #define CAM_WIDTH 70
 #define CAM_HEIGHT 40
 
-struct CurrentMap
-{
+#define YDOORTOP 15
+#define YDOORBOT  23
+
+#define XDOORLEFT 30
+#define XDOORRIGHT 41
+
+struct TileMap {
 	std::string currentMapName;
+
 	std::string topMap;
 	std::string rightMap;
 	std::string bottomMap;
@@ -43,14 +49,13 @@ private:
 	COORD initialBufferCoord = { 0, 0 };
 	SMALL_RECT bufferArea = { 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1 };
 
-	CurrentMap cm;
-
 	int playerPosX = CAM_WIDTH /2;
 	int playerPosY = CAM_HEIGHT/2;
 
 	int cameraPosX = playerPosX - CAM_WIDTH / 2;
 	int cameraPosY = playerPosY - CAM_HEIGHT / 2;
 
+	TileMap currentMap;
 
 
 public:
@@ -67,10 +72,13 @@ public:
 	void SetTextCoord(int x, int y, char c);
 	char GetTextCoord(int x, int y);
 	void SetTextCoord(int x, int y, char c, int color);
+	void SetTextCoordFixed(int x, int y, char c, int color);
 	void Clear();
 	void DisplaySpriteFromString(std::string filename, int coordX, int coordY, int color);
 	void DisplayGameObject(GameObject *gameObject);
 	void ReadMap();
+
+	void DrawBorder();
 
 
 	void GoLeft();
@@ -78,6 +86,7 @@ public:
 	void GoUp();
 	void DisplayPlayer();
 	void DisplayGameObjects(std::list<GameObject *> gameObjects);
+	void CheckPlayerPosition();
 	void GoDown();
 
 };
