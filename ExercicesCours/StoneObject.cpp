@@ -2,8 +2,8 @@
 #include "StoneObject.h"
 
 
-StoneObject::StoneObject(int x, int y)
-: BreakableObject(x, y, STONE_HEALTH) {
+StoneObject::StoneObject(int x, int y, std::string spriteFile)
+: BreakableObject(x, y, spriteFile, STONE_HEALTH) {
 }
 
 

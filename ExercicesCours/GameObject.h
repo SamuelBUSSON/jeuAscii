@@ -5,27 +5,29 @@
 
 #include <string>
 
-struct Hitbox {
-	int originX, originY, width, height;
+struct Sprite {
+	std::string spriteFile;
+	int width;
+	int height;
 };
 
 class GameObject {
 
 private:
-	struct Hitbox hitbox;
+	struct Sprite sprite;
 
 protected:
 	int posX;
 	int posY;
 
 public:
-	GameObject(int x, int y);
+	GameObject(int x, int y, std::string spriteFile);
 	~GameObject();
 
 	void Init();
 	virtual void OnClick();
 
-	bool HitboxIsOnCoords(int x, int y);
+	bool SpriteIsOnCoords(int x, int y);
 
 
 	inline int GetX() const { return posX; }

@@ -7,7 +7,7 @@
 
 class FireCamp : public GameObject {
 public:
-	FireCamp(int x, int y);
+	FireCamp(int x, int y, std::string spriteFile);
 	~FireCamp();
 };
 

@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "GameObject.h"
 
-GameObject::GameObject(int x, int y) {
+GameObject::GameObject(int x, int y, std::string spriteFile) {
 	posX = x;
 	posY = y;
+	sprite.spriteFile = spriteFile;
 }
 
 
@@ -19,11 +20,11 @@ void GameObject::OnClick() {
 
 }
 
-bool GameObject::HitboxIsOnCoords(int x, int y) {
+bool GameObject::SpriteIsOnCoords(int x, int y) {
 	return (
-		x >= hitbox.originX &&
-		x <= hitbox.originX + hitbox.width &&
-		y >= hitbox.originY &&
-		y <= hitbox.originY + hitbox.height
+		x >= 0 &&
+		x <= sprite.width &&
+		y >= 0 &&
+		y <= sprite.height
 	);
 }

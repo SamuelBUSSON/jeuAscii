@@ -11,7 +11,7 @@ private:
 	int health;
 
 public:
-	BreakableObject(int x, int y, int health);
+	BreakableObject(int x, int y, std::string spriteFile, int health);
 	~BreakableObject();
 
 	virtual void OnClick() override;

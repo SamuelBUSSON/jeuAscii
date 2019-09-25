@@ -10,7 +10,7 @@
 class TreeObject :	public BreakableObject {
 
 public:
-	TreeObject(int x, int y);
+	TreeObject(int x, int y, std::string spriteFile);
 	~TreeObject();
 
 	void OnClick() override;

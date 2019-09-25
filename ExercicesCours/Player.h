@@ -15,10 +15,8 @@ private:
 	unsigned int health;
 	int food;
 
-	std::string spriteFile = "Sprite/Player.txt";
-
 public:
-	Player(int x, int y);
+	Player(int x, int y, std::string spriteFile);
 	~Player();
 
 	void MoveLeft();

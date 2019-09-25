@@ -2,8 +2,8 @@
 #include "TreeObject.h"
 
 
-TreeObject::TreeObject(int x, int y)
-: BreakableObject(x, y, TREE_HEALTH) {
+TreeObject::TreeObject(int x, int y, std::string spriteFile)
+: BreakableObject(x, y, spriteFile, TREE_HEALTH) {
 }
 
 

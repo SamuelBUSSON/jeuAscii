@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "GameManager.h"
+
+#include "Player.h"
+
 #include <algorithm>
 
 
@@ -120,7 +123,7 @@ void GameManager::Update()
 GameObject* GameManager::GetGameObjectAtCoords(int x, int y) {
 
 	for (GameObject &object : gameObjects) {
-		if (object.HitboxIsOnCoords(x, y)) {
+		if (object.SpriteIsOnCoords(x, y)) {
 			return &object;
 		}
 	}

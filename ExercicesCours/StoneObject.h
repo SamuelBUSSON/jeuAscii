@@ -10,7 +10,7 @@
 class StoneObject : public BreakableObject {
 
 public:
-	StoneObject(int x, int y);
+	StoneObject(int x, int y, std::string spriteFile);
 	~StoneObject();
 
 	void OnClick() override;

@@ -2,8 +2,8 @@
 #include "Player.h"
 
 
-Player::Player(int x, int y)
-: GameObject(x, y) {
+Player::Player(int x, int y, std::string spriteFile)
+: GameObject(x, y, spriteFile) {
 	health = PLAYER_HEALTH;
 	food = PLAYER_FOOD;
 }

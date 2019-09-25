@@ -2,8 +2,8 @@
 #include "BreakableObject.h"
 
 
-BreakableObject::BreakableObject(int x, int y, int _health)
-: GameObject(x, y), health(_health) {
+BreakableObject::BreakableObject(int x, int y, std::string spriteFile, int _health)
+: GameObject(x, y, spriteFile), health(_health) {
 }
 
 

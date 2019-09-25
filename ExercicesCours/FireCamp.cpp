@@ -2,8 +2,8 @@
 #include "FireCamp.h"
 
 
-FireCamp::FireCamp(int x, int y)
-: GameObject(x, y) {
+FireCamp::FireCamp(int x, int y, std::string spriteFile)
+: GameObject(x, y, spriteFile) {
 }
 
 
