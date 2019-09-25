@@ -78,6 +78,9 @@ void ScreenManager::ClearScreen() {
 
 void ScreenManager::SampleDisplay() 
 {
+	cameraPosX = playerPosX - CAM_WIDTH / 2;
+	cameraPosY = playerPosY - CAM_HEIGHT / 2;
+
 	ReadMap();
 	DisplayPlayer();
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
@@ -99,6 +102,9 @@ char ScreenManager::GetTextCoord(int x, int y)
 
 void ScreenManager::SetTextCoord(int x, int y, char c, int color)
 {
+	x = x - cameraPosX;
+	y = y - cameraPosY;
+
 	buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
 	buffer[x + y * SCREEN_WIDTH].Attributes = color;
 }
@@ -176,59 +182,58 @@ void ScreenManager::ReadMap()
 
 void ScreenManager::GoLeft()
 {
-	currentMapCoordX--;
-	if (currentMapCoordX <= 1) {
-		currentMapCoordX = 1;
+	playerPosX--;
+	if (playerPosX <= 1) {
+		playerPosX = 1;
 	}
 
-	if (GetTextCoord( currentMapCoordX - 1 , currentMapCoordY) == 'M') {
-		currentMapCoordX++;
+	if (GetTextCoord( playerPosX - 1 , playerPosY) == 'M') {
+		playerPosX++;
 	}
 
 }
 
 void ScreenManager::GoRight()
 {
-	currentMapCoordX++;
-	if (currentMapCoordX >= CAM_WIDTH - 1) {
-		currentMapCoordX = CAM_WIDTH - 1;
+	playerPosX++;
+	if (playerPosX >= CAM_WIDTH - 1) {
+		playerPosX = CAM_WIDTH - 1;
 	}
 
-	if (GetTextCoord(currentMapCoordX + 1, currentMapCoordY) == 'M') {
-		currentMapCoordX--;
+	if (GetTextCoord(playerPosX + 1, playerPosY) == 'M') {
+		playerPosX--;
 	}
 }
 
 void ScreenManager::GoDown()
 {
-	currentMapCoordY++;
-	if (currentMapCoordY >= CAM_HEIGHT - 3) {
-		currentMapCoordY = CAM_HEIGHT - 3;
+	playerPosY++;
+	if (playerPosY >= CAM_HEIGHT - 3) {
+		playerPosY = CAM_HEIGHT - 3;
 	}
 
-	if (GetTextCoord(currentMapCoordX, currentMapCoordY) == 'M') {
-		currentMapCoordY--;
+	if (GetTextCoord(playerPosX, playerPosY) == 'M') {
+		playerPosY--;
 	}
 }
 
 void ScreenManager::GoUp()
 {
-	currentMapCoordY--;
-	if (currentMapCoordY <= 1) {
-		currentMapCoordY = 1;
+	playerPosY--;
+	if (playerPosY <= 1) {
+		playerPosY = 1;
 	}
 
-	if (GetTextCoord(currentMapCoordX, currentMapCoordY) == 'M') {
-		currentMapCoordY++;
+	if (GetTextCoord(playerPosX, playerPosY) == 'M') {
+		playerPosY++;
 	}
 }
 
 void ScreenManager::DisplayPlayer() 
 {
-	SetTextCoord(currentMapCoordX, currentMapCoordY, 'O', FOREGROUND_RED);
-	SetTextCoord(currentMapCoordX-1, currentMapCoordY, '\\', FOREGROUND_RED);
-	SetTextCoord(currentMapCoordX+1, currentMapCoordY, '/', FOREGROUND_RED);
-
+	SetTextCoord(playerPosX, playerPosY, 'O', FOREGROUND_RED);
+	SetTextCoord(playerPosX-1, playerPosY, '\\', FOREGROUND_RED);
+	SetTextCoord(playerPosX+1, playerPosY, '/', FOREGROUND_RED);
 }
 
 

@@ -23,6 +23,7 @@ void GameManager::Run() {
 
 	while (!exit_game)
 	{
+	
 		screenManager->ClearScreen();
 		screenManager->SampleDisplay();
 		Update();
