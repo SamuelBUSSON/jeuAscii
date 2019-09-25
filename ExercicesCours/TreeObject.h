@@ -13,6 +13,8 @@ public:
 	TreeObject(int x, int y, std::string spriteFile);
 	~TreeObject();
 
+	inline std::string GetDescription() const override { return "a huge tree"; }
+
 	void OnClick() override;
 	void OnBreak() override;
 };

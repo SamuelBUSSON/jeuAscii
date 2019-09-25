@@ -14,6 +14,8 @@ public:
 	BreakableObject(int x, int y, std::string spriteFile, int health);
 	~BreakableObject();
 
+	virtual std::string GetDescription() const = 0;
+
 	virtual void OnClick() override;
 	virtual void OnBreak() = 0;
 };

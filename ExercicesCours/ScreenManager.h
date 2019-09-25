@@ -12,12 +12,16 @@
 #include <list>
 
 #include "GameObject.h"
+#include "InfoPanel.h"
 
 #define SCREEN_WIDTH 120
 #define SCREEN_HEIGHT 40
 
 #define CAM_WIDTH 70
 #define CAM_HEIGHT 40
+
+#define INFO_PANEL_ORIG_X 75
+#define INFO_PANEL_ORIG_Y 1
 
 #define YDOORTOP 15
 #define YDOORBOT  23
@@ -57,6 +61,8 @@ private:
 
 	TileMap currentMap;
 
+	InfoPanel *infoPanel;
+
 
 public:
 	ScreenManager();
@@ -65,30 +71,33 @@ public:
 	void Init();
 
 	void ClearScreen();
-
 	void SampleDisplay(std::list<GameObject *> gameObjects);
+
 	bool GetExitGame();
-	//void Update();
+
 	void SetTextCoord(int x, int y, char c);
 	char GetTextCoord(int x, int y);
 	void SetTextCoord(int x, int y, char c, int color);
 	void SetTextCoordFixed(int x, int y, char c, int color);
+
 	void Clear();
-	void DisplaySpriteFromString(std::string filename, int coordX, int coordY, int color);
-	void DisplayGameObject(GameObject *gameObject);
+
 	void ReadMap();
-
 	void DrawBorder();
-
 
 	void GoLeft();
 	void GoRight();
 	void GoUp();
-	void DisplayPlayer();
-	void DisplayGameObjects(std::list<GameObject *> gameObjects);
-	void CheckPlayerPosition();
 	void GoDown();
 
+	void CheckPlayerPosition();
+
+	void DisplayPlayer();
+	void DisplayGameObjects(std::list<GameObject *> gameObjects);
+	void DisplayGameObject(GameObject *gameObject);
+
+	void WriteInfoPanel(InfoPanel *_infoPanel);
+	void SetInfo(std::string infos);
 };
 
 #endif

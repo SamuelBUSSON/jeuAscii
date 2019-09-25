@@ -11,7 +11,7 @@ GameObject::GameObject(int x, int y, std::string spriteFile) {
 
 
 GameObject::~GameObject() {
-
+	
 }
 
 void GameObject::Init() {

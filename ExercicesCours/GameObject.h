@@ -36,6 +36,9 @@ public:
 	inline int GetY() const { return posY; }
 	inline int GetHeight() const { return sprite.height; }
 	inline int GetColor() const { return sprite.color; }
+
+	virtual std::string GetDescription() const = 0;
+
 	inline std::string GetSpriteFileName() const { return sprite.spriteFile; }
 
 	inline void SetColor(int _color) { sprite.color = _color; }

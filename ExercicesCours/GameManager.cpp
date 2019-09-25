@@ -2,6 +2,7 @@
 #include "GameManager.h"
 
 #include "TreeObject.h"
+#include "FireCamp.h"
 #include "Player.h"
 
 #include <algorithm>
@@ -22,7 +23,7 @@ GameManager::~GameManager() {
 }
 
 void GameManager::Init() {
-
+	gameObjects.push_front(new FireCamp(10, 8, "Sprite/FireCamp.txt"));
 	gameObjects.push_front(new TreeObject(20, 20, "Sprite/Tree.txt"));
 	gameObjects.push_front(new TreeObject(25, 25, "Sprite/Tree.txt"));
 
@@ -163,6 +164,8 @@ void GameManager::HighlightGameObjectAtCoords(COORD coords) {
 		highlightedGameObjectOldColor = gameObject->GetColor();
 		highlightedGameObject = gameObject;
 		highlightedGameObject->SetColor(20);
+
+		screenManager->SetInfo(highlightedGameObject->GetDescription());
 	}
 }
 
@@ -171,5 +174,7 @@ void GameManager::RemoveHighlight() {
 		highlightedGameObject->SetColor(highlightedGameObjectOldColor);
 		highlightedGameObject = nullptr;
 		highlightedGameObjectOldColor = NULL;
+
+		screenManager->SetInfo("");
 	}
 }

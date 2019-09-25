@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include "InfoPanel.h"
+
 using namespace std;
 
 
@@ -32,10 +34,12 @@ ScreenManager::ScreenManager() {
 
 	writeHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 	currentMap.currentMapName = "Sprite/Maps/Map1.txt";
+
+	infoPanel = new InfoPanel();
 }
 
 ScreenManager::~ScreenManager() {
-
+	delete infoPanel;
 }
 
 void ScreenManager::Init() {
@@ -44,9 +48,7 @@ void ScreenManager::Init() {
 	SetConsoleScreenBufferSize(writeHandle, bufferSize);
 
 	ReadMap();
-	DisplayPlayer();
-
-	
+	DisplayPlayer();	
 }
 
 void ScreenManager::ClearScreen() {
@@ -69,6 +71,8 @@ void ScreenManager::SampleDisplay(std::list<GameObject *> gameObjects)
 	DisplayPlayer();
 	DisplayGameObjects(gameObjects);
 	DrawBorder();
+
+	WriteInfoPanel(infoPanel);
 
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
 
@@ -265,3 +269,14 @@ void ScreenManager::DisplayGameObjects(std::list<GameObject *> gameObjects) {
 	}
 }
 
+void ScreenManager::WriteInfoPanel(InfoPanel *_infoPanel) {
+	std::string text = _infoPanel->GetText();
+	for (size_t i = 0; i < text.length(); i++) {
+		buffer[(INFO_PANEL_ORIG_X + i) + (INFO_PANEL_ORIG_Y * SCREEN_WIDTH)].Char.UnicodeChar = text[i];
+		buffer[(INFO_PANEL_ORIG_X + i) + (INFO_PANEL_ORIG_Y * SCREEN_WIDTH)].Attributes = _infoPanel->GetTextColor();
+	}
+}
+
+void ScreenManager::SetInfo(std::string infos) {
+	infoPanel->SetString(infos);
+}

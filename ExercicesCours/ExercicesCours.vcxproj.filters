@@ -12,6 +12,7 @@
     <ClCompile Include="TreeObject.cpp" />
     <ClCompile Include="StoneObject.cpp" />
     <ClCompile Include="FireCamp.cpp" />
+    <ClCompile Include="InfoPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
@@ -24,5 +25,6 @@
     <ClInclude Include="TreeObject.h" />
     <ClInclude Include="StoneObject.h" />
     <ClInclude Include="FireCamp.h" />
+    <ClInclude Include="InfoPanel.h" />
   </ItemGroup>
 </Project>
