@@ -18,7 +18,7 @@
 
 struct ZIndexComparison {
 	inline bool const operator()(const GameObject *objectA, const GameObject *objectB) {
-		return (objectA->GetY() > objectB->GetY());
+		return ((objectA->GetY() + objectA->GetHeight()) < (objectB->GetY() + objectB->GetHeight()));
 	}
 };
 
@@ -51,6 +51,7 @@ public:
 
 	GameObject* GetGameObjectAtCoords(int x, int y);
 	void HighlightGameObjectAtCoords(COORD coords);
+	void RemoveHighlight();
 	std::list<GameObject *> GetGameObjects();
 
 	static GameManager& instance()

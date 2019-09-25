@@ -198,15 +198,20 @@ void GameManager::HighlightGameObjectAtCoords(COORD coords) {
 	GameObject *gameObject = GetGameObjectAtCoords(coords.X, coords.Y);
 
 	if (gameObject == nullptr) {
-		if (highlightedGameObject != nullptr && highlightedGameObjectOldColor != NULL) {
-			highlightedGameObject->SetColor(highlightedGameObjectOldColor);
-			highlightedGameObject = nullptr;
-			highlightedGameObjectOldColor = NULL;
-		}
+		RemoveHighlight();
 	}
-	else if (gameObject != nullptr && gameObject != highlightedGameObject) {
+	else {
+		RemoveHighlight();
 		highlightedGameObjectOldColor = gameObject->GetColor();
 		highlightedGameObject = gameObject;
 		highlightedGameObject->SetColor(20);
+	}
+}
+
+void GameManager::RemoveHighlight() {
+	if (highlightedGameObject != nullptr && highlightedGameObjectOldColor != NULL) {
+		highlightedGameObject->SetColor(highlightedGameObjectOldColor);
+		highlightedGameObject = nullptr;
+		highlightedGameObjectOldColor = NULL;
 	}
 }
