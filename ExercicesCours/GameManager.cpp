@@ -126,9 +126,6 @@ void GameManager::Update()
 
 			case VK_DOWN:
 				player->MoveDown();
-				if (DetectCollision(player->GetX(), player->GetY())) {
-					player->MoveUp();
-				}
 				break;
 
 			default:

@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Player.h"
+#include "ScreenManager.h"
+#include "GameManager.h"
 
 
 Player::Player(int x, int y, std::string spriteFile)
@@ -13,17 +15,21 @@ Player::~Player() {
 }
 
 void Player::MoveLeft() {
-	posX--;
+	if(ScreenManager::instance().GetTextCoord(posX - 1, posY) != 'M' && !GameManager::instance().GetGameObjectAtCoords(posX - 1, posY))
+		posX--;
 }
 
 void Player::MoveRight() {
-	posX++;
+	if (ScreenManager::instance().GetTextCoord(posX + sprite.width, posY) != 'M' && !GameManager::instance().GetGameObjectAtCoords(posX + sprite.width + 1, posY))
+		posX++;
 }
 
 void Player::MoveUp() {
-	posY--;
+	if (ScreenManager::instance().GetTextCoord(posX, posY - 1) != 'M' && !GameManager::instance().GetGameObjectAtCoords(posX, posY - 1))
+		posY--;
 }
 
 void Player::MoveDown() {
-	posY++;
+	if (ScreenManager::instance().GetTextCoord(posX, posY + sprite.height) != 'M' && !GameManager::instance().GetGameObjectAtCoords(posX, posY + sprite.height + 1))
+		posY++;
 }

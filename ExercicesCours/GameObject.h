@@ -14,10 +14,8 @@ struct Sprite {
 
 class GameObject {
 
-private:
-	struct Sprite sprite;
-
 protected:
+	struct Sprite sprite;
 	int posX;
 	int posY;
 
