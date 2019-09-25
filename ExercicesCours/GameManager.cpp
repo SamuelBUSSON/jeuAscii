@@ -26,6 +26,8 @@ void GameManager::Run() {
 
 	while (!exit_game)
 	{
+	
+		screenManager->ClearScreen();
 		screenManager->SampleDisplay();
 		Update();
 	}
@@ -60,19 +62,27 @@ void GameManager::Update()
 			break;
 
 		case VK_LEFT:
-			screenManager->GoLeft();
+			if (InputRecord.Event.KeyEvent.bKeyDown) {
+				screenManager->GoLeft();
+			}
 			break;
 
 		case VK_RIGHT:
-			screenManager->GoRight();
+			if (InputRecord.Event.KeyEvent.bKeyDown) {
+				screenManager->GoRight();
+			}
 			break;
 
 		case VK_UP:
-			screenManager->GoUp();
+			if (InputRecord.Event.KeyEvent.bKeyDown) {
+				screenManager->GoUp();
+			}
 			break;
 
 		case VK_DOWN:
-			screenManager->GoDown();
+			if (InputRecord.Event.KeyEvent.bKeyDown) {
+				screenManager->GoDown();
+			}
 			break;
 
 		default:
