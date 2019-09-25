@@ -7,12 +7,31 @@
 #include <windows.h>
 #include <iostream>
 #include <string>
+#include <vector>
+
 
 using namespace std;
+
+
+const vector<string> explode(const string& s, const char& c)
+{
+	string buff{ "" };
+	vector<string> v;
+
+	for (auto n : s)
+	{
+		if (n != c) buff += n; else
+			if (n == c && buff != "") { v.push_back(buff); buff = ""; }
+	}
+	if (buff != "") v.push_back(buff);
+
+	return v;
+}
 
 ScreenManager::ScreenManager() {
 
 	writeHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	cm.currentMapName = "Sprite/Maps/Map1.txt";
 	
 }
 
@@ -21,10 +40,6 @@ ScreenManager::~ScreenManager() {
 }
 
 void ScreenManager::Init() {
-
-	/*DWORD fdwMode = ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT | ENABLE_EXTENDED_FLAGS;
-
-	SetConsoleMode(readHandle, fdwMode);*/
 
 	SetConsoleWindowInfo(writeHandle, TRUE, &bufferArea);
 
@@ -44,24 +59,27 @@ void ScreenManager::Init() {
 	SetCurrentConsoleFontEx(writeHandle, false, &customFont);
 	*/
 
-	for (int currentX = 0; currentX < SCREEN_WIDTH; currentX++) {
-		for (int currentY = 0; currentY < SCREEN_HEIGHT; currentY++) {
-			buffer[currentX + currentY * SCREEN_WIDTH].Char.UnicodeChar = 0x2588;
-			//buffer[currentX + currentY * SCREEN_WIDTH].Attributes = FOREGROUND_GREEN;
-		}
-	}	
+	ReadMap();
+	DisplayPlayer();
 
 	
+}
+
+void ScreenManager::ClearScreen() {
+	for (int x = 0; x < SCREEN_WIDTH; x++)
+	{
+		for (int y = 0; y < SCREEN_HEIGHT; y++)
+		{
+			SetTextCoord(x, y, ' ');
+		}
+	}
 }
 
 
 void ScreenManager::SampleDisplay() 
 {
 	ReadMap();
-
-	SetTextCoord(40, 20, 'o');
-
-
+	DisplayPlayer();
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
 }
 
@@ -74,10 +92,24 @@ void ScreenManager::SetTextCoord(int x, int y, char c)
 	buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
 }
 
+char ScreenManager::GetTextCoord(int x, int y)
+{
+	return buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar;
+}
+
 void ScreenManager::SetTextCoord(int x, int y, char c, int color)
 {
 	buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
 	buffer[x + y * SCREEN_WIDTH].Attributes = color;
+}
+
+void ScreenManager::Clear() 
+{
+	for (int currentX = 0; currentX < SCREEN_WIDTH; currentX++) {
+		for (int currentY = 0; currentY < SCREEN_HEIGHT; currentY++) {
+			buffer[currentX + currentY * SCREEN_WIDTH].Char.UnicodeChar = 0x2588;
+		}
+	}
 }
 
 void ScreenManager::DisplaySpriteFromString(string filename, int coordX, int coordY, int color)
@@ -88,13 +120,14 @@ void ScreenManager::DisplaySpriteFromString(string filename, int coordX, int coo
 	int y = 0;
 
 	char c;
-	while (getline(inFile, line)) {
+	while (getline(inFile, line)) 
+	{
 		for (int x = 0; x < line.length(); x++)
 		{
-			if (line[x] != 'W') {
+			if (line[x] != 'W') 
+			{
 				SetTextCoord(coordX + x, coordY + y, line[x], color);
 			}
-			
 		}
 		y++;
 	}
@@ -103,23 +136,40 @@ void ScreenManager::DisplaySpriteFromString(string filename, int coordX, int coo
 void ScreenManager::ReadMap()
 {
 	std::ifstream inFile;
-	inFile.open("Sprite/Map.txt");
+	inFile.open("Sprite/Maps/Map1.txt");
 	std::string line;
 	int numberLine = 0;
 
+	//Draw border
+	for (int i = 0; i <= CAM_WIDTH + 1; i++)
+	{
+		for (int y = 0; y < CAM_HEIGHT -1 ; y++)
+		{
+			if (i == 0 || i == CAM_WIDTH + 1 || y == 0 || y == CAM_HEIGHT - 2) {
+				SetTextCoord(i, y, ' ', BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY);
+			}			
+		}
+	}
+
 	char c;
 	while (getline(inFile, line)) {
-		if (numberLine >= currentMapCoordY - (CAM_HEIGHT/2) && numberLine <= currentMapCoordY + (CAM_HEIGHT / 2))
+		if (numberLine == 0) 
 		{
-			for (int i = 0; i < line.length(); i++)
-			{
-				if (i >= currentMapCoordX - (CAM_WIDTH / 2) && i <= currentMapCoordX + (CAM_WIDTH / 2))
-				{
-					SetTextCoord(((CAM_WIDTH / 2) + i% (CAM_WIDTH / 2)), ((CAM_HEIGHT / 2) + numberLine % (CAM_HEIGHT / 2)), line[i], FOREGROUND_RED | FOREGROUND_INTENSITY);
-				}
+			vector<string> v{ explode(line, ',') };
+			if (v.size() >= 4) {
+				cm.topMap = v[0];
+				cm.rightMap = v[1];
+				cm.bottomMap = v[2];
+				cm.leftMap = v[3];
 			}
 		}
-
+		else 
+		{
+			for (int x = 0; x < line.length(); x++)
+			{
+				SetTextCoord(x + 1, numberLine, line[x], FOREGROUND_GREEN);
+			}
+		}		
 		numberLine++;
 	}
 }
@@ -127,27 +177,58 @@ void ScreenManager::ReadMap()
 void ScreenManager::GoLeft()
 {
 	currentMapCoordX--;
-	if (currentMapCoordX <= 0) {
-		currentMapCoordX = 0;
+	if (currentMapCoordX <= 1) {
+		currentMapCoordX = 1;
 	}
+
+	if (GetTextCoord( currentMapCoordX - 1 , currentMapCoordY) == 'M') {
+		currentMapCoordX++;
+	}
+
 }
 
 void ScreenManager::GoRight()
 {
 	currentMapCoordX++;
+	if (currentMapCoordX >= CAM_WIDTH - 1) {
+		currentMapCoordX = CAM_WIDTH - 1;
+	}
+
+	if (GetTextCoord(currentMapCoordX + 1, currentMapCoordY) == 'M') {
+		currentMapCoordX--;
+	}
 }
 
 void ScreenManager::GoDown()
 {
 	currentMapCoordY++;
+	if (currentMapCoordY >= CAM_HEIGHT - 3) {
+		currentMapCoordY = CAM_HEIGHT - 3;
+	}
+
+	if (GetTextCoord(currentMapCoordX, currentMapCoordY) == 'M') {
+		currentMapCoordY--;
+	}
 }
 
 void ScreenManager::GoUp()
 {
 	currentMapCoordY--;
-	if (currentMapCoordY <= 0) {
-		currentMapCoordY = 0;
+	if (currentMapCoordY <= 1) {
+		currentMapCoordY = 1;
 	}
+
+	if (GetTextCoord(currentMapCoordX, currentMapCoordY) == 'M') {
+		currentMapCoordY++;
+	}
+}
+
+void ScreenManager::DisplayPlayer() 
+{
+	SetTextCoord(currentMapCoordX, currentMapCoordY, 'O', FOREGROUND_RED);
+	SetTextCoord(currentMapCoordX-1, currentMapCoordY, '\\', FOREGROUND_RED);
+	SetTextCoord(currentMapCoordX+1, currentMapCoordY, '/', FOREGROUND_RED);
+
 }
 
 
