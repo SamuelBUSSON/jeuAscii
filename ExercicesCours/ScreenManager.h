@@ -9,6 +9,9 @@
 #include <windows.h>
 #include <iostream>
 #include <string>
+#include <list>
+
+#include "GameObject.h"
 
 #define SCREEN_WIDTH 100
 #define SCREEN_HEIGHT 40
@@ -58,7 +61,7 @@ public:
 
 	void ClearScreen();
 
-	void SampleDisplay();
+	void SampleDisplay(std::list<GameObject *> gameObjects);
 	bool GetExitGame();
 	//void Update();
 	void SetTextCoord(int x, int y, char c);
@@ -66,6 +69,7 @@ public:
 	void SetTextCoord(int x, int y, char c, int color);
 	void Clear();
 	void DisplaySpriteFromString(std::string filename, int coordX, int coordY, int color);
+	void DisplayGameObject(GameObject *gameObject);
 	void ReadMap();
 
 
@@ -73,6 +77,7 @@ public:
 	void GoRight();
 	void GoUp();
 	void DisplayPlayer();
+	void DisplayGameObjects(std::list<GameObject *> gameObjects);
 	void GoDown();
 
 };

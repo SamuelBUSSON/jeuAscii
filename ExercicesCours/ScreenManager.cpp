@@ -70,19 +70,20 @@ void ScreenManager::ClearScreen() {
 	{
 		for (int y = 0; y < SCREEN_HEIGHT; y++)
 		{
-			SetTextCoord(x, y, ' ');
+			SetTextCoord(x, y, ' ', 0);
 		}
 	}
 }
 
 
-void ScreenManager::SampleDisplay() 
+void ScreenManager::SampleDisplay(std::list<GameObject *> gameObjects) 
 {
 	cameraPosX = playerPosX - CAM_WIDTH / 2;
 	cameraPosY = playerPosY - CAM_HEIGHT / 2;
 
 	ReadMap();
 	DisplayPlayer();
+	DisplayGameObjects(gameObjects);
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
 }
 
@@ -104,9 +105,16 @@ void ScreenManager::SetTextCoord(int x, int y, char c, int color)
 {
 	x = x - cameraPosX;
 	y = y - cameraPosY;
+	
+	if (x >= 0 &&
+		y >= 0 &&
+		x < SCREEN_WIDTH &&
+		y < SCREEN_HEIGHT) {
+		buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
+		buffer[x + y * SCREEN_WIDTH].Attributes = color;
+	}
 
-	buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
-	buffer[x + y * SCREEN_WIDTH].Attributes = color;
+
 }
 
 void ScreenManager::Clear() 
@@ -115,6 +123,26 @@ void ScreenManager::Clear()
 		for (int currentY = 0; currentY < SCREEN_HEIGHT; currentY++) {
 			buffer[currentX + currentY * SCREEN_WIDTH].Char.UnicodeChar = 0x2588;
 		}
+	}
+}
+
+void ScreenManager::DisplayGameObject(GameObject *gameObject) {
+	std::ifstream inFile;
+	inFile.open(gameObject->GetSpriteFileName());
+	std::string line;
+	int y = 0;
+
+	char c;
+	while (getline(inFile, line))
+	{
+		for (int x = 0; x < line.length(); x++)
+		{
+			if (line[x] != 'W')
+			{
+				SetTextCoord(gameObject->GetX() + x, gameObject->GetY() + y, line[x], 128);
+			}
+		}
+		y++;
 	}
 }
 
@@ -236,5 +264,9 @@ void ScreenManager::DisplayPlayer()
 	SetTextCoord(playerPosX+1, playerPosY, '/', FOREGROUND_RED);
 }
 
-
+void ScreenManager::DisplayGameObjects(std::list<GameObject *> gameObjects) {
+	for (GameObject* object : gameObjects) {
+		DisplayGameObject(object);
+	}
+}
 

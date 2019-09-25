@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GameManager.h"
 
+#include "TreeObject.h"
 #include "Player.h"
 
 #include <algorithm>
@@ -14,10 +15,17 @@ GameManager::GameManager() {
 
 
 GameManager::~GameManager() {
+	for (GameObject *object : gameObjects) {
+		delete object;
+	}
 	delete screenManager;
 }
 
 void GameManager::Init() {
+
+	gameObjects.push_front(new TreeObject(20, 20, "Sprite/Tree.txt"));
+	gameObjects.push_front(new TreeObject(10, 35, "Sprite/Tree.txt"));
+
 	screenManager->Init();
 	inputManager->Init();
 }
@@ -28,12 +36,12 @@ void GameManager::Run() {
 	{
 	
 		screenManager->ClearScreen();
-		screenManager->SampleDisplay();
+		screenManager->SampleDisplay(GetGameObjects());
 		Update();
 	}
 }
 
-std::list<GameObject> GameManager::GetGameObjects() {
+std::list<GameObject *> GameManager::GetGameObjects() {
 	gameObjects.sort(ZIndexComparison());
 	return gameObjects;
 }
@@ -132,9 +140,9 @@ void GameManager::Update()
 */
 GameObject* GameManager::GetGameObjectAtCoords(int x, int y) {
 
-	for (GameObject &object : gameObjects) {
-		if (object.SpriteIsOnCoords(x, y)) {
-			return &object;
+	for (GameObject *object : gameObjects) {
+		if (object->SpriteIsOnCoords(x, y)) {
+			return object;
 		}
 	}
 
