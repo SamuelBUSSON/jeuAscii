@@ -23,7 +23,6 @@ void GameManager::Run() {
 
 	while (!exit_game)
 	{
-	
 		screenManager->ClearScreen();
 		screenManager->SampleDisplay();
 		Update();
@@ -43,51 +42,50 @@ void GameManager::Update()
 	{
 	case KEY_EVENT:
 
-		switch (InputRecord.Event.KeyEvent.wVirtualKeyCode)
-		{
-		case VK_ESCAPE:
-			break;
+		if (InputRecord.Event.KeyEvent.bKeyDown) {
+			switch (InputRecord.Event.KeyEvent.wVirtualKeyCode)
+			{
+			case VK_ESCAPE:
+				break;
 
-		case VK_SPACE:
+			case VK_SPACE:
 
-			break;
+				break;
 
 
-		case VK_RETURN:
+			case VK_RETURN:
 
-			break;
+				break;
 
-		case VK_LEFT:
-			if (InputRecord.Event.KeyEvent.bKeyDown) {
+			case VK_LEFT:
+
 				screenManager->GoLeft();
-			}
-			break;
 
-		case VK_RIGHT:
-			if (InputRecord.Event.KeyEvent.bKeyDown) {
+				break;
+
+			case VK_RIGHT:
+
 				screenManager->GoRight();
-			}
-			break;
 
-		case VK_UP:
-			if (InputRecord.Event.KeyEvent.bKeyDown) {
+				break;
+
+			case VK_UP:
+
 				screenManager->GoUp();
+
+				break;
+
+			case VK_DOWN:
+					screenManager->GoDown();
+				break;
+
+			default:
+
+
+				break;
+
 			}
-			break;
-
-		case VK_DOWN:
-			if (InputRecord.Event.KeyEvent.bKeyDown) {
-				screenManager->GoDown();
-			}
-			break;
-
-		default:
-
-
-			break;
-
-
-
+			screenManager->CheckPlayerPosition();
 		}//switch
 
 		//---------------------------------------------------------------------------------
