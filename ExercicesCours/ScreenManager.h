@@ -13,20 +13,8 @@
 #define SCREEN_WIDTH 100
 #define SCREEN_HEIGHT 40
 
-#define CAM_WIDTH 70
-#define CAM_HEIGHT 40
-
-#define PLAYER_WIDTH 1;
-#define PLAYER_HEIGHT 1;
-
-struct CurrentMap
-{
-	std::string currentMapName;
-	std::string leftMap;
-	std::string rightMap;
-	std::string topMap;
-	std::string bottomMap;
-};
+#define CAM_WIDTH 40
+#define CAM_HEIGHT 20
 
 class ScreenManager {
 
@@ -43,10 +31,9 @@ private:
 	COORD initialBufferCoord = { 0, 0 };
 	SMALL_RECT bufferArea = { 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1 };
 
-	int currentMapCoordX = SCREEN_WIDTH/2;
-	int currentMapCoordY = SCREEN_HEIGHT/2;
+	int currentMapCoordX = 0;
+	int currentMapCoordY = 0;
 
-	CurrentMap cm;
 
 public:
 	ScreenManager();
@@ -54,15 +41,11 @@ public:
 
 	void Init();
 
-	void ClearScreen();
-
 	void SampleDisplay();
 	bool GetExitGame();
 	//void Update();
 	void SetTextCoord(int x, int y, char c);
-	char GetTextCoord(int x, int y);
 	void SetTextCoord(int x, int y, char c, int color);
-	void Clear();
 	void DisplaySpriteFromString(std::string filename, int coordX, int coordY, int color);
 	void ReadMap();
 
@@ -70,7 +53,6 @@ public:
 	void GoLeft();
 	void GoRight();
 	void GoUp();
-	void DisplayPlayer();
 	void GoDown();
 
 };
