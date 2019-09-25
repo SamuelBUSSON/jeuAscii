@@ -9,6 +9,14 @@ GameObject::GameObject(int x, int y, std::string spriteFile) {
 	sprite = LoadSpriteFile(spriteFile);
 }
 
+GameObject::GameObject(int x, int y, std::string spriteFile, std::string mapName)
+{
+	posX = x;
+	posY = y;
+	sprite = LoadSpriteFile(spriteFile);
+	map_link = mapName;
+}
+
 
 GameObject::~GameObject() {
 	
@@ -30,6 +38,17 @@ bool GameObject::SpriteIsOnCoords(int x, int y)
 		y >= posY &&
 		y <= posY + sprite.height
 	);
+}
+
+bool GameObject::SpriteIsOnCoordsAndMap(int x, int y, std::string map_name)
+{
+	return (
+		x >= posX &&
+		x <= posX + sprite.width &&
+		y >= posY &&
+		y <= posY + sprite.height &&
+		map_link == map_name
+		);
 }
 
 Sprite GameObject::LoadSpriteFile(std::string spriteFile)

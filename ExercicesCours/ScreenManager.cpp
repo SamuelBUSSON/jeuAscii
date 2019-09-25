@@ -151,9 +151,6 @@ void ScreenManager::ReadMap()
 
 	int numberLine = 0;	
 
-	
-	
-	char c;
 	while (getline(inFile, line)) {	
 
 		if (numberLine == 0) 
@@ -167,19 +164,16 @@ void ScreenManager::ReadMap()
 
 			}
 		}
-
-
-
-		/*if (numberLine >= playerPosY - CAM_HEIGHT/2 && numberLine <= playerPosY + CAM_HEIGHT/2)
-		{*/
+		else 
+		{
 			for (int x = 0; x < line.length(); x++)
 			{
 				/*if(x >= playerPosX - CAM_WIDTH/2 && x <= playerPosX + CAM_WIDTH / 2)
 				{*/
-					SetTextCoord(x + 1, numberLine, line[x], FOREGROUND_GREEN);
+				SetTextCoord(x + 1, numberLine, line[x], FOREGROUND_GREEN);
 				//}
 			}
-		//}
+		}
 		numberLine++;
 	}
 
@@ -261,20 +255,37 @@ void ScreenManager::CheckPlayerPosition()
 	
 }*/
 
-void ScreenManager::RightMap() {
-	currentMap.currentMapName = currentMap.rightMap;
+bool ScreenManager::RightMap() {
+	if (currentMap.rightMap != " ") {
+		currentMap.currentMapName = currentMap.rightMap;
+		return true;
+	}
+	return false;
 }
 
-void ScreenManager::LeftMap() {
-	currentMap.currentMapName = currentMap.leftMap;
+bool ScreenManager::LeftMap() {
+	if (currentMap.leftMap != " ") {
+		currentMap.currentMapName = currentMap.leftMap;
+		return true;
+	}
+	return false;
 }
 
-void ScreenManager::TopMap() {
-	currentMap.currentMapName = currentMap.topMap;
+bool ScreenManager::TopMap() {
+	if (currentMap.topMap != " ") {
+		currentMap.currentMapName = currentMap.topMap;
+		return true;
+	}
+	return false;
 }
 
-void ScreenManager::BottomMap() {
-	currentMap.currentMapName = currentMap.bottomMap;
+bool ScreenManager::BottomMap() {
+	if (currentMap.bottomMap != " ") {
+
+		currentMap.currentMapName = currentMap.bottomMap;
+		return true;
+	}
+	return false;
 }
 
 void ScreenManager::DisplayGameObjects(std::list<GameObject *> gameObjects) {

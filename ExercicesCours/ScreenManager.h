@@ -87,10 +87,13 @@ public:
 	void ReadMap();
 	void DrawBorder();
 
-	void RightMap();
-	void LeftMap();
-	void TopMap();
-	void BottomMap();
+	bool RightMap();
+	bool LeftMap();
+	bool TopMap();
+	bool BottomMap();
+
+	inline std::string GetCurrentMap() const { return currentMap.currentMapName; }
+
 
 
 	void DisplayGameObjects(std::list<GameObject *> gameObjects);

@@ -50,9 +50,12 @@ public:
 	void Update();
 
 	GameObject* GetGameObjectAtCoords(int x, int y);
+	GameObject * GetGameObjectAtCoordsOnMap(int x, int y);
 	void HighlightGameObjectAtCoords(COORD coords);
 	void RemoveHighlight();
 	std::list<GameObject *> GetGameObjects();
+
+	std::list<GameObject*> GetGameObjectsByMap(std::string mapName);
 
 	static GameManager& instance()
 	{

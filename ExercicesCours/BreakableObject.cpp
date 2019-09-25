@@ -6,6 +6,10 @@ BreakableObject::BreakableObject(int x, int y, std::string spriteFile, int _heal
 : GameObject(x, y, spriteFile), health(_health) {
 }
 
+BreakableObject::BreakableObject(int x, int y, std::string spriteFile, int _health, std::string mapName)
+	: GameObject(x, y, spriteFile, mapName), health(_health) {
+}
+
 
 BreakableObject::~BreakableObject()
 {

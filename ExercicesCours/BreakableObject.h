@@ -12,6 +12,7 @@ private:
 
 public:
 	BreakableObject(int x, int y, std::string spriteFile, int health);
+	BreakableObject(int x, int y, std::string spriteFile, int _health, std::string mapName);
 	~BreakableObject();
 
 	virtual std::string GetDescription() const = 0;

@@ -1,17 +1,17 @@
-Sprite/Maps/Map3.txt,Sprite/Maps/Map8.txt, , ,
+Sprite/Maps/Map4.txt,Sprite/Maps/Map8.txt, , ,
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMM           MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 M                                                                    M
 M                                                                    M
 M                                                                    M
 M                                                                    M
 M                                                                    M
-M                              7                                     M
+M                              T                                     M
 M                                                                    M
 M                                                                    M
 M                                                                    M
 M                                                                    M
 M                                                                    M
-M                                                                    M
+M      T                                                             M
 M
 M
 M
@@ -23,9 +23,9 @@ M
 M
 M                                                                    M
 M                                                                    M
+M      T                                                             M
 M                                                                    M
-M                                                                    M
-M                                                                    M
+M                                                T                   M
 M                                                                    M
 M                                                                    M
 M                                                                    M

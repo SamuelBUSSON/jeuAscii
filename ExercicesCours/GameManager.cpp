@@ -6,8 +6,10 @@
 #include "Player.h"
 
 #include <algorithm>
-
-
+#include <string>
+#include <iostream>
+#include <filesystem>
+#include <fstream>
 
 void GameManager::CheckPlayerPosition()
 {
@@ -15,13 +17,15 @@ void GameManager::CheckPlayerPosition()
 	{
 		if (player->GetX() >= CAM_WIDTH - 2)
 		{
-			player->SetX(3);
-			ScreenManager::instance().RightMap();
+			if (ScreenManager::instance().RightMap()) {
+				player->SetX(3);
+			}
 		}
 		if (player->GetX() <= 2)
-		{
-			player->SetX(CAM_WIDTH - 3);
-			ScreenManager::instance().LeftMap();
+		{			
+			if (ScreenManager::instance().LeftMap()) {
+				player->SetX(CAM_WIDTH - 3);
+			}			
 		}
 	}
 
@@ -29,21 +33,24 @@ void GameManager::CheckPlayerPosition()
 	{
 		if (player->GetY() <= 1)
 		{
-			player->SetY(CAM_HEIGHT - 4);
-			ScreenManager::instance().TopMap();
+			if (ScreenManager::instance().TopMap())
+			{
+				player->SetY(CAM_HEIGHT - 4);
+			}
 		}
 
 		if (player->GetY() >= CAM_HEIGHT - 3)
 		{
-			player->SetY(2);
-			ScreenManager::instance().BottomMap();
+			if (ScreenManager::instance().BottomMap()) {
+				player->SetY(2);
+			}
 		}
 	}
 }
 
 bool GameManager::DetectCollision(int x, int y) 
 {
-	if (GetGameObjectAtCoords(x, y) && GetGameObjectAtCoords(x, y) != player) {
+	if (GetGameObjectAtCoordsOnMap(x, y) && GetGameObjectAtCoordsOnMap(x, y) != player) {
 		return true;
 	}
 	return false;
@@ -65,9 +72,42 @@ GameManager::~GameManager() {
 }
 
 void GameManager::Init() {
-	gameObjects.push_front(new FireCamp(10, 8, "Sprite/FireCamp.txt"));
-	gameObjects.push_front(new TreeObject(20, 20, "Sprite/Tree.txt"));
-	gameObjects.push_front(new TreeObject(10, 35, "Sprite/Tree.txt"));
+
+	std::string path = "Sprite/Maps";
+	for (const auto & entry : std::filesystem::directory_iterator(path)) 
+	{
+		std::ifstream myfile;
+		myfile.open(entry);
+		std::string line;
+
+		std::string base_filename = entry.path().generic_string();
+
+		int numberLine = 0;
+		while (std::getline(myfile, line))
+		{
+			if (numberLine > 0) {
+				for (int x = 0; x < line.length(); x++)
+				{
+					switch (line[x])
+					{
+					case 'T':
+						gameObjects.push_front(new TreeObject(x, numberLine, "Sprite/Tree.txt", base_filename));
+						break;
+
+					case 'F':
+						gameObjects.push_front(new FireCamp(x, numberLine, "Sprite/FireCamp.txt", base_filename));
+						break;
+
+					default:
+						break;
+					}					
+				}
+			}
+			numberLine++;
+		}
+		myfile.close();
+	}
+
 	gameObjects.push_front(player);
 
 	ScreenManager::instance().Init();
@@ -79,7 +119,8 @@ void GameManager::Run() {
 	while (!exit_game)
 	{
 		ScreenManager::instance().ClearScreen();
-		ScreenManager::instance().SampleDisplay(GetGameObjects());
+		ScreenManager::instance().SampleDisplay(GetGameObjectsByMap(ScreenManager::instance().GetCurrentMap()));
+		
 		Update();
 	}
 }
@@ -87,6 +128,28 @@ void GameManager::Run() {
 std::list<GameObject *> GameManager::GetGameObjects() {
 	gameObjects.sort(ZIndexComparison());
 	return gameObjects;
+}
+
+std::list<GameObject *> GameManager::GetGameObjectsByMap(std::string mapName) {
+
+	std::list<GameObject *> gmSort;
+	std::list<GameObject *>::iterator itr = gameObjects.begin();
+
+	while (itr != gameObjects.end()) {
+		if ((*itr)->GetMapLink() == mapName) {
+			gmSort.push_front((*itr));
+		}
+		if ((*itr) == player) {
+			gmSort.push_front((*itr));
+		}
+		itr++;
+	}
+
+
+
+	gmSort.sort(ZIndexComparison());
+
+	return gmSort;
 }
 
 
@@ -191,9 +254,21 @@ GameObject* GameManager::GetGameObjectAtCoords(int x, int y) {
 	return nullptr;
 }
 
+GameObject* GameManager::GetGameObjectAtCoordsOnMap(int x, int y) {
+
+	for (GameObject *object : gameObjects) 
+	{
+		if (object->SpriteIsOnCoordsAndMap(x, y, ScreenManager::instance().GetCurrentMap())) 
+		{
+			return object;
+		}
+	}
+	return nullptr;
+}
+
 
 void GameManager::HighlightGameObjectAtCoords(COORD coords) {
-	GameObject *gameObject = GetGameObjectAtCoords(coords.X, coords.Y);
+	GameObject *gameObject = GetGameObjectAtCoordsOnMap(coords.X, coords.Y);
 
 	if (gameObject == nullptr) {
 		RemoveHighlight();
