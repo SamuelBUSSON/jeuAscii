@@ -112,16 +112,18 @@ void GameManager::Update()
 	}
 }
 
+
 /*
 	Retourne l'objet situé à la position [x, y]
-	Si plusieurs objets sont à cette position alors la fonction retourne l'objet le plus bas 
+	Si plusieurs objets sont à cette position alors la fonction retourne l'objet le plus bas (le posY le plus élevé)
 */
 GameObject* GameManager::GetGameObjectAtCoords(int x, int y) {
 
 	for (GameObject &object : gameObjects) {
 		if (object.HitboxIsOnCoords(x, y)) {
 			return &object;
-			break;
 		}
 	}
+
+	return nullptr;
 }

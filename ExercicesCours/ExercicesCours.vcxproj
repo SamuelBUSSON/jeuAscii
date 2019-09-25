@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BreakableObject.h" />
+    <ClInclude Include="FireCamp.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputManager.h" />
@@ -164,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="BreakableObject.cpp" />
     <ClCompile Include="ExercicesCours.cpp" />
+    <ClCompile Include="FireCamp.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />

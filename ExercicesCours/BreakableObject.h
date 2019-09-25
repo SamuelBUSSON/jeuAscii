@@ -4,6 +4,8 @@
 #define DEF_BREAKABLEOBJECT
 
 #include "GameObject.h"
+#include <string>
+
 class BreakableObject :	public GameObject {
 private:
 	int health;

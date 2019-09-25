@@ -11,6 +11,7 @@
     <ClCompile Include="BreakableObject.cpp" />
     <ClCompile Include="TreeObject.cpp" />
     <ClCompile Include="StoneObject.cpp" />
+    <ClCompile Include="FireCamp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
@@ -22,5 +23,6 @@
     <ClInclude Include="BreakableObject.h" />
     <ClInclude Include="TreeObject.h" />
     <ClInclude Include="StoneObject.h" />
+    <ClInclude Include="FireCamp.h" />
   </ItemGroup>
 </Project>

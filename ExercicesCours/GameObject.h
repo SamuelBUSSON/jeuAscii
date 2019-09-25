@@ -3,6 +3,7 @@
 #ifndef DEF_GAMEOBJECT
 #define DEF_GAMEOBJECT
 
+#include <string>
 
 struct Hitbox {
 	int originX, originY, width, height;
@@ -11,11 +12,7 @@ struct Hitbox {
 class GameObject {
 
 private:
-	int spriteWidth;
-	int spriteHeight;
-
 	struct Hitbox hitbox;
-	char* sprite;
 
 protected:
 	int posX;

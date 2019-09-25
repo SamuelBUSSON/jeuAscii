@@ -8,6 +8,7 @@
 #include "BreakableObject.h"
 
 class StoneObject : public BreakableObject {
+
 public:
 	StoneObject(int x, int y);
 	~StoneObject();

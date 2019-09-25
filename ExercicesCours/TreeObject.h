@@ -8,6 +8,7 @@
 #include "BreakableObject.h"
 
 class TreeObject :	public BreakableObject {
+
 public:
 	TreeObject(int x, int y);
 	~TreeObject();
