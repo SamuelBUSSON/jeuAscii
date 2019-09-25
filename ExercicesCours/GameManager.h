@@ -6,10 +6,15 @@
 #include "ScreenManager.h"
 #include "GameObject.h"
 #include "InputManager.h"
+#include "Player.h"
 
 #include <list>
 
+#define YDOORTOP 14
+#define YDOORBOT  22
 
+#define XDOORLEFT 29
+#define XDOORRIGHT 40
 
 struct ZIndexComparison {
 	inline bool const operator()(const GameObject *objectA, const GameObject *objectB) {
@@ -30,9 +35,14 @@ private:
 
 	GameObject *highlightedGameObject;
 	int highlightedGameObjectOldColor;
+
+	GameManager();
+
+	Player* player;
 	
 public:
-	GameManager();
+	void CheckPlayerPosition();
+	bool DetectCollision(int x, int y);
 	~GameManager();
 
 	void Init();
@@ -43,6 +53,12 @@ public:
 	void HighlightGameObjectAtCoords(COORD coords);
 	void RemoveHighlight();
 	std::list<GameObject *> GetGameObjects();
+
+	static GameManager& instance()
+	{
+		static GameManager INSTANCE;
+		return INSTANCE;
+	}
 };
 
 

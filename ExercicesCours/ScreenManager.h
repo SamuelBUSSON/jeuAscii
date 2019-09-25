@@ -23,11 +23,6 @@
 #define INFO_PANEL_ORIG_X 75
 #define INFO_PANEL_ORIG_Y 1
 
-#define YDOORTOP 15
-#define YDOORBOT  23
-
-#define XDOORLEFT 30
-#define XDOORRIGHT 41
 
 struct TileMap {
 	std::string currentMapName;
@@ -63,9 +58,16 @@ private:
 
 	InfoPanel *infoPanel;
 
+	ScreenManager();
 
 public:
-	ScreenManager();
+
+	static ScreenManager& instance()
+	{
+		static ScreenManager INSTANCE;
+		return INSTANCE;
+	}
+	
 	~ScreenManager();
 
 	void Init();
@@ -85,16 +87,15 @@ public:
 	void ReadMap();
 	void DrawBorder();
 
-	void GoLeft();
-	void GoRight();
-	void GoUp();
-	void GoDown();
+	void RightMap();
+	void LeftMap();
+	void TopMap();
+	void BottomMap();
 
-	void CheckPlayerPosition();
 
-	void DisplayPlayer();
 	void DisplayGameObjects(std::list<GameObject *> gameObjects);
 	void DisplayGameObject(GameObject *gameObject);
+
 
 	void WriteInfoPanel(InfoPanel *_infoPanel);
 	void SetInfo(std::string infos);

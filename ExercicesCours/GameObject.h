@@ -14,10 +14,8 @@ struct Sprite {
 
 class GameObject {
 
-private:
-	struct Sprite sprite;
-
 protected:
+	struct Sprite sprite;
 	int posX;
 	int posY;
 
@@ -42,6 +40,8 @@ public:
 	inline std::string GetSpriteFileName() const { return sprite.spriteFile; }
 
 	inline void SetColor(int _color) { sprite.color = _color; }
+	inline void SetX(int x) { posX = x; }
+	inline void SetY(int y) { posY = y; }
 };
 
 #endif

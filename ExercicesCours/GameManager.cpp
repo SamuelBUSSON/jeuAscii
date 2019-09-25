@@ -8,10 +8,52 @@
 #include <algorithm>
 
 
-GameManager::GameManager() {
 
-	screenManager = new ScreenManager();
+void GameManager::CheckPlayerPosition()
+{
+	if (player->GetY() >= YDOORTOP && player->GetY() <= YDOORBOT)
+	{
+		if (player->GetX() >= CAM_WIDTH - 2)
+		{
+			player->SetX(3);
+			ScreenManager::instance().RightMap();
+		}
+		if (player->GetX() <= 2)
+		{
+			player->SetX(CAM_WIDTH - 3);
+			ScreenManager::instance().LeftMap();
+		}
+	}
+
+	if (player->GetX() >= XDOORLEFT && player->GetX() <= XDOORRIGHT)
+	{
+		if (player->GetY() <= 1)
+		{
+			player->SetY(CAM_HEIGHT - 4);
+			ScreenManager::instance().TopMap();
+		}
+
+		if (player->GetY() >= CAM_HEIGHT - 3)
+		{
+			player->SetY(2);
+			ScreenManager::instance().BottomMap();
+		}
+	}
+}
+
+bool GameManager::DetectCollision(int x, int y) 
+{
+	if (GetGameObjectAtCoords(x, y) && GetGameObjectAtCoords(x, y) != player) {
+		return true;
+	}
+	return false;
+}
+
+
+GameManager::GameManager() {
 	inputManager = new InputManager();
+
+	player = new Player(CAM_WIDTH / 2, CAM_HEIGHT /2 -10, "Sprite/Player.txt");
 }
 
 
@@ -25,9 +67,10 @@ GameManager::~GameManager() {
 void GameManager::Init() {
 	gameObjects.push_front(new FireCamp(10, 8, "Sprite/FireCamp.txt"));
 	gameObjects.push_front(new TreeObject(20, 20, "Sprite/Tree.txt"));
-	gameObjects.push_front(new TreeObject(25, 25, "Sprite/Tree.txt"));
+	gameObjects.push_front(new TreeObject(10, 35, "Sprite/Tree.txt"));
+	gameObjects.push_front(player);
 
-	screenManager->Init();
+	ScreenManager::instance().Init();
 	inputManager->Init();
 }
 
@@ -35,8 +78,8 @@ void GameManager::Run() {
 
 	while (!exit_game)
 	{
-		screenManager->ClearScreen();
-		screenManager->SampleDisplay(GetGameObjects());
+		ScreenManager::instance().ClearScreen();
+		ScreenManager::instance().SampleDisplay(GetGameObjects());
 		Update();
 	}
 }
@@ -71,25 +114,19 @@ void GameManager::Update()
 				break;
 
 			case VK_LEFT:
-
-				screenManager->GoLeft();
-
+				player->MoveLeft();
 				break;
 
 			case VK_RIGHT:
-
-				screenManager->GoRight();
-
+				player->MoveRight();
 				break;
 
 			case VK_UP:
-
-				screenManager->GoUp();
-
+				player->MoveUp();
 				break;
 
 			case VK_DOWN:
-					screenManager->GoDown();
+				player->MoveDown();
 				break;
 
 			default:
@@ -98,7 +135,9 @@ void GameManager::Update()
 				break;
 
 			}
-			screenManager->CheckPlayerPosition();
+
+			CheckPlayerPosition();
+
 		}//switch
 
 		//---------------------------------------------------------------------------------
@@ -165,7 +204,7 @@ void GameManager::HighlightGameObjectAtCoords(COORD coords) {
 		highlightedGameObject = gameObject;
 		highlightedGameObject->SetColor(20);
 
-		screenManager->SetInfo(highlightedGameObject->GetDescription());
+		ScreenManager::instance().SetInfo(highlightedGameObject->GetDescription());
 	}
 }
 
@@ -175,6 +214,6 @@ void GameManager::RemoveHighlight() {
 		highlightedGameObject = nullptr;
 		highlightedGameObjectOldColor = NULL;
 
-		screenManager->SetInfo("");
+		ScreenManager::instance().SetInfo("");
 	}
 }

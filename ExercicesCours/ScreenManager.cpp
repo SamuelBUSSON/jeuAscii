@@ -48,7 +48,6 @@ void ScreenManager::Init() {
 	SetConsoleScreenBufferSize(writeHandle, bufferSize);
 
 	ReadMap();
-	DisplayPlayer();	
 }
 
 void ScreenManager::ClearScreen() {
@@ -68,7 +67,6 @@ void ScreenManager::SampleDisplay(std::list<GameObject *> gameObjects)
 	//cameraPosY = playerPosY - CAM_HEIGHT / 2;
 
 	ReadMap();
-	DisplayPlayer();
 	DisplayGameObjects(gameObjects);
 	DrawBorder();
 
@@ -200,7 +198,7 @@ void ScreenManager::DrawBorder() {
 		}
 	}
 }
-
+/*
 void ScreenManager::GoLeft()
 {
 	playerPosX--;
@@ -261,6 +259,22 @@ void ScreenManager::CheckPlayerPosition()
 	}
 
 	
+}*/
+
+void ScreenManager::RightMap() {
+	currentMap.currentMapName = currentMap.rightMap;
+}
+
+void ScreenManager::LeftMap() {
+	currentMap.currentMapName = currentMap.leftMap;
+}
+
+void ScreenManager::TopMap() {
+	currentMap.currentMapName = currentMap.topMap;
+}
+
+void ScreenManager::BottomMap() {
+	currentMap.currentMapName = currentMap.bottomMap;
 }
 
 void ScreenManager::DisplayGameObjects(std::list<GameObject *> gameObjects) {
