@@ -107,6 +107,10 @@ void GameManager::Update()
 
 	case MOUSE_EVENT: // mouse input 
 
+		mousePosition = InputRecord.Event.MouseEvent.dwMousePosition;
+
+		HighlightGameObjectAtCoords(mousePosition);
+
 		if (InputRecord.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED)
 		{
 			/*coord.X = InputRecord.Event.MouseEvent.dwMousePosition.X;
@@ -147,4 +151,22 @@ GameObject* GameManager::GetGameObjectAtCoords(int x, int y) {
 	}
 
 	return nullptr;
+}
+
+
+void GameManager::HighlightGameObjectAtCoords(COORD coords) {
+	GameObject *gameObject = GetGameObjectAtCoords(coords.X, coords.Y);
+
+	if (gameObject == nullptr) {
+		if (highlightedGameObject != nullptr && highlightedGameObjectOldColor != NULL) {
+			highlightedGameObject->SetColor(highlightedGameObjectOldColor);
+			highlightedGameObject = nullptr;
+			highlightedGameObjectOldColor = NULL;
+		}
+	}
+	else if (gameObject != nullptr && gameObject != highlightedGameObject) {
+		highlightedGameObjectOldColor = gameObject->GetColor();
+		highlightedGameObject = gameObject;
+		highlightedGameObject->SetColor(20);
+	}
 }

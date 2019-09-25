@@ -19,7 +19,7 @@ class InputManager
 private :
 	HANDLE readHandle;
 
-	COORD coord;
+	COORD mousePosition;
 	INPUT_RECORD InputRecord;
 	DWORD Events;
 
@@ -31,7 +31,7 @@ public:
 	~InputManager();
 
 	void Init();
-	void Update();
+	inline COORD GetMousePosition() const { return mousePosition; }
 	INPUT_RECORD GetInputEvent();
 
 };

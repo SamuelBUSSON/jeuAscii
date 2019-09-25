@@ -139,7 +139,7 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 		{
 			if (line[x] != 'W')
 			{
-				SetTextCoord(gameObject->GetX() + x, gameObject->GetY() + y, line[x], 128);
+				SetTextCoord(gameObject->GetX() + x, gameObject->GetY() + y, line[x], gameObject->GetColor());
 			}
 		}
 		y++;
