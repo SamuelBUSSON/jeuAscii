@@ -13,7 +13,7 @@
 
 #include "GameObject.h"
 
-#define SCREEN_WIDTH 100
+#define SCREEN_WIDTH 120
 #define SCREEN_HEIGHT 40
 
 #define CAM_WIDTH 70

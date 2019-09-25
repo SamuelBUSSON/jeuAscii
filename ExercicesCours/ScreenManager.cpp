@@ -41,23 +41,7 @@ ScreenManager::~ScreenManager() {
 void ScreenManager::Init() {
 
 	SetConsoleWindowInfo(writeHandle, TRUE, &bufferArea);
-
 	SetConsoleScreenBufferSize(writeHandle, bufferSize);
-
-
-	/*
-	CONSOLE_FONT_INFOEX customFont;
-	customFont.cbSize = sizeof(CONSOLE_FONT_INFOEX);
-	customFont.nFont = 0;
-	customFont.dwFontSize.X = 12;
-	customFont.dwFontSize.Y = 12;
-	customFont.FontFamily = FF_ROMAN;
-	customFont.FontWeight = FW_NORMAL;
-
-	SetCurrentConsoleFontEx(writeHandle, false, &customFont);
-	
-	SetCurrentConsoleFontEx(writeHandle, false, &customFont);
-	*/
 
 	ReadMap();
 	DisplayPlayer();
@@ -85,7 +69,9 @@ void ScreenManager::SampleDisplay(std::list<GameObject *> gameObjects)
 	DisplayPlayer();
 	DisplayGameObjects(gameObjects);
 	DrawBorder();
+
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
+
 }
 
 bool ScreenManager::GetExitGame() {
@@ -148,27 +134,6 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 			if (line[x] != 'W')
 			{
 				SetTextCoord(gameObject->GetX() + x, gameObject->GetY() + y, line[x], gameObject->GetColor());
-			}
-		}
-		y++;
-	}
-}
-
-void ScreenManager::DisplaySpriteFromString(string filename, int coordX, int coordY, int color)
-{
-	std::ifstream inFile;
-	inFile.open(filename);
-	std::string line;
-	int y = 0;
-
-	char c;
-	while (getline(inFile, line)) 
-	{
-		for (int x = 0; x < line.length(); x++)
-		{
-			if (line[x] != 'W') 
-			{
-				SetTextCoord(coordX + x, coordY + y, line[x], color);
 			}
 		}
 		y++;
