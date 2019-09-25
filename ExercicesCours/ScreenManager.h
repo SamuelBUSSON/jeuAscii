@@ -19,12 +19,6 @@
 #define CAM_WIDTH 70
 #define CAM_HEIGHT 40
 
-#define YDOORTOP 15
-#define YDOORBOT  23
-
-#define XDOORLEFT 30
-#define XDOORRIGHT 41
-
 struct TileMap {
 	std::string currentMapName;
 
@@ -57,9 +51,16 @@ private:
 
 	TileMap currentMap;
 
+	ScreenManager();
 
 public:
-	ScreenManager();
+
+	static ScreenManager& instance()
+	{
+		static ScreenManager INSTANCE;
+		return INSTANCE;
+	}
+	
 	~ScreenManager();
 
 	void Init();
@@ -77,17 +78,19 @@ public:
 	void DisplaySpriteFromString(std::string filename, int coordX, int coordY, int color);
 	void DisplayGameObject(GameObject *gameObject);
 	void ReadMap();
-
 	void DrawBorder();
 
 
-	void GoLeft();
-	void GoRight();
-	void GoUp();
-	void DisplayPlayer();
+	void RightMap();
+
+	void LeftMap();
+
+	void TopMap();
+
+	void BottomMap();
+
 	void DisplayGameObjects(std::list<GameObject *> gameObjects);
 	void CheckPlayerPosition();
-	void GoDown();
 
 };
 
