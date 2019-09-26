@@ -34,7 +34,7 @@ public:
 
 	inline struct Panel GetDescriptionPanel() const { return descriptionPanel; }
 
-	inline void SetInventory(std::list<LootObject *> inventory) { inventoryPanel.text.clear(); for (LootObject *loot : inventory) inventoryPanel.text.push_back("+ " + loot->GetName()); }
+	void SetInventory(std::list<LootObject *> inventory);
 };
 
 #endif
