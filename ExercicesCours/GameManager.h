@@ -12,7 +12,7 @@
 #include <list>
 #include <map>
 
-#define YDOORTOP 14
+#define YDOORTOP 13
 #define YDOORBOT  22
 
 #define XDOORLEFT 29
