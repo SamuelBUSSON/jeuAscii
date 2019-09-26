@@ -162,6 +162,7 @@
     <ClInclude Include="LootObject.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RockLootObject.h" />
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="StickLootObject.h" />
     <ClInclude Include="StoneObject.h" />
@@ -184,6 +185,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RockLootObject.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="StickLootObject.cpp" />
     <ClCompile Include="StoneObject.cpp" />

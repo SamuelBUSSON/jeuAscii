@@ -4,6 +4,7 @@
 #include "TreeObject.h"
 #include "FireCamp.h"
 #include "Player.h"
+#include "StoneObject.h"
 
 #include <algorithm>
 #include <string>
@@ -95,6 +96,10 @@ void GameManager::Init() {
 
 					case 'F':
 						gameObjects.push_front(new FireCamp(x, numberLine, "Sprite/FireCamp.txt", base_filename));
+						break;
+
+					case 'S':
+						gameObjects.push_front(new StoneObject(x, numberLine, "Sprite/Stone.txt", base_filename));
 						break;
 
 					default:

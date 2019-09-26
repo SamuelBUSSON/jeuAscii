@@ -11,6 +11,7 @@ class StoneObject : public BreakableObject {
 
 public:
 	StoneObject(int x, int y, std::string spriteFile);
+	StoneObject(int x, int y, std::string spriteFile, std::string mapName);
 	~StoneObject();
 
 	inline std::string GetDescription() const override { return "a huge stone"; }
