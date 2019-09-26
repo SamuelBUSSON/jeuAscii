@@ -50,10 +50,7 @@ void GameManager::CheckPlayerPosition()
 
 bool GameManager::DetectCollision(int x, int y) 
 {
-	if (GetGameObjectAtCoordsOnMap(x, y) && GetGameObjectAtCoordsOnMap(x, y) != player) {
-		return true;
-	}
-	return false;
+	return (GetGameObjectAtCoordsOnMap(x, y) && GetGameObjectAtCoordsOnMap(x, y) != player);
 }
 
 
@@ -68,6 +65,9 @@ GameManager::~GameManager() {
 	for (GameObject *object : gameObjects) {
 		delete object;
 	}
+
+	gameObjects.clear();
+
 	delete screenManager;
 }
 
@@ -214,10 +214,7 @@ void GameManager::Update()
 
 		if (InputRecord.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED)
 		{
-			/*coord.X = InputRecord.Event.MouseEvent.dwMousePosition.X;
-			coord.Y = InputRecord.Event.MouseEvent.dwMousePosition.Y;*/
-
-
+			ClickOnCoords(mousePosition.X, mousePosition.Y);
 		}// mouse 
 
 		break;
@@ -239,6 +236,17 @@ void GameManager::Update()
 }
 
 
+void GameManager::DestroyGameObject(GameObject *gameObject) {
+	std::list<GameObject *>::iterator it = std::find(gameObjects.begin(), gameObjects.end(), gameObject);
+
+	if (it != gameObjects.end()) {
+		delete * it;
+		gameObjects.erase(it);
+	}
+}
+
+
+
 /*
 	Retourne l'objet situé à la position [x, y]
 	Si plusieurs objets sont à cette position alors la fonction retourne l'objet le plus bas (le posY le plus élevé)
@@ -258,7 +266,7 @@ GameObject* GameManager::GetGameObjectAtCoordsOnMap(int x, int y) {
 
 	for (GameObject *object : gameObjects) 
 	{
-		if (object->SpriteIsOnCoordsAndMap(x, y, ScreenManager::instance().GetCurrentMap())) 
+		if (object->SpriteIsOnCoordsAndMap(x, y, ScreenManager::instance().GetCurrentMap()) || (object == player && object->SpriteIsOnCoords(x, y)))
 		{
 			return object;
 		}
@@ -290,5 +298,13 @@ void GameManager::RemoveHighlight() {
 		highlightedGameObjectOldColor = NULL;
 
 		ScreenManager::instance().SetInfo("");
+	}
+}
+
+void GameManager::ClickOnCoords(int x, int y) {
+	GameObject *gameObject = GetGameObjectAtCoordsOnMap(x, y);
+
+	if (gameObject != nullptr) {
+		gameObject->OnClick();
 	}
 }

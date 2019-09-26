@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "TreeObject.h"
+#include "GameManager.h"
+
+#include <iostream>
 
 
 TreeObject::TreeObject(int x, int y, std::string spriteFile)
@@ -20,5 +23,6 @@ void TreeObject::OnClick() {
 }
 
 void TreeObject::OnBreak() {
-
+	//GameManager::instance().AddGameObject();
+	GameManager::instance().DestroyGameObject(this);
 }

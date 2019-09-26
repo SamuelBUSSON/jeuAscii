@@ -49,10 +49,16 @@ public:
 	void Run();
 	void Update();
 
+
+	void AddGameObject(GameObject *gameObject);
+	void DestroyGameObject(GameObject *gameObject);
+
 	GameObject* GetGameObjectAtCoords(int x, int y);
 	GameObject * GetGameObjectAtCoordsOnMap(int x, int y);
 	void HighlightGameObjectAtCoords(COORD coords);
 	void RemoveHighlight();
+
+	void ClickOnCoords(int x, int y);
 	std::list<GameObject *> GetGameObjects();
 
 	std::list<GameObject*> GetGameObjectsByMap(std::string mapName);

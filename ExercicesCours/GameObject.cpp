@@ -42,13 +42,7 @@ bool GameObject::SpriteIsOnCoords(int x, int y)
 
 bool GameObject::SpriteIsOnCoordsAndMap(int x, int y, std::string map_name)
 {
-	return (
-		x >= posX &&
-		x <= posX + sprite.width &&
-		y >= posY &&
-		y <= posY + sprite.height &&
-		map_link == map_name
-		);
+	return (SpriteIsOnCoords(x, y) && map_link == map_name);
 }
 
 Sprite GameObject::LoadSpriteFile(std::string spriteFile)
