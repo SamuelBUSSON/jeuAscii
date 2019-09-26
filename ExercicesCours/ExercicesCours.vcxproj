@@ -152,19 +152,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AppleLootObject.h" />
     <ClInclude Include="BreakableObject.h" />
     <ClInclude Include="FireCamp.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InfoPanel.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="LootObject.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ScreenManager.h" />
+    <ClInclude Include="StickLootObject.h" />
     <ClInclude Include="StoneObject.h" />
     <ClInclude Include="TreeObject.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AppleLootObject.cpp" />
     <ClCompile Include="BreakableObject.cpp" />
     <ClCompile Include="ExercicesCours.cpp" />
     <ClCompile Include="FireCamp.cpp" />
@@ -172,6 +176,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InfoPanel.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="LootObject.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -180,6 +185,7 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
+    <ClCompile Include="StickLootObject.cpp" />
     <ClCompile Include="StoneObject.cpp" />
     <ClCompile Include="TreeObject.cpp" />
   </ItemGroup>

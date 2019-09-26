@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "InputManager.h"
 #include "Player.h"
+#include "LootObject.h"
 
 #include <list>
 
@@ -39,6 +40,7 @@ private:
 	GameManager();
 
 	Player* player;
+	std::list<LootObject *> inventory;
 	
 public:
 	void CheckPlayerPosition();
@@ -52,6 +54,8 @@ public:
 
 	void AddGameObject(GameObject *gameObject);
 	void DestroyGameObject(GameObject *gameObject);
+
+	void AddLootToInventory(LootObject *lootObject);
 
 	GameObject* GetGameObjectAtCoords(int x, int y);
 	GameObject * GetGameObjectAtCoordsOnMap(int x, int y);

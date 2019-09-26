@@ -65,7 +65,6 @@ GameManager::~GameManager() {
 	for (GameObject *object : gameObjects) {
 		delete object;
 	}
-
 	gameObjects.clear();
 
 	delete screenManager;
@@ -236,6 +235,10 @@ void GameManager::Update()
 }
 
 
+void GameManager::AddGameObject(GameObject *gameObject) {
+	gameObjects.push_front(gameObject);
+}
+
 void GameManager::DestroyGameObject(GameObject *gameObject) {
 	std::list<GameObject *>::iterator it = std::find(gameObjects.begin(), gameObjects.end(), gameObject);
 
@@ -245,6 +248,11 @@ void GameManager::DestroyGameObject(GameObject *gameObject) {
 	}
 }
 
+
+void GameManager::AddLootToInventory(LootObject *lootObject) {
+	gameObjects.push_front(lootObject);
+	inventory.push_front(lootObject);
+}
 
 
 /*

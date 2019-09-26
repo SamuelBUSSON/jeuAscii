@@ -13,6 +13,9 @@
     <ClCompile Include="StoneObject.cpp" />
     <ClCompile Include="FireCamp.cpp" />
     <ClCompile Include="InfoPanel.cpp" />
+    <ClCompile Include="LootObject.cpp" />
+    <ClCompile Include="AppleLootObject.cpp" />
+    <ClCompile Include="StickLootObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
@@ -26,5 +29,8 @@
     <ClInclude Include="StoneObject.h" />
     <ClInclude Include="FireCamp.h" />
     <ClInclude Include="InfoPanel.h" />
+    <ClInclude Include="LootObject.h" />
+    <ClInclude Include="AppleLootObject.h" />
+    <ClInclude Include="StickLootObject.h" />
   </ItemGroup>
 </Project>
