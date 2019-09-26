@@ -1,2 +1,2 @@
-"Sprite/Maps2\\Map1.txt"
+Salut
 0

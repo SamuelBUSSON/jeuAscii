@@ -41,7 +41,8 @@ private:
 
 	Player* player;
 
-	std::map<int, std::list<GameObject *>> gameObjectsMap;
+	//TODO :
+	//std::map<int, std::list<GameObject *>> gameObjectsMap;
 	
 public:
 	void CheckPlayerPosition();
@@ -62,6 +63,7 @@ public:
 	std::list<GameObject*> GetGameObjectsByMap(std::string mapName);
 
 	inline GameObject* GetHighlightGameObject() { return highlightedGameObject; }
+	inline GameObject* GetPlayer() { return player; }
 
 	static GameManager& instance()
 	{

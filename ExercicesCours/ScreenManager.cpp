@@ -302,7 +302,11 @@ bool ScreenManager::BottomMap() {
 
 void ScreenManager::DisplayGameObjects(std::list<GameObject *> gameObjects) {
 	for (GameObject* object : gameObjects) {
-		DisplayGameObject(object);
+		if (object->GetMapLink() == currentMap.currentMapName || object == GameManager::instance().GetPlayer())
+		{
+			DisplayGameObject(object);
+			//object->DrawCollider();			
+		}
 	}
 }
 

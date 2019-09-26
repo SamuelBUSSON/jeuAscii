@@ -25,6 +25,7 @@ public:
 	void MoveRight();
 	void MoveUp();
 	void MoveDown();
+	void DrawPos();
 };
 
 #endif

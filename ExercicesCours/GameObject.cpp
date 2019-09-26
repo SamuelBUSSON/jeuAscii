@@ -6,6 +6,7 @@
 #include <vector>
 #include <sstream>
 #include <utility>
+#include "ScreenManager.h"
 
 std::vector<std::string> explode(std::string const & s, char delim)
 {
@@ -114,5 +115,18 @@ Sprite GameObject::LoadSpriteFile(std::string spriteFile)
 	inFile.close();
 
 	return spriteReturn;
+}
+
+void GameObject::DrawCollider() 
+{
+	for (int x = colliderStartX; x <= colliderEndX; x++)
+	{
+		for (int y = colliderStartY; y <= colliderEndY; y++)
+		{
+			ScreenManager::instance().SetTextCoord(x, y, ' ', BACKGROUND_BLUE);
+		}
+	}
+
+
 }
 

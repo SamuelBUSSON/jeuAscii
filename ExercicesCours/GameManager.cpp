@@ -85,7 +85,7 @@ void GameManager::Init() {
 	for (const auto & entry : std::filesystem::directory_iterator(path)) 
 	{
 		std::fstream myfile;
-		myfile.open(entry);
+		myfile.open(entry, std::ios::out | std::ios::in | std::ios::app);
 		std::string line;
 
 		//myfile << "\n"+ std::to_string(fileCount) << std::endl;
@@ -131,17 +131,17 @@ void GameManager::Run() {
 	while (!exit_game)
 	{
 		ScreenManager::instance().ClearScreen();
-		ScreenManager::instance().SampleDisplay(GetGameObjectsByMap(ScreenManager::instance().GetCurrentMap()));
-		ScreenManager::instance().SetInfo("x : "+ std::to_string(player->GetX()) + " y : " + std::to_string(player->GetY()));
+		ScreenManager::instance().SampleDisplay(GetGameObjects());
 		Update();
 	}
+
 }
 
 std::list<GameObject *> GameManager::GetGameObjects() {
 	gameObjects.sort(ZIndexComparison());
 	return gameObjects;
 }
-
+/*
 std::list<GameObject *> GameManager::GetGameObjectsByMap(std::string mapName) {
 
 	std::list<GameObject *> gmSort;
@@ -161,7 +161,7 @@ std::list<GameObject *> GameManager::GetGameObjectsByMap(std::string mapName) {
 
 	return gmSort;
 }
-
+*/
 
 void GameManager::Update()
 {
@@ -175,6 +175,7 @@ void GameManager::Update()
 			switch (InputRecord.Event.KeyEvent.wVirtualKeyCode)
 			{
 			case VK_ESCAPE:
+				exit_game = true;
 				break;
 
 			case VK_SPACE:
@@ -221,6 +222,8 @@ void GameManager::Update()
 		mousePosition = InputRecord.Event.MouseEvent.dwMousePosition;
 
 		HighlightGameObjectAtCoords(mousePosition);
+
+		//ScreenManager::instance().SetInfo("x : " + std::to_string(InputRecord.Event.MouseEvent.dwMousePosition.X) + " y : " + std::to_string(InputRecord.Event.MouseEvent.dwMousePosition.Y));
 
 		if (InputRecord.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED)
 		{

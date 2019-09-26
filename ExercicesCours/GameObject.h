@@ -39,6 +39,8 @@ public:
 	bool SpriteColliderIsOnCoordsAndMap(int x, int y, std::string map_name);
 	Sprite LoadSpriteFile(std::string spriteFile);
 
+	void DrawCollider();
+
 
 	inline int GetX() const { return posX; }
 	inline int GetY() const { return posY; }
