@@ -316,9 +316,9 @@ void ScreenManager::WriteInfoPanel(InfoPanel *_infoPanel) {
 	int lineJump = 0;
 
 	for (struct Panel *panel : _infoPanel->panels) {
-		WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->origX, INFO_PANEL_ORIG_Y + panel->origY + lineJump, panel->header, _infoPanel->GetDescriptionPanel().headerColor);
-		for (std::string line : panel->text) {
-			WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->origX, INFO_PANEL_ORIG_Y + panel->origY + 1 + lineJump, "    " + line, _infoPanel->GetDescriptionPanel().color);
+		WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->origX, INFO_PANEL_ORIG_Y + panel->origY + lineJump, _infoPanel->GetDescriptionPanel().header);
+		for (struct Line *line : panel->text) {
+			WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->origX, INFO_PANEL_ORIG_Y + panel->origY + 1 + lineJump, line);
 			lineJump++;
 		}
 	}
@@ -332,9 +332,9 @@ void ScreenManager::SetInventory(std::list<LootObject *> inventory) {
 	infoPanel->SetInventory(inventory);
 }
 
-void ScreenManager::WriteLineAtCoords(int x, int y, std::string text, int color) {
-	for (size_t i = 0; i < text.length(); i++) {
-		buffer[(x + i) + (y * SCREEN_WIDTH)].Char.UnicodeChar = text[i];
-		buffer[(x + i) + (y * SCREEN_WIDTH)].Attributes = color;
+void ScreenManager::WriteLineAtCoords(int x, int y, struct Line line) {
+	for (size_t i = 0; i < line.text.length(); i++) {
+		buffer[(x + i) + (y * SCREEN_WIDTH)].Char.UnicodeChar = line.text[i];
+		buffer[(x + i) + (y * SCREEN_WIDTH)].Attributes = line.color;
 	}
 }

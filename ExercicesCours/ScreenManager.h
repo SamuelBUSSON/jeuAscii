@@ -103,7 +103,7 @@ public:
 
 
 	void WriteInfoPanel(InfoPanel *_infoPanel);
-	void WriteLineAtCoords(int x, int y, std::string text, int color);
+	void WriteLineAtCoords(int x, int y, struct Line line);
 	void SetDescription(std::string infos);
 	void SetInventory(std::list<LootObject *> inventory);
 };

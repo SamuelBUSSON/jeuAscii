@@ -8,13 +8,18 @@
 #include <string>
 #include <list>
 
+struct Line {
+	std::string text;
+	int color;
+};
+
 struct Panel {
 	int origX;
 	int origY;
-	std::list<std::string> text;
-	int color;
-	std::string header;
-	int headerColor;
+
+	std::list<struct Line *> text;
+	int defaultColor;
+	struct Line header;
 };
 
 class InfoPanel
@@ -33,6 +38,8 @@ public:
 	inline void SetDescription(std::string str) { descriptionPanel.text.clear(); descriptionPanel.text.push_front(str); }
 
 	inline struct Panel GetDescriptionPanel() const { return descriptionPanel; }
+
+	void HighlightLineAtCoords(int x, int y);
 
 	void SetInventory(std::list<LootObject *> inventory);
 };
