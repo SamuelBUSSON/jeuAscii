@@ -46,6 +46,8 @@ private:
 	std::list<LootObject *> inventory;
 
 	std::map<int, std::list<GameObject *>> gameObjectsMap;
+	//TODO :
+	//std::map<int, std::list<GameObject *>> gameObjectsMap;
 	
 public:
 	void CheckPlayerPosition();
@@ -72,10 +74,11 @@ public:
 	void ClickOnCoords(int x, int y);
 	std::list<GameObject *> GetGameObjects();
 
-	std::list<GameObject*> GetGameObjectsByMap(std::string mapName);
+	//std::list<GameObject*> GetGameObjectsByMap(std::string mapName);
 
 	inline GameObject* GetHighlightGameObject() { return highlightedGameObject; }
 	inline bool IsClicking() { return isClicking; }
+	inline GameObject* GetPlayer() { return player; }
 
 	static GameManager& instance()
 	{
