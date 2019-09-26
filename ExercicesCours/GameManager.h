@@ -10,6 +10,7 @@
 #include "LootObject.h"
 
 #include <list>
+#include <map>
 
 #define YDOORTOP 14
 #define YDOORBOT  22
@@ -41,7 +42,10 @@ private:
 	GameManager();
 
 	Player* player;
+
 	std::list<LootObject *> inventory;
+
+	std::map<int, std::list<GameObject *>> gameObjectsMap;
 	
 public:
 	void CheckPlayerPosition();
@@ -61,6 +65,7 @@ public:
 
 	GameObject* GetGameObjectAtCoords(int x, int y);
 	GameObject * GetGameObjectAtCoordsOnMap(int x, int y);
+	GameObject * GetGameObjectColliderAtCoordsOnMap(int x, int y);
 	void HighlightGameObjectAtCoords(COORD coords);
 	void RemoveHighlight();
 
@@ -68,6 +73,8 @@ public:
 	std::list<GameObject *> GetGameObjects();
 
 	std::list<GameObject*> GetGameObjectsByMap(std::string mapName);
+
+	inline GameObject* GetHighlightGameObject() { return highlightedGameObject; }
 
 	static GameManager& instance()
 	{

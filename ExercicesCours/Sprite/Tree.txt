@@ -1,9 +1,19 @@
+17 9 6 9 11 9
 WWWWWWW_-_
 WWWW/~~   ~~\
 W/~~         ~~\
 {               }
 W\  _-     -_  /
 WWW~WW\\ //WW~
-_-W-WWW| |W_- _
-WW_ -WW| |WWW-_
+WWWWWWW| |WWWWW
+WWWWWWW| |WWWWW
 WWWWWW// \\
+WWWWWWWGGG
+WWWWGGG   GGG
+WGGG         GGG
+G               G
+WG  GG     GG  G
+WWWGWWYY YYWWG
+WWWWWWWY YWWWWW
+WWWWWWWY YWWWWW
+WWWWWWYY YY

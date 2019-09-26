@@ -15,21 +15,21 @@ Player::~Player() {
 }
 
 void Player::MoveLeft() {
-	if(ScreenManager::instance().GetTextCoord(posX - 1, posY) != 'M' && !GameManager::instance().GetGameObjectAtCoordsOnMap(posX - 1, posY))
+	if(ScreenManager::instance().GetTextCoord(posX - 1, posY + 1) != 'M' && !GameManager::instance().GetGameObjectColliderAtCoordsOnMap(posX - 1, posY))
 		posX--;
 }
 
 void Player::MoveRight() {
-	if (ScreenManager::instance().GetTextCoord(posX + sprite.width, posY) != 'M' && !GameManager::instance().GetGameObjectAtCoordsOnMap(posX + sprite.width + 1, posY))
+	if (ScreenManager::instance().GetTextCoord(posX + sprite.width + 1, posY + 1) != 'M' && !GameManager::instance().GetGameObjectColliderAtCoordsOnMap(posX + sprite.width + 1, posY))
 		posX++;
 }
 
 void Player::MoveUp() {
-	if (ScreenManager::instance().GetTextCoord(posX, posY - 1) != 'M' && !GameManager::instance().GetGameObjectAtCoordsOnMap(posX, posY - 1))
+	if (ScreenManager::instance().GetTextCoord(posX, posY) != 'M' && !GameManager::instance().GetGameObjectColliderAtCoordsOnMap(posX, posY - sprite.height))
 		posY--;
 }
 
 void Player::MoveDown() {
-	if (ScreenManager::instance().GetTextCoord(posX, posY + sprite.height) != 'M' && !GameManager::instance().GetGameObjectAtCoordsOnMap(posX, posY + sprite.height + 1))
+	if (ScreenManager::instance().GetTextCoord(posX, posY + 1 + sprite.height) != 'M' && !GameManager::instance().GetGameObjectColliderAtCoordsOnMap(posX, posY + sprite.height))
 		posY++;
 }
