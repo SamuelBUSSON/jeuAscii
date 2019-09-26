@@ -8,6 +8,7 @@ Player::Player(int x, int y, std::string spriteFile)
 : GameObject(x, y, spriteFile) {
 	health = PLAYER_HEALTH;
 	food = PLAYER_FOOD;
+	description = "it's you !";
 }
 
 

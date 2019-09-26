@@ -11,10 +11,12 @@
 
 TreeObject::TreeObject(int x, int y, std::string spriteFile)
 : BreakableObject(x, y, spriteFile, TREE_HEALTH) {
+	description = "a huge tree";
 }
 
 TreeObject::TreeObject(int x, int y, std::string spriteFile, std::string mapName)
 	: BreakableObject(x, y, spriteFile, TREE_HEALTH, mapName) {
+	description = "a huge tree";
 }
 
 
@@ -23,7 +25,18 @@ TreeObject::~TreeObject() {
 
 void TreeObject::OnClick() {
 	BreakableObject::OnClick();
-	//ici peut etre de l'animation
+}
+
+void TreeObject::UpdateDescription() {
+	if (health == 1) {
+		description = "a nearly-completely destroyed tree";
+	}
+	else if (health < 3) {
+		description = "a broken tree";
+	}
+	else if (health < TREE_HEALTH) {
+		description = "a huge tree with some cracks";
+	}
 }
 
 void TreeObject::OnBreak() {

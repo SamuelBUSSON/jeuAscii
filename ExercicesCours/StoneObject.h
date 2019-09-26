@@ -14,8 +14,7 @@ public:
 	StoneObject(int x, int y, std::string spriteFile, std::string mapName);
 	~StoneObject();
 
-	inline std::string GetDescription() const override { return "a huge stone"; }
-
+	void UpdateDescription() override;
 	void OnClick() override;
 	void OnBreak() override;
 };

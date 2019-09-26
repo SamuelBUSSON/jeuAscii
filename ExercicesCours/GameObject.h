@@ -9,7 +9,6 @@ struct Sprite {
 	std::string spriteFile;
 	int width;
 	int height;
-	int color;
 };
 
 class GameObject {
@@ -25,6 +24,8 @@ protected:
 	int colliderEndY;
 
 	std::string map_link;
+
+	std::string description;
 
 public:
 	GameObject(int x, int y, std::string spriteFile);
@@ -43,14 +44,12 @@ public:
 	inline int GetX() const { return posX; }
 	inline int GetY() const { return posY; }
 	inline int GetHeight() const { return sprite.height; }
-	inline int GetColor() const { return sprite.color; }
 	inline std::string GetMapLink() const { return map_link; }
 
-	virtual std::string GetDescription() const = 0;
+	inline std::string GetDescription() const { return description; }
 
 	inline std::string GetSpriteFileName() const { return sprite.spriteFile; }
 
-	inline void SetColor(int _color) { sprite.color = _color; }
 	inline void SetX(int x) { posX = x; }
 	inline void SetY(int y) { posY = y; }
 	inline void SetMapLink(std::string mapName) { map_link = mapName; }

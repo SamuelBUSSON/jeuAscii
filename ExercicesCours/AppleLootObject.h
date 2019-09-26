@@ -7,7 +7,6 @@ public:
 	AppleLootObject(int x, int y, std::string spriteFile, std::string mapLink);
 	~AppleLootObject();
 
-	inline std::string GetDescription() const override { return "a red apple"; }
 	inline std::string GetName() const override { return "apple"; }
 };
 

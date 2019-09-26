@@ -5,7 +5,6 @@
 
 LootObject::LootObject(int x, int y, std::string spriteFile, std::string mapLink)
 : GameObject(x, y, spriteFile, mapLink) {
-
 }
 
 

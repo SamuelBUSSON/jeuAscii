@@ -19,8 +19,6 @@ public:
 	Player(int x, int y, std::string spriteFile);
 	~Player();
 
-	inline std::string GetDescription() const override { return "it's you !"; }
-
 	void MoveLeft();
 	void MoveRight();
 	void MoveUp();

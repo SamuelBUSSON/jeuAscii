@@ -10,8 +10,6 @@ public:
 	FireCamp(int x, int y, std::string spriteFile);
 	FireCamp(int x, int y, std::string spriteFile, std::string mapName);
 	~FireCamp();
-
-	inline std::string GetDescription() const override { return "a fire camp"; }
 };
 
 #endif

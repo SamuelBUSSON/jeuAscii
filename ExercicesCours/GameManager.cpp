@@ -323,8 +323,6 @@ GameObject* GameManager::GetGameObjectColliderAtCoordsOnMap(int x, int y) {
 }
 
 
-
-
 void GameManager::HighlightGameObjectAtCoords(COORD coords) {
 	GameObject *gameObject = GetGameObjectAtCoordsOnMap(coords.X, coords.Y);
 
@@ -334,7 +332,6 @@ void GameManager::HighlightGameObjectAtCoords(COORD coords) {
 	else {
 		RemoveHighlight();
 		highlightedGameObject = gameObject;
-		highlightedGameObject->SetColor(20);
 
 		ScreenManager::instance().SetDescription(highlightedGameObject->GetDescription());
 	}
@@ -344,7 +341,6 @@ void GameManager::RemoveHighlight() {
 	if (highlightedGameObject != nullptr) 
 	{
 		highlightedGameObject = nullptr;
-		highlightedGameObjectOldColor = NULL;
 
 		ScreenManager::instance().SetDescription("");
 	}

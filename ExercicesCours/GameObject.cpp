@@ -98,8 +98,7 @@ Sprite GameObject::LoadSpriteFile(std::string spriteFile)
 	struct Sprite spriteReturn = {
 		spriteFile,
 		width,
-		height,
-		color
+		height
 	};
 
 	inFile.close();

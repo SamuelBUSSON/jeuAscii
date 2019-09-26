@@ -75,6 +75,7 @@ public:
 	std::list<GameObject*> GetGameObjectsByMap(std::string mapName);
 
 	inline GameObject* GetHighlightGameObject() { return highlightedGameObject; }
+	inline bool IsClicking() { return isClicking; }
 
 	static GameManager& instance()
 	{

@@ -7,20 +7,34 @@
 
 StoneObject::StoneObject(int x, int y, std::string spriteFile)
 : BreakableObject(x, y, spriteFile, STONE_HEALTH) {
+	description = "a big stone";
 }
 
 StoneObject::StoneObject(int x, int y, std::string spriteFile, std::string mapName)
 : BreakableObject(x, y, spriteFile, STONE_HEALTH, mapName) {
+	description = "a big stone";
 }
-
-
 
 StoneObject::~StoneObject() {
 }
 
 void StoneObject::OnClick() {
 	BreakableObject::OnClick();
-	//ici peut etre de l'animation
+}
+
+void StoneObject::UpdateDescription() {
+	if (health == 1) {
+		description = "a stone. it is about to explode";
+	}
+	else if (health < 3) {
+		description = "a miserable stone";
+	}
+	else if (health < 5) {
+		description = "a big stone with cracks";
+	}
+	else if (health < STONE_HEALTH) {
+		description = "a big stone with fingerprints";
+	}
 }
 
 void StoneObject::OnBreak() {

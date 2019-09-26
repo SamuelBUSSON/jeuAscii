@@ -17,6 +17,7 @@ BreakableObject::~BreakableObject()
 
 void BreakableObject::OnClick() {
 	health--;
+	UpdateDescription();
 
 	if (health < 1) {
 		OnBreak();

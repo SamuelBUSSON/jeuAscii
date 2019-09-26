@@ -190,9 +190,8 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 					{
 						if (line[x] != 'W')
 						{
-							SetTextCoord(gameObject->GetX() + x, gameObject->GetY() + y, line[x], gameObject->GetColor());
+							SetTextCoord(gameObject->GetX() + x, gameObject->GetY() + y, line[x], 0);
 						}
-
 					}
 					else
 					{
@@ -200,7 +199,8 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 						{
 							if (GameManager::instance().GetHighlightGameObject() && GameManager::instance().GetHighlightGameObject() == gameObject)
 							{
-								SetTextColor(gameObject->GetX() + x, gameObject->GetY() + y - gameObject->GetHeight(), GetColorByChar(line[x]) + 0x80);
+
+									SetTextColor(gameObject->GetX() + x, gameObject->GetY() + y - gameObject->GetHeight(), GetColorByChar(line[x]) + 0x80);
 							}
 							else 
 							{
