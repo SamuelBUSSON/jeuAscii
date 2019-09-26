@@ -19,15 +19,12 @@ GameObject::GameObject(int x, int y, std::string spriteFile, std::string mapName
 
 
 GameObject::~GameObject() {
-	
 }
 
 void GameObject::Init() {
-
 }
 
 void GameObject::OnClick() {
-
 }
 
 bool GameObject::SpriteIsOnCoords(int x, int y)

@@ -3,23 +3,38 @@
 #ifndef DEF_INFOPANEL
 #define DEF_INFOPANEL
 
+#include "LootObject.h"
+
 #include <string>
+#include <list>
+
+struct Panel {
+	int origX;
+	int origY;
+	std::list<std::string> text;
+	int color;
+	std::string header;
+	int headerColor;
+};
 
 class InfoPanel
 {
 private:
-	std::string text;
-	int textColor;
+	
+	struct Panel descriptionPanel;
+	struct Panel inventoryPanel;
 
 public:
 	InfoPanel();
 	~InfoPanel();
 
+	std::list<struct Panel *> panels;
 
-	inline void SetString(std::string str) { text = str; }
+	inline void SetDescription(std::string str) { descriptionPanel.text.clear(); descriptionPanel.text.push_front(str); }
 
-	inline std::string GetText() const { return text; }
-	inline int GetTextColor() const { return textColor; }
+	inline struct Panel GetDescriptionPanel() const { return descriptionPanel; }
+
+	inline void SetInventory(std::list<LootObject *> inventory) { inventoryPanel.text.clear(); for (LootObject *loot : inventory) inventoryPanel.text.push_back("+ " + loot->GetName()); }
 };
 
 #endif

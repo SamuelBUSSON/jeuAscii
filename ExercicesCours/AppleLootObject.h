@@ -8,5 +8,6 @@ public:
 	~AppleLootObject();
 
 	inline std::string GetDescription() const override { return "a red apple"; }
+	inline std::string GetName() const override { return "apple"; }
 };
 

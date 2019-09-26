@@ -213,7 +213,13 @@ void GameManager::Update()
 
 		if (InputRecord.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED)
 		{
-			ClickOnCoords(mousePosition.X, mousePosition.Y);
+			if (!isClicking) {
+				ClickOnCoords(mousePosition.X, mousePosition.Y);
+				isClicking = true;
+			}
+		}
+		else {
+			isClicking = false;
 		}// mouse 
 
 		break;
@@ -248,10 +254,18 @@ void GameManager::DestroyGameObject(GameObject *gameObject) {
 	}
 }
 
+void GameManager::DestroyLootObject(GameObject *gameObject) {
+	std::list<GameObject *>::iterator it = std::find(gameObjects.begin(), gameObjects.end(), gameObject);
+
+	if (it != gameObjects.end()) {
+		gameObjects.erase(it);
+	}
+}
+
 
 void GameManager::AddLootToInventory(LootObject *lootObject) {
-	gameObjects.push_front(lootObject);
 	inventory.push_front(lootObject);
+	ScreenManager::instance().SetInventory(inventory);
 }
 
 
@@ -295,7 +309,7 @@ void GameManager::HighlightGameObjectAtCoords(COORD coords) {
 		highlightedGameObject = gameObject;
 		highlightedGameObject->SetColor(20);
 
-		ScreenManager::instance().SetInfo(highlightedGameObject->GetDescription());
+		ScreenManager::instance().SetDescription(highlightedGameObject->GetDescription());
 	}
 }
 
@@ -305,7 +319,7 @@ void GameManager::RemoveHighlight() {
 		highlightedGameObject = nullptr;
 		highlightedGameObjectOldColor = NULL;
 
-		ScreenManager::instance().SetInfo("");
+		ScreenManager::instance().SetDescription("");
 	}
 }
 

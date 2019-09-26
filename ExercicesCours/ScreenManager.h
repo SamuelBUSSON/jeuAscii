@@ -101,7 +101,9 @@ public:
 
 
 	void WriteInfoPanel(InfoPanel *_infoPanel);
-	void SetInfo(std::string infos);
+	void WriteLineAtCoords(int x, int y, std::string text, int color);
+	void SetDescription(std::string infos);
+	void SetInventory(std::list<LootObject *> inventory);
 };
 
 #endif

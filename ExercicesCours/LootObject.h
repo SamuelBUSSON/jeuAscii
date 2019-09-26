@@ -7,5 +7,6 @@ public:
 	~LootObject();
 	virtual std::string GetDescription() const override = 0;
 	void OnClick() override;
+	virtual std::string GetName() const = 0;
 };
 

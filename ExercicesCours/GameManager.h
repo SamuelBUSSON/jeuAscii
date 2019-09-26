@@ -32,6 +32,7 @@ private:
 
 	InputManager* inputManager;
 	COORD mousePosition;
+	bool isClicking = false;
 	bool exit_game = false;
 
 	GameObject *highlightedGameObject;
@@ -54,6 +55,7 @@ public:
 
 	void AddGameObject(GameObject *gameObject);
 	void DestroyGameObject(GameObject *gameObject);
+	void DestroyLootObject(GameObject *gameObject);
 
 	void AddLootToInventory(LootObject *lootObject);
 

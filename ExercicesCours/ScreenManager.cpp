@@ -295,13 +295,28 @@ void ScreenManager::DisplayGameObjects(std::list<GameObject *> gameObjects) {
 }
 
 void ScreenManager::WriteInfoPanel(InfoPanel *_infoPanel) {
-	std::string text = _infoPanel->GetText();
-	for (size_t i = 0; i < text.length(); i++) {
-		buffer[(INFO_PANEL_ORIG_X + i) + (INFO_PANEL_ORIG_Y * SCREEN_WIDTH)].Char.UnicodeChar = text[i];
-		buffer[(INFO_PANEL_ORIG_X + i) + (INFO_PANEL_ORIG_Y * SCREEN_WIDTH)].Attributes = _infoPanel->GetTextColor();
+	int lineJump = 0;
+
+	for (struct Panel *panel : _infoPanel->panels) {
+		WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->origX, INFO_PANEL_ORIG_Y + panel->origY + lineJump, panel->header, _infoPanel->GetDescriptionPanel().headerColor);
+		for (std::string line : panel->text) {
+			WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->origX, INFO_PANEL_ORIG_Y + panel->origY + 1 + lineJump, "    " + line, _infoPanel->GetDescriptionPanel().color);
+			lineJump++;
+		}
 	}
 }
 
-void ScreenManager::SetInfo(std::string infos) {
-	infoPanel->SetString(infos);
+void ScreenManager::SetDescription(std::string desc) {
+	infoPanel->SetDescription(desc);
+}
+
+void ScreenManager::SetInventory(std::list<LootObject *> inventory) {
+	infoPanel->SetInventory(inventory);
+}
+
+void ScreenManager::WriteLineAtCoords(int x, int y, std::string text, int color) {
+	for (size_t i = 0; i < text.length(); i++) {
+		buffer[(x + i) + (y * SCREEN_WIDTH)].Char.UnicodeChar = text[i];
+		buffer[(x + i) + (y * SCREEN_WIDTH)].Attributes = color;
+	}
 }
