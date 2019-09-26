@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "GameManager.h"
 #include "InfoPanel.h"
 
 using namespace std;
@@ -27,6 +28,47 @@ const vector<string> explode(const string& s, const char& c)
 	if (buff != "") v.push_back(buff);
 
 	return v;
+}
+
+int GetColorByChar(char const c) 
+{
+	switch (c)
+	{
+	case 'G':
+		return 0x0A;	//Light Green
+	case 'B':
+		return 0x09;	//Light Blue
+	case 'R':
+		return 0x0C;	//Light Red
+	case 'W':
+		return 0x0F;	//White
+	case 'C':
+		return 0x0B;	//Cyan
+	case 'Y':
+		return 0x06;	//Dark Yellow
+
+	case 'V':
+		return 0x0E;	//Yellow Flash
+
+	case 'r':
+		return 0xCC;	//Background Red
+	case 'p':
+		return 0x44;	//Background Red[[==
+	case 'g':
+		return 0x22;	//Background Green
+	case 'b':
+		return 0x99;	//Background Blue
+	case 'c':
+		return 0xBB;	//Background Cyan
+	case 'w':
+		return 0xFF;	//Background White
+	case 'y':
+		return 0xEE;	//Background yellow
+
+	default:
+		return 0;
+		break;
+	}
 }
 
 
@@ -97,9 +139,6 @@ char ScreenManager::GetTextCoord(int x, int y)
 
 void ScreenManager::SetTextCoord(int x, int y, char c, int color)
 {
-	x = x - cameraPosX;
-	y = y - cameraPosY;
-	
 	if (x + y * SCREEN_WIDTH <= SCREEN_WIDTH * SCREEN_HEIGHT) {
 		buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
 		buffer[x + y * SCREEN_WIDTH].Attributes = color;
@@ -111,6 +150,16 @@ void ScreenManager::SetTextCoordFixed(int x, int y, char c, int color)
 {
 	buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
 	buffer[x + y * SCREEN_WIDTH].Attributes = color;
+}
+
+
+void ScreenManager::SetTextColor(int x, int y, int color)
+{
+
+	if (x + y * SCREEN_WIDTH <= SCREEN_WIDTH * SCREEN_HEIGHT) {
+		buffer[x + y * SCREEN_WIDTH].Attributes = color;
+	}
+
 }
 
 void ScreenManager::Clear() 
@@ -131,15 +180,39 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 	char c;
 	while (getline(inFile, line))
 	{
-		for (int x = 0; x < line.length(); x++)
+		if(y > 0)
 		{
-			if (line[x] != 'W')
-			{
-				SetTextCoord(gameObject->GetX() + x, gameObject->GetY() + y, line[x], gameObject->GetColor());
-			}
+				for (int x = 0; x < line.length(); x++)
+				{
+					if (y < gameObject->GetHeight() + 1)
+					{
+						if (line[x] != 'W')
+						{
+							SetTextCoord(gameObject->GetX() + x, gameObject->GetY() + y, line[x], gameObject->GetColor());
+						}
+
+					}
+					else
+					{
+						if (line[x] != 'W') 
+						{
+							if (GameManager::instance().GetHighlightGameObject() && GameManager::instance().GetHighlightGameObject() == gameObject)
+							{
+								SetTextColor(gameObject->GetX() + x, gameObject->GetY() + y - gameObject->GetHeight(), GetColorByChar(line[x]) + 0x80);
+							}
+							else 
+							{
+								SetTextColor(gameObject->GetX() + x, gameObject->GetY() + y - gameObject->GetHeight(), GetColorByChar(line[x]));
+							}
+							
+						}
+					}
+				}
 		}
 		y++;
 	}
+
+	inFile.close();
 }
 
 void ScreenManager::ReadMap()
@@ -168,13 +241,14 @@ void ScreenManager::ReadMap()
 		{
 			for (int x = 0; x < line.length(); x++)
 			{
-				/*if(x >= playerPosX - CAM_WIDTH/2 && x <= playerPosX + CAM_WIDTH / 2)
-				{*/
-				SetTextCoord(x + 1, numberLine, line[x], FOREGROUND_GREEN);
-				//}
+				SetTextCoord(x + 1, numberLine, line[x], line[x] == 'M' ? 0x22 : FOREGROUND_GREEN);
 			}
 		}
 		numberLine++;
+	}
+
+	if (inFile) {
+		inFile.close();
 	}
 
 	
@@ -192,68 +266,6 @@ void ScreenManager::DrawBorder() {
 		}
 	}
 }
-/*
-void ScreenManager::GoLeft()
-{
-	playerPosX--;
-}
-
-void ScreenManager::GoRight()
-{
-	playerPosX++;
-}
-
-void ScreenManager::GoDown()
-{
-	playerPosY++;
-}
-
-void ScreenManager::GoUp()
-{
-	playerPosY--;
-}
-
-void ScreenManager::DisplayPlayer() 
-{
-	SetTextCoord(playerPosX, playerPosY, 'O', FOREGROUND_RED);
-	SetTextCoord(playerPosX-1, playerPosY, '\\', FOREGROUND_RED);
-    SetTextCoord(playerPosX+1, playerPosY, '/', FOREGROUND_RED);
-}
-
-
-void ScreenManager::CheckPlayerPosition() 
-{
-	if (playerPosY >= YDOORTOP && playerPosY <= YDOORBOT)
-	{
-		if (playerPosX >= CAM_WIDTH - 2) 
-		{
-			playerPosX = 3;
-			currentMap.currentMapName = currentMap.rightMap;
-		}
-		if (playerPosX <= 2)
-		{
-			playerPosX = CAM_WIDTH - 3;
-			currentMap.currentMapName = currentMap.leftMap;
-		}
-	}
-	
-	if (playerPosX >= XDOORLEFT && playerPosX <= XDOORRIGHT) 
-	{
-		if (playerPosY <= 1) 
-		{
-			playerPosY = CAM_HEIGHT - 2;
-			currentMap.currentMapName = currentMap.topMap;
-		}
-
-		if (playerPosY >= CAM_HEIGHT - 1) 
-		{
-			playerPosY = 2;
-			currentMap.currentMapName = currentMap.bottomMap;
-		}
-	}
-
-	
-}*/
 
 bool ScreenManager::RightMap() {
 	if (currentMap.rightMap != " ") {

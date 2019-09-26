@@ -18,6 +18,12 @@ protected:
 	struct Sprite sprite;
 	int posX;
 	int posY;
+
+	int colliderStartX;
+	int colliderStartY;
+	int colliderEndX;
+	int colliderEndY;
+
 	std::string map_link;
 
 public:
@@ -30,6 +36,7 @@ public:
 
 	bool SpriteIsOnCoords(int x, int y);
 	bool SpriteIsOnCoordsAndMap(int x, int y, std::string map_name);
+	bool SpriteColliderIsOnCoordsAndMap(int x, int y, std::string map_name);
 	Sprite LoadSpriteFile(std::string spriteFile);
 
 

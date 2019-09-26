@@ -11,6 +11,12 @@
 #include <filesystem>
 #include <fstream>
 
+
+bool is_number(const std::string& s)
+{
+	return !s.empty() && std::find_if(s.begin(), s.end(), [](char c) { return !isdigit(c); }) == s.end();
+}
+
 void GameManager::CheckPlayerPosition()
 {
 	if (player->GetY() >= YDOORTOP && player->GetY() <= YDOORBOT)
@@ -31,18 +37,18 @@ void GameManager::CheckPlayerPosition()
 
 	if (player->GetX() >= XDOORLEFT && player->GetX() <= XDOORRIGHT)
 	{
-		if (player->GetY() <= 1)
+		if (player->GetY() <= 0)
 		{
 			if (ScreenManager::instance().TopMap())
 			{
-				player->SetY(CAM_HEIGHT - 4);
+				player->SetY(CAM_HEIGHT - 5);
 			}
 		}
 
-		if (player->GetY() >= CAM_HEIGHT - 3)
+		if (player->GetY() >= CAM_HEIGHT - 4)
 		{
 			if (ScreenManager::instance().BottomMap()) {
-				player->SetY(2);
+				player->SetY(1);
 			}
 		}
 	}
@@ -60,7 +66,7 @@ bool GameManager::DetectCollision(int x, int y)
 GameManager::GameManager() {
 	inputManager = new InputManager();
 
-	player = new Player(CAM_WIDTH / 2, CAM_HEIGHT /2 -10, "Sprite/Player.txt");
+	player = new Player(CAM_WIDTH / 2, CAM_HEIGHT /2, "Sprite/Player.txt");
 }
 
 
@@ -74,11 +80,15 @@ GameManager::~GameManager() {
 void GameManager::Init() {
 
 	std::string path = "Sprite/Maps";
+	int fileCount = 0;
+
 	for (const auto & entry : std::filesystem::directory_iterator(path)) 
 	{
-		std::ifstream myfile;
+		std::fstream myfile;
 		myfile.open(entry);
 		std::string line;
+
+		//myfile << "\n"+ std::to_string(fileCount) << std::endl;
 
 		std::string base_filename = entry.path().generic_string();
 
@@ -105,7 +115,9 @@ void GameManager::Init() {
 			}
 			numberLine++;
 		}
+
 		myfile.close();
+		fileCount++;
 	}
 
 	gameObjects.push_front(player);
@@ -120,7 +132,7 @@ void GameManager::Run() {
 	{
 		ScreenManager::instance().ClearScreen();
 		ScreenManager::instance().SampleDisplay(GetGameObjectsByMap(ScreenManager::instance().GetCurrentMap()));
-		
+		ScreenManager::instance().SetInfo("x : "+ std::to_string(player->GetX()) + " y : " + std::to_string(player->GetY()));
 		Update();
 	}
 }
@@ -144,8 +156,6 @@ std::list<GameObject *> GameManager::GetGameObjectsByMap(std::string mapName) {
 		}
 		itr++;
 	}
-
-
 
 	gmSort.sort(ZIndexComparison());
 
@@ -266,6 +276,20 @@ GameObject* GameManager::GetGameObjectAtCoordsOnMap(int x, int y) {
 	return nullptr;
 }
 
+GameObject* GameManager::GetGameObjectColliderAtCoordsOnMap(int x, int y) {
+
+	for (GameObject *object : gameObjects)
+	{
+		if (object->SpriteColliderIsOnCoordsAndMap(x, y, ScreenManager::instance().GetCurrentMap()))
+		{
+			return object;
+		}
+	}
+	return nullptr;
+}
+
+
+
 
 void GameManager::HighlightGameObjectAtCoords(COORD coords) {
 	GameObject *gameObject = GetGameObjectAtCoordsOnMap(coords.X, coords.Y);
@@ -275,20 +299,15 @@ void GameManager::HighlightGameObjectAtCoords(COORD coords) {
 	}
 	else {
 		RemoveHighlight();
-		highlightedGameObjectOldColor = gameObject->GetColor();
 		highlightedGameObject = gameObject;
-		highlightedGameObject->SetColor(20);
-
 		ScreenManager::instance().SetInfo(highlightedGameObject->GetDescription());
 	}
 }
 
 void GameManager::RemoveHighlight() {
-	if (highlightedGameObject != nullptr && highlightedGameObjectOldColor != NULL) {
-		highlightedGameObject->SetColor(highlightedGameObjectOldColor);
+	if (highlightedGameObject != nullptr) 
+	{
 		highlightedGameObject = nullptr;
-		highlightedGameObjectOldColor = NULL;
-
 		ScreenManager::instance().SetInfo("");
 	}
 }

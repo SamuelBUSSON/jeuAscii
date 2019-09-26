@@ -82,6 +82,8 @@ public:
 	void SetTextCoord(int x, int y, char c, int color);
 	void SetTextCoordFixed(int x, int y, char c, int color);
 
+	void SetTextColor(int x, int y, int color);
+
 	void Clear();
 
 	void ReadMap();
