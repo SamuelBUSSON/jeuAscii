@@ -8,6 +8,8 @@
 #include "InputManager.h"
 #include "Player.h"
 #include "LootObject.h"
+#include "Node.h"
+#include "Graph.h"
 
 #include <list>
 #include <map>
@@ -46,15 +48,24 @@ private:
 	std::list<LootObject *> inventory;
 
 	std::map<int, std::list<GameObject *>> gameObjectsMap;
+
+
+	Graph* allMapsGraph = new Graph();
+	Node* current_node;
 	//TODO :
 	//std::map<int, std::list<GameObject *>> gameObjectsMap;
 	
 public:
 	void CheckPlayerPosition();
-	bool DetectCollision(int x, int y);
+
+	void CheckPlayerPositionTest();
+	//bool DetectCollision(int x, int y);
 	~GameManager();
 
 	void Init();
+
+	void InitTest();
+
 	void Run();
 	void Update();
 
@@ -80,7 +91,12 @@ public:
 	inline bool IsClicking() { return isClicking; }
 	inline GameObject* GetPlayer() { return player; }
 
-	static GameManager& instance()
+	inline Node*  GetCurrentNode() { return current_node; }
+	inline void  SetCurrentNode(Node* n) { current_node = n; }
+
+	inline Graph*  GetGraph() { return allMapsGraph; }
+	
+	static GameManager& Instance()
 	{
 		static GameManager INSTANCE;
 		return INSTANCE;

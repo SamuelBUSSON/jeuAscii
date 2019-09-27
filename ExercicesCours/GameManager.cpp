@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "GameManager.h"
 
+
 #include "TreeObject.h"
 #include "FireCamp.h"
-#include "Player.h"
 #include "StoneObject.h"
 
 #include <algorithm>
@@ -12,12 +12,40 @@
 #include <filesystem>
 #include <fstream>
 
+//#include "Utiles.h"
+#include <stdio.h>
 
-bool is_number(const std::string& s)
-{
-	return !s.empty() && std::find_if(s.begin(), s.end(), [](char c) { return !isdigit(c); }) == s.end();
+void RemoveMaps() {
+	//Folder where all maps are
+	std::string path = "Sprite/MapTest/Map";
+	std::string s = "";
+
+	for (int i = 0; i < MapGenerator::Instance().GetNumberOfMap(); i++)
+	{
+		s = path +  std::to_string(i) + ".txt";
+		remove(s.c_str());
+	}
 }
 
+
+const std::vector<std::string> explode2(const std::string& s, const char& c)
+{
+	std::string buff{ "" };
+	std::vector<std::string> v;
+
+	for (auto n : s)
+	{
+		if (n != c) buff += n; else
+			if (n == c && buff != "") { v.push_back(buff); buff = ""; }
+	}
+	if (buff != "") v.push_back(buff);
+
+	return v;
+}
+
+/**
+* @brief : Check if player is next to door
+**/
 void GameManager::CheckPlayerPosition()
 {
 	if (player->GetY() >= YDOORTOP && player->GetY() <= YDOORBOT)
@@ -55,10 +83,70 @@ void GameManager::CheckPlayerPosition()
 	}
 }
 
-bool GameManager::DetectCollision(int x, int y) 
+/**
+* @brief : Check if player is next to door
+**/
+void GameManager::CheckPlayerPositionTest()
 {
-	return (GetGameObjectAtCoordsOnMap(x, y) && GetGameObjectAtCoordsOnMap(x, y) != player);
+	Vector2 v = current_node->GetPos();
+
+	if (player->GetY() >= YDOORTOP && player->GetY() <= YDOORBOT)
+	{
+		if (player->GetX() >= CAM_WIDTH - 2)
+		{
+			//RIGHT
+			if (current_node->GetNodeAdjacent(East) == nullptr) {
+				current_node->AddAdjacent(East, new Node(MapGenerator::Instance().CreateMap()));
+			}
+			SetCurrentNode(current_node->GetNodeAdjacent(East));
+			v.x++;
+			player->SetX(3);
+		}
+		if (player->GetX() <= 2)
+		{
+			//LEFT
+			if (current_node->GetNodeAdjacent(West) == nullptr) {
+				current_node->AddAdjacent(West, new Node(MapGenerator::Instance().CreateMap()));
+			}
+			SetCurrentNode(current_node->GetNodeAdjacent(West));
+			v.x--;
+			player->SetX(CAM_WIDTH - 3);
+		}
+	}
+
+	if (player->GetX() >= XDOORLEFT && player->GetX() <= XDOORRIGHT)
+	{
+		if (player->GetY() <= 0)
+		{
+			//TOP
+			if (current_node->GetNodeAdjacent(North) == nullptr) {
+				current_node->AddAdjacent(North, new Node(MapGenerator::Instance().CreateMap()));
+			}			
+			SetCurrentNode(current_node->GetNodeAdjacent(North));
+			v.y++;
+			current_node->SetGraphPos(v);
+			player->SetY(CAM_HEIGHT - 5);
+		}
+
+		if (player->GetY() >= CAM_HEIGHT - 4)
+		{
+			//BOTTOM
+			if (current_node->GetNodeAdjacent(South) == nullptr) {
+				current_node->AddAdjacent(South, new Node(MapGenerator::Instance().CreateMap()));
+			}
+			SetCurrentNode(current_node->GetNodeAdjacent(South));
+			v.y--;
+			current_node->SetGraphPos(v);
+			player->SetY(1);
+		}
+	}
+
+	allMapsGraph->AddNode(v.x, v.y, current_node);
+
+	current_node->CheckMapAround();
+
 }
+
 
 
 GameManager::GameManager() {
@@ -69,30 +157,36 @@ GameManager::GameManager() {
 
 
 GameManager::~GameManager() {
+
 	for (GameObject *object : gameObjects) {
 		delete object;
 	}
 	gameObjects.clear();
 
+
 	delete screenManager;
 }
-
+/**
+* @brief : Init the game
+**/
 void GameManager::Init() {
 
-	std::string path = "Sprite/Maps";
+	//Folder where all maps are
+	std::string path = "Sprite/Maps/";
 	int fileCount = 0;
-
+	//Count Line of file
+	int numberLine(0);
+	//Browse the folder and get each file
 	for (const auto & entry : std::filesystem::directory_iterator(path)) 
 	{
 		std::fstream myfile;
 		myfile.open(entry, std::ios::out | std::ios::in | std::ios::app);
 		std::string line;
-
-		//myfile << "\n"+ std::to_string(fileCount) << std::endl;
-
+		//Get FileName
 		std::string base_filename = entry.path().generic_string();
 
-		int numberLine = 0;
+		numberLine = 0;
+
 		while (std::getline(myfile, line))
 		{
 			if (numberLine > 0) {
@@ -110,6 +204,10 @@ void GameManager::Init() {
 
 					case 'S':
 						gameObjects.push_front(new StoneObject(x, numberLine, "Sprite/Stone.txt", base_filename));
+						break;
+
+					case 'G':
+						gameObjects.push_front(new GameObject(x, numberLine, "Sprite/Monster.txt", base_filename));
 						break;
 
 					default:
@@ -130,44 +228,108 @@ void GameManager::Init() {
 	inputManager->Init();
 }
 
+void GameManager::InitTest()
+{
+	//allMapsGraph = new Graph();
+
+	//Folder where all maps are
+	std::string path = "Sprite/MapTest/";
+	int fileCount = 0;
+	//Count Line of file
+	int numberLine(0);
+	//Browse the folder and get each file
+	for (const auto & entry : std::filesystem::directory_iterator(path))
+	{
+		std::fstream myfile;
+		myfile.open(entry, std::ios::out | std::ios::in | std::ios::app);
+		std::string line;
+		//Get FileName
+		std::string base_filename = entry.path().generic_string();
+
+		numberLine = 0;
+
+		while (std::getline(myfile, line))
+		{
+			if (numberLine > 0) {
+				for (int x = 0; x < line.length(); x++)
+				{
+					switch (line[x])
+					{
+					case 'T':
+						gameObjects.push_front(new TreeObject(x, numberLine, "Sprite/Tree.txt", base_filename));
+						break;
+
+					case 'F':
+						gameObjects.push_front(new FireCamp(x, numberLine, "Sprite/FireCamp.txt", base_filename));
+						break;
+
+					case 'S':
+						gameObjects.push_front(new StoneObject(x, numberLine, "Sprite/Stone.txt", base_filename));
+						break;
+
+					case 'G':
+						gameObjects.push_front(new GameObject(x, numberLine, "Sprite/Monster.txt", base_filename));
+						break;
+
+					default:
+						break;
+					}
+				}
+			}
+			else
+			{
+				//TODO Create Node System
+				std::vector<std::string> v = explode2(line, ',');
+			}
+			numberLine++;
+		}
+		myfile.close();
+		fileCount++;
+	}
+
+	if (fileCount == 0) 
+	{
+		SetCurrentNode(new Node(MapGenerator::Instance().CreateMap()));
+		current_node->SetGraphPos(Vector2({ 0, 0 }));
+		allMapsGraph->AddNode(0, 0, current_node);
+		
+	}
+	
+
+	gameObjects.push_front(player);
+
+	ScreenManager::instance().Init();
+	inputManager->Init();
+
+}
+
+/**
+* @brief : Run The game (Game Loop)
+**/
 void GameManager::Run() {
 
 	while (!exit_game)
 	{
 		ScreenManager::instance().ClearScreen();
-
 		ScreenManager::instance().SampleDisplay(GetGameObjects());
 		Update();
 	}
 
+	RemoveMaps();
 }
+
+/**
+* @brief : Run The game (Game Loop)
+**/
 
 std::list<GameObject *> GameManager::GetGameObjects() {
 	gameObjects.sort(ZIndexComparison());
 	return gameObjects;
 }
-/*
-std::list<GameObject *> GameManager::GetGameObjectsByMap(std::string mapName) {
 
-	std::list<GameObject *> gmSort;
-	std::list<GameObject *>::iterator itr = gameObjects.begin();
-
-	while (itr != gameObjects.end()) {
-		if ((*itr)->GetMapLink() == mapName) {
-			gmSort.push_front((*itr));
-		}
-		if ((*itr) == player) {
-			gmSort.push_front((*itr));
-		}
-		itr++;
-	}
-
-	gmSort.sort(ZIndexComparison());
-
-	return gmSort;
-}
-*/
-
+/**
+* @brief : Get Input Event and manage it
+**/
 void GameManager::Update()
 {
 	INPUT_RECORD InputRecord = inputManager->GetInputEvent();
@@ -214,8 +376,8 @@ void GameManager::Update()
 				break;
 
 			}
-
-			CheckPlayerPosition();
+			CheckPlayerPositionTest();
+			//CheckPlayerPosition();
 
 		}//switch
 
@@ -259,11 +421,18 @@ void GameManager::Update()
 	}
 }
 
-
+/**
+* @brief : Add Game object to the game
+* @param gameObject : The gameObject to add
+**/
 void GameManager::AddGameObject(GameObject *gameObject) {
 	gameObjects.push_front(gameObject);
 }
 
+/**
+* @brief : Destroy gameObject from the game
+* @param gameObject : The gameObject to destroy
+**/
 void GameManager::DestroyGameObject(GameObject *gameObject) {
 	std::list<GameObject *>::iterator it = std::find(gameObjects.begin(), gameObjects.end(), gameObject);
 
@@ -272,7 +441,10 @@ void GameManager::DestroyGameObject(GameObject *gameObject) {
 		gameObjects.erase(it);
 	}
 }
-
+/**
+* @brief : Destroy lootObject from the game
+* @param gameObject : The lootObject to destroy
+**/
 void GameManager::DestroyLootObject(GameObject *gameObject) {
 	std::list<GameObject *>::iterator it = std::find(gameObjects.begin(), gameObjects.end(), gameObject);
 
@@ -281,17 +453,19 @@ void GameManager::DestroyLootObject(GameObject *gameObject) {
 	}
 }
 
-
+/**
+* @brief : Add lootObject to player's inventory
+* @param lootObject : The lootObject to add
+**/
 void GameManager::AddLootToInventory(LootObject *lootObject) {
 	inventory.push_front(lootObject);
 	ScreenManager::instance().SetInventory(inventory);
 }
 
-
-/*
-	Retourne l'objet situé à la position [x, y]
-	Si plusieurs objets sont à cette position alors la fonction retourne l'objet le plus bas (le posY le plus élevé)
-*/
+/**
+* @brief : Return object on Coord x, y, return the highest object on Y axis
+* @return : The object om coord 
+**/
 GameObject* GameManager::GetGameObjectAtCoords(int x, int y) {
 
 	for (GameObject *object : gameObjects) {
@@ -303,11 +477,15 @@ GameObject* GameManager::GetGameObjectAtCoords(int x, int y) {
 	return nullptr;
 }
 
+/**
+* @brief : Return object on Coord x, y on currentMap, return the highest object on Y axis
+* @return : The object on coord
+**/
 GameObject* GameManager::GetGameObjectAtCoordsOnMap(int x, int y) {
 
 	for (GameObject *object : gameObjects) 
 	{
-		if (object->SpriteIsOnCoordsAndMap(x, y, ScreenManager::instance().GetCurrentMap()) || (object == player && object->SpriteIsOnCoords(x, y)))
+		if (object->SpriteIsOnCoordsAndMap(x, y, current_node->GetMapName()) || (object == player && object->SpriteIsOnCoords(x, y)))
 		{
 			return object;
 		}
@@ -315,11 +493,15 @@ GameObject* GameManager::GetGameObjectAtCoordsOnMap(int x, int y) {
 	return nullptr;
 }
 
+/**
+* @brief : Return object on Coord x, y on currentMap if there is collider
+* @return : The object on coord
+**/
 GameObject* GameManager::GetGameObjectColliderAtCoordsOnMap(int x, int y) {
 
 	for (GameObject *object : gameObjects)
 	{
-		if (object->SpriteColliderIsOnCoordsAndMap(x, y, ScreenManager::instance().GetCurrentMap()))
+		if (object->SpriteColliderIsOnCoordsAndMap(x, y, current_node->GetMapName()))
 		{
 			return object;
 		}
@@ -327,7 +509,10 @@ GameObject* GameManager::GetGameObjectColliderAtCoordsOnMap(int x, int y) {
 	return nullptr;
 }
 
-
+/**
+* @brief : Highlight object on mouse move
+* @param coords : The object on coord
+**/
 void GameManager::HighlightGameObjectAtCoords(COORD coords) {
 	GameObject *gameObject = GetGameObjectAtCoordsOnMap(coords.X, coords.Y);
 
@@ -341,7 +526,9 @@ void GameManager::HighlightGameObjectAtCoords(COORD coords) {
 		ScreenManager::instance().SetDescription(highlightedGameObject->GetDescription());
 	}
 }
-
+/**
+* @brief : Remove the previous highlighted object
+**/
 void GameManager::RemoveHighlight() {
 	if (highlightedGameObject != nullptr) 
 	{

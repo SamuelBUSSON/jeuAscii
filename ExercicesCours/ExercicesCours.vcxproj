@@ -23,7 +23,7 @@
     <ProjectGuid>{80366D89-D329-4DFA-A6E0-88DB396E168D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ExercicesCours</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -157,16 +157,21 @@
     <ClInclude Include="FireCamp.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Graph.h" />
     <ClInclude Include="InfoPanel.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="LootObject.h" />
+    <ClInclude Include="MapGenerator.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="RockLootObject.h" />
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="StickLootObject.h" />
     <ClInclude Include="StoneObject.h" />
     <ClInclude Include="TreeObject.h" />
+    <ClInclude Include="Utiles.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppleLootObject.cpp" />
@@ -175,9 +180,12 @@
     <ClCompile Include="FireCamp.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="InfoPanel.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LootObject.cpp" />
+    <ClCompile Include="MapGenerator.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -190,6 +198,10 @@
     <ClCompile Include="StickLootObject.cpp" />
     <ClCompile Include="StoneObject.cpp" />
     <ClCompile Include="TreeObject.cpp" />
+    <ClCompile Include="Utiles.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ExercicesCours.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

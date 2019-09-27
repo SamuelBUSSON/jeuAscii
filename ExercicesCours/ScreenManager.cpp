@@ -1,19 +1,16 @@
 #include "pch.h"
 #include "ScreenManager.h"
 
-
-#include <iomanip>
 #include <fstream>
 #include <windows.h>
-#include <iostream>
 #include <string>
 #include <vector>
 
 #include "GameManager.h"
 #include "InfoPanel.h"
 
-using namespace std;
 
+using namespace std;
 
 const vector<string> explode(const string& s, const char& c)
 {
@@ -109,7 +106,7 @@ void ScreenManager::SampleDisplay(std::list<GameObject *> gameObjects)
 {
 	//cameraPosX = playerPosX - CAM_WIDTH / 2;
 	//cameraPosY = playerPosY - CAM_HEIGHT / 2;
-
+	
 	ReadMap();
 	DisplayGameObjects(gameObjects);
 	DrawBorder();
@@ -179,6 +176,8 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 	std::string line;
 	int y = 0;
 
+	SetTextCoord(gameObject->GetX() + 1, gameObject->GetY(), ' ');
+
 	char c;
 	while (getline(inFile, line))
 	{
@@ -186,6 +185,7 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 		{
 				for (int x = 0; x < line.length(); x++)
 				{
+
 					if (y < gameObject->GetHeight() + 1)
 					{
 						if (line[x] != 'W')
@@ -197,7 +197,7 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 					{
 						if (line[x] != 'W') 
 						{
-							if (GameManager::instance().GetHighlightGameObject() && GameManager::instance().GetHighlightGameObject() == gameObject)
+							if (GameManager::Instance().GetHighlightGameObject() && GameManager::Instance().GetHighlightGameObject() == gameObject)
 							{
 
 									SetTextColor(gameObject->GetX() + x, gameObject->GetY() + y - gameObject->GetHeight(), GetColorByChar(line[x]) + 0x80);
@@ -219,33 +219,18 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 
 void ScreenManager::ReadMap()
 {	
-	
 	std::ifstream inFile;
-	inFile.open(currentMap.currentMapName);
+	inFile.open(GameManager::Instance().GetCurrentNode()->GetMapName());
+	//inFile.open(currentMap.currentMapName);
 	std::string line;
 
 	int numberLine = 0;	
 
 	while (getline(inFile, line)) {	
-
-		if (numberLine == 0) 
-		{
-			vector<string> v = explode(line, ',');
-			if (v.size() >= 4) {
-				currentMap.topMap = v[0];
-				currentMap.rightMap = v[1];
-				currentMap.bottomMap = v[2];
-				currentMap.leftMap = v[3];
-
-			}
-		}
-		else 
-		{
 			for (int x = 0; x < line.length(); x++)
 			{
 				SetTextCoord(x + 1, numberLine, line[x], line[x] == 'M' ? 0x22 : FOREGROUND_GREEN);
 			}
-		}
 		numberLine++;
 	}
 
@@ -302,9 +287,10 @@ bool ScreenManager::BottomMap() {
 	return false;
 }
 
+
 void ScreenManager::DisplayGameObjects(std::list<GameObject *> gameObjects) {
 	for (GameObject* object : gameObjects) {
-		if (object->GetMapLink() == currentMap.currentMapName || object == GameManager::instance().GetPlayer())
+		if (object->GetMapLink() == GameManager::Instance().GetCurrentNode()->GetMapName() || object == GameManager::Instance().GetPlayer())
 		{
 			DisplayGameObject(object);
 			//object->DrawCollider();			

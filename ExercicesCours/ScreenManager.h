@@ -3,11 +3,7 @@
 #ifndef DEF_SCREENMANAGER
 #define DEF_SCREENMANAGER
 
-#include <iomanip>
-#include <fstream>
-
 #include <windows.h>
-#include <iostream>
 #include <string>
 #include <list>
 

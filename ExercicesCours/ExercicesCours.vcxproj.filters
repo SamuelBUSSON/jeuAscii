@@ -17,6 +17,10 @@
     <ClCompile Include="AppleLootObject.cpp" />
     <ClCompile Include="StickLootObject.cpp" />
     <ClCompile Include="RockLootObject.cpp" />
+    <ClCompile Include="MapGenerator.cpp" />
+    <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Utiles.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
@@ -34,5 +38,13 @@
     <ClInclude Include="AppleLootObject.h" />
     <ClInclude Include="StickLootObject.h" />
     <ClInclude Include="RockLootObject.h" />
+    <ClInclude Include="MapGenerator.h" />
+    <ClInclude Include="Graph.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Utiles.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ExercicesCours.rc" />
   </ItemGroup>
 </Project>

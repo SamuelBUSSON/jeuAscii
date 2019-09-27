@@ -1,15 +1,8 @@
 #include "pch.h"
 #include "InputManager.h"
 
-#include <iomanip>
-#include <fstream>
-
 #include <windows.h>
-#include <iostream>
-#include <string>
 
-#define SCREEN_WIDTH 200
-#define SCREEN_HEIGHT 60
 
 InputManager::InputManager()
 {

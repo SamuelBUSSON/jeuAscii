@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include <utility>
 #include "ScreenManager.h"
 
 std::vector<std::string> explode(std::string const & s, char delim)
