@@ -10,13 +10,9 @@
 
 #include <vector>
 
+#include "Utiles.h"
+
 using namespace std;
-
-
-void SetCharAtCoord2(int x, int y, std::string &s, char c)
-{
-	s[x + (y * (MAP_WIDTH + 1))] = c;
-}
 
 Node::Node(std::string mapPath) : src(mapPath)
 {

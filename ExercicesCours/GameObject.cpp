@@ -7,26 +7,16 @@
 #include <sstream>
 #include "ScreenManager.h"
 
-std::vector<std::string> explode(std::string const & s, char delim)
-{
-	std::vector<std::string> result;
-	std::istringstream iss(s);
 
-	for (std::string token; std::getline(iss, token, delim); )
-	{
-		result.push_back(std::move(token));
-	}
+#include "Utiles.h"
 
-	return result;
-}
-
-GameObject::GameObject(int x, int y, std::string spriteFile) {
+GameObject::GameObject(int x, int y, std::string spriteFile)  : shakeCounter(0){
 	posX = x;
 	posY = y;
 	sprite = LoadSpriteFile(spriteFile);
 }
 
-GameObject::GameObject(int x, int y, std::string spriteFile, std::string mapName)
+GameObject::GameObject(int x, int y, std::string spriteFile, std::string mapName) : shakeCounter(0)
 {
 	posX = x;
 	posY = y;
@@ -117,5 +107,33 @@ void GameObject::DrawCollider()
 	}
 
 
+}
+
+void GameObject::Shake()
+{
+	shakeCounter++;
+	
+	switch (shakeCounter)
+	{
+	case 1:
+		posY++;
+		break;
+
+	case 2:
+		posY -= 2;
+		break;
+
+	case 3:
+		posY += 2;
+		break;
+
+	case 4:
+		posY--;
+		shakeCounter = 0;
+		ScreenManager::instance().SetShakeObject(nullptr);
+		break;
+	default:
+		break;
+	}
 }
 

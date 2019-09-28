@@ -12,11 +12,23 @@
 #include <filesystem>
 #include <fstream>
 
-//#include "Utiles.h"
+#include "Utiles.h"
 #include <stdio.h>
 
-void RemoveMaps() {
+void RemoveMaps() 
+{
+
 	//Folder where all maps are
+	std::string path = "Sprite/MapTest/";
+
+	//Browse the folder and get each file
+	for (const auto & entry : std::filesystem::directory_iterator(path))
+	{
+		remove((entry.path().generic_string()).c_str());
+	}
+
+	/*
+	//Folder where all maps are	
 	std::string path = "Sprite/MapTest/Map";
 	std::string s = "";
 
@@ -24,24 +36,11 @@ void RemoveMaps() {
 	{
 		s = path +  std::to_string(i) + ".txt";
 		remove(s.c_str());
-	}
+	}*/
+
+	system("exec rm -r Sprite/MapTest/*");
 }
 
-
-const std::vector<std::string> explode2(const std::string& s, const char& c)
-{
-	std::string buff{ "" };
-	std::vector<std::string> v;
-
-	for (auto n : s)
-	{
-		if (n != c) buff += n; else
-			if (n == c && buff != "") { v.push_back(buff); buff = ""; }
-	}
-	if (buff != "") v.push_back(buff);
-
-	return v;
-}
 
 /**
 * @brief : Check if player is next to door
@@ -171,6 +170,8 @@ GameManager::~GameManager() {
 **/
 void GameManager::Init() {
 
+	RemoveMaps();
+
 	//Folder where all maps are
 	std::string path = "Sprite/Maps/";
 	int fileCount = 0;
@@ -230,6 +231,9 @@ void GameManager::Init() {
 
 void GameManager::InitTest()
 {
+
+	RemoveMaps();
+
 	//allMapsGraph = new Graph();
 
 	//Folder where all maps are
@@ -240,50 +244,6 @@ void GameManager::InitTest()
 	//Browse the folder and get each file
 	for (const auto & entry : std::filesystem::directory_iterator(path))
 	{
-		std::fstream myfile;
-		myfile.open(entry, std::ios::out | std::ios::in | std::ios::app);
-		std::string line;
-		//Get FileName
-		std::string base_filename = entry.path().generic_string();
-
-		numberLine = 0;
-
-		while (std::getline(myfile, line))
-		{
-			if (numberLine > 0) {
-				for (int x = 0; x < line.length(); x++)
-				{
-					switch (line[x])
-					{
-					case 'T':
-						gameObjects.push_front(new TreeObject(x, numberLine, "Sprite/Tree.txt", base_filename));
-						break;
-
-					case 'F':
-						gameObjects.push_front(new FireCamp(x, numberLine, "Sprite/FireCamp.txt", base_filename));
-						break;
-
-					case 'S':
-						gameObjects.push_front(new StoneObject(x, numberLine, "Sprite/Stone.txt", base_filename));
-						break;
-
-					case 'G':
-						gameObjects.push_front(new GameObject(x, numberLine, "Sprite/Monster.txt", base_filename));
-						break;
-
-					default:
-						break;
-					}
-				}
-			}
-			else
-			{
-				//TODO Create Node System
-				std::vector<std::string> v = explode2(line, ',');
-			}
-			numberLine++;
-		}
-		myfile.close();
 		fileCount++;
 	}
 
@@ -314,8 +274,6 @@ void GameManager::Run() {
 		ScreenManager::instance().SampleDisplay(GetGameObjects());
 		Update();
 	}
-
-	RemoveMaps();
 }
 
 /**
@@ -332,93 +290,97 @@ std::list<GameObject *> GameManager::GetGameObjects() {
 **/
 void GameManager::Update()
 {
-	INPUT_RECORD InputRecord = inputManager->GetInputEvent();
+	
+	
+	if (inputManager->IsInput()) {
+		INPUT_RECORD InputRecord = inputManager->GetInputEvent();
 
-	switch (InputRecord.EventType)
-	{
-	case KEY_EVENT:
-
-		if (InputRecord.Event.KeyEvent.bKeyDown) {
-			switch (InputRecord.Event.KeyEvent.wVirtualKeyCode)
-			{
-			case VK_ESCAPE:
-				exit_game = true;
-				break;
-
-			case VK_SPACE:
-
-				break;
-
-
-			case VK_RETURN:
-
-				break;
-
-			case VK_LEFT:
-				player->MoveLeft();
-				break;
-
-			case VK_RIGHT:
-				player->MoveRight();
-				break;
-
-			case VK_UP:
-				player->MoveUp();
-				break;
-
-			case VK_DOWN:
-				player->MoveDown();
-				break;
-
-			default:
-
-
-				break;
-
-			}
-			CheckPlayerPositionTest();
-			//CheckPlayerPosition();
-
-		}//switch
-
-		//---------------------------------------------------------------------------------
-		break;
-
-	case MOUSE_EVENT: // mouse input 
-
-		mousePosition = InputRecord.Event.MouseEvent.dwMousePosition;
-
-		HighlightGameObjectAtCoords(mousePosition);
-
-		//ScreenManager::instance().SetInfo("x : " + std::to_string(InputRecord.Event.MouseEvent.dwMousePosition.X) + " y : " + std::to_string(InputRecord.Event.MouseEvent.dwMousePosition.Y));
-
-		if (InputRecord.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+		switch (InputRecord.EventType)
 		{
-			if (!isClicking) {
-				ClickOnCoords(mousePosition.X, mousePosition.Y);
-				isClicking = true;
+		case KEY_EVENT:
+
+			if (InputRecord.Event.KeyEvent.bKeyDown) {
+				switch (InputRecord.Event.KeyEvent.wVirtualKeyCode)
+				{
+				case VK_ESCAPE:
+					exit_game = true;
+					break;
+
+				case VK_SPACE:
+
+					break;
+
+
+				case VK_RETURN:
+
+					break;
+
+				case VK_LEFT:
+					player->MoveLeft();
+					break;
+
+				case VK_RIGHT:
+					player->MoveRight();
+					break;
+
+				case VK_UP:
+					player->MoveUp();
+					break;
+
+				case VK_DOWN:
+					player->MoveDown();
+					break;
+
+				default:
+
+
+					break;
+
+				}
+				CheckPlayerPositionTest();
+				//CheckPlayerPosition();
+
+			}//switch
+
+			//---------------------------------------------------------------------------------
+			break;
+
+		case MOUSE_EVENT: // mouse input 
+
+			mousePosition = InputRecord.Event.MouseEvent.dwMousePosition;
+
+			HighlightGameObjectAtCoords(mousePosition);
+
+			//ScreenManager::instance().SetInfo("x : " + std::to_string(InputRecord.Event.MouseEvent.dwMousePosition.X) + " y : " + std::to_string(InputRecord.Event.MouseEvent.dwMousePosition.Y));
+
+			if (InputRecord.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+			{
+				if (!isClicking) {
+					ClickOnCoords(mousePosition.X, mousePosition.Y);
+					isClicking = true;
+				}
 			}
+			else {
+				isClicking = false;
+			}// mouse 
+
+			break;
+
+		case WINDOW_BUFFER_SIZE_EVENT: // scrn buf. resizing 
+			;
+			break;
+
+		case FOCUS_EVENT:  // disregard focus events 
+
+		case MENU_EVENT:   // disregard menu events 
+
+			break;
+
+		default:
+			break;
 		}
-		else {
-			isClicking = false;
-		}// mouse 
-
-		break;
-
-	case WINDOW_BUFFER_SIZE_EVENT: // scrn buf. resizing 
-		;
-		break;
-
-	case FOCUS_EVENT:  // disregard focus events 
-
-	case MENU_EVENT:   // disregard menu events 
-
-		break;
-
-	default:
-		std::cout << "Unknown event type \n";
-		break;
 	}
+	
 }
 
 /**
@@ -516,7 +478,7 @@ GameObject* GameManager::GetGameObjectColliderAtCoordsOnMap(int x, int y) {
 void GameManager::HighlightGameObjectAtCoords(COORD coords) {
 	GameObject *gameObject = GetGameObjectAtCoordsOnMap(coords.X, coords.Y);
 
-	if (gameObject == nullptr) {
+	if (gameObject == nullptr || gameObject == ScreenManager::instance().GetShakeObject()) {
 		RemoveHighlight();
 	}
 	else {
@@ -543,5 +505,6 @@ void GameManager::ClickOnCoords(int x, int y) {
 
 	if (gameObject != nullptr) {
 		gameObject->OnClick();
+		ScreenManager::instance().SetShakeObject(gameObject);
 	}
 }

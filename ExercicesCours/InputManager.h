@@ -24,6 +24,7 @@ public:
 	~InputManager();
 
 	void Init();
+	bool IsInput();
 	inline COORD GetMousePosition() const { return mousePosition; }
 	INPUT_RECORD GetInputEvent();
 

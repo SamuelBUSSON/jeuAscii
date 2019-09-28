@@ -54,6 +54,8 @@ private:
 
 	InfoPanel *infoPanel;
 
+	GameObject *shakeObject;
+
 	ScreenManager();
 
 public:
@@ -91,7 +93,8 @@ public:
 	bool BottomMap();
 
 	inline std::string GetCurrentMap() const { return currentMap.currentMapName; }
-
+	inline void SetShakeObject(GameObject* g) { shakeObject = g; }
+	inline GameObject* GetShakeObject() {return shakeObject; }
 
 
 	void DisplayGameObjects(std::list<GameObject *> gameObjects);

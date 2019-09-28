@@ -12,21 +12,6 @@
 
 using namespace std;
 
-const vector<string> explode(const string& s, const char& c)
-{
-	string buff{ "" };
-	vector<string> v;
-
-	for (auto n : s)
-	{
-		if (n != c) buff += n; else
-			if (n == c && buff != "") { v.push_back(buff); buff = ""; }
-	}
-	if (buff != "") v.push_back(buff);
-
-	return v;
-}
-
 int GetColorByChar(char const c) 
 {
 	switch (c)
@@ -108,10 +93,19 @@ void ScreenManager::SampleDisplay(std::list<GameObject *> gameObjects)
 	//cameraPosY = playerPosY - CAM_HEIGHT / 2;
 	
 	ReadMap();
+
+	if (shakeObject) 
+	{
+		shakeObject->Shake();
+	}
+
 	DisplayGameObjects(gameObjects);
 	DrawBorder();
 
 	WriteInfoPanel(infoPanel);
+
+
+
 
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
 
@@ -225,12 +219,13 @@ void ScreenManager::ReadMap()
 	std::string line;
 
 	int numberLine = 0;	
-
-	while (getline(inFile, line)) {	
+	while (getline(inFile, line)) {
+		if (numberLine > 0){
 			for (int x = 0; x < line.length(); x++)
 			{
 				SetTextCoord(x + 1, numberLine, line[x], line[x] == 'M' ? 0x22 : FOREGROUND_GREEN);
 			}
+		}
 		numberLine++;
 	}
 

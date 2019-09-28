@@ -9,11 +9,9 @@
 
 #include "GameManager.h"
 #include "TreeObject.h"
+#include "StoneObject.h"
+#include "Utiles.h"
 
-void SetCharAtCoord(int x, int y, std::string &s, char c)
-{	
-	s[x + (y * (MAP_WIDTH + 1))] = c;
-}
 
 void CreateDoor(std::string &s, Direction direct) 
 {
@@ -106,12 +104,32 @@ std::string MapGenerator::CreateMap()
 	int x = 0;
 	int y = 0;
 
-	for (int i = 0; i < TREE_PER_MAP; i++)
-	{
-		int x = rand() % (3 + MAP_WIDTH - 19);
-		int y = rand() % (3 + MAP_HEIGHT - 12);
+	int object_chanceSpawn;
 
-		GameManager::Instance().AddGameObject(new TreeObject(x, y, "Sprite/Tree.txt", returnValue));
+	for (int i = 0; i < rand() % MAX_OBJECT_PER_MAP + MIN_OBJECT_PER_MAP; i++)
+	{
+		object_chanceSpawn = rand() % 100;
+
+		if (object_chanceSpawn < 50) 
+		{
+			x = rand() % (MAP_WIDTH - 18) + 2;
+			y = rand() % (MAP_HEIGHT - 9) + 4;
+			GameManager::Instance().AddGameObject(new TreeObject(x, y, "Sprite/Tree.txt", returnValue));
+		}
+		if (object_chanceSpawn >= 50 && object_chanceSpawn < 85 )
+		{
+			x = rand() % (MAP_WIDTH - 10) + 2;
+			y = rand() % (MAP_HEIGHT - 5) + 4;
+			GameManager::Instance().AddGameObject(new StoneObject(x, y, "Sprite/Stone.txt", returnValue));
+		}
+
+		if (object_chanceSpawn >= 85)
+		{
+			x = rand() % (MAP_WIDTH - 9) + 2;
+			y = rand() % (MAP_HEIGHT - 5) + 4;
+			GameManager::Instance().AddGameObject(new GameObject(x, y, "Sprite/Monster.txt", returnValue));
+		}
+
 	}
 
 	

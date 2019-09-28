@@ -2,12 +2,6 @@
 
 #include <string>
 
-#define MAP_WIDTH 70
-#define MAP_HEIGHT 37
-
-#define DOOR_LENGTH 11
-
-#define TREE_PER_MAP 3
 
 
 enum Direction
