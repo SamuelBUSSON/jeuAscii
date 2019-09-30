@@ -118,6 +118,7 @@ void ScreenManager::SampleDisplay(std::list<GameObject *> gameObjects)
 
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
 
+	infoPanel->HighlightLineAtCoords(0, 5);
 }
 
 bool ScreenManager::GetExitGame() {
@@ -316,9 +317,9 @@ void ScreenManager::WriteInfoPanel(InfoPanel *_infoPanel) {
 	int lineJump = 0;
 
 	for (struct Panel *panel : _infoPanel->panels) {
-		WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->origX, INFO_PANEL_ORIG_Y + panel->origY + lineJump, _infoPanel->GetDescriptionPanel().header);
+		WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->origX, INFO_PANEL_ORIG_Y + panel->origY + lineJump, panel->header);
 		for (struct Line *line : panel->text) {
-			WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->origX, INFO_PANEL_ORIG_Y + panel->origY + 1 + lineJump, line);
+			WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->origX, INFO_PANEL_ORIG_Y + panel->origY + 1 + lineJump, *line);
 			lineJump++;
 		}
 	}
@@ -332,7 +333,7 @@ void ScreenManager::SetInventory(std::list<LootObject *> inventory) {
 	infoPanel->SetInventory(inventory);
 }
 
-void ScreenManager::WriteLineAtCoords(int x, int y, struct Line line) {
+void ScreenManager::WriteLineAtCoords(int x, int y, struct Line const &line) {
 	for (size_t i = 0; i < line.text.length(); i++) {
 		buffer[(x + i) + (y * SCREEN_WIDTH)].Char.UnicodeChar = line.text[i];
 		buffer[(x + i) + (y * SCREEN_WIDTH)].Attributes = line.color;
