@@ -35,6 +35,7 @@ InfoPanel::~InfoPanel()
 	}
 }
 
+
 void InfoPanel::SetDescription(std::string str)
 { 
 	descriptionPanel.clear();
