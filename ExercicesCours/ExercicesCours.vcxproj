@@ -157,8 +157,10 @@
     <ClInclude Include="FireCamp.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="InfoLine.h" />
     <ClInclude Include="InfoPanel.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="ItemInfoLine.h" />
     <ClInclude Include="LootObject.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
@@ -175,8 +177,10 @@
     <ClCompile Include="FireCamp.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="InfoLine.cpp" />
     <ClCompile Include="InfoPanel.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="ItemInfoLine.cpp" />
     <ClCompile Include="LootObject.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

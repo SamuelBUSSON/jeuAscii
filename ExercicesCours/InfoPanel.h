@@ -4,27 +4,23 @@
 #define DEF_INFOPANEL
 
 #include "LootObject.h"
+#include "InfoLine.h"
 
 #include <string>
 #include <list>
-
-struct Line {
-	std::string text;
-	int color;
-};
 
 struct Panel {
 	int origX;
 	int origY;
 
-	std::list<struct Line *> text;
+	std::list<InfoLine *> text;
 	int defaultColor;
 	int defaultHighlight;
-	struct Line header;
+	InfoLine *header;
 
 	void clear() {
-		for (Line* line : text) {
-			delete line;
+		for (InfoLine* InfoLine : text) {
+			delete InfoLine;
 		}
 
 		text.clear();
@@ -44,7 +40,7 @@ public:
 
 	std::list<struct Panel *> panels;
 
-	Line *highlightedLine;
+	InfoLine *highlightedLine;
 	int oldColorHighlightedLine;
 
 	inline struct Panel GetDescriptionPanel() const { return descriptionPanel; }

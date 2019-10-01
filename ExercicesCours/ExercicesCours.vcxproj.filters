@@ -17,6 +17,8 @@
     <ClCompile Include="AppleLootObject.cpp" />
     <ClCompile Include="StickLootObject.cpp" />
     <ClCompile Include="RockLootObject.cpp" />
+    <ClCompile Include="InfoLine.cpp" />
+    <ClCompile Include="ItemInfoLine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
@@ -34,5 +36,7 @@
     <ClInclude Include="AppleLootObject.h" />
     <ClInclude Include="StickLootObject.h" />
     <ClInclude Include="RockLootObject.h" />
+    <ClInclude Include="InfoLine.h" />
+    <ClInclude Include="ItemInfoLine.h" />
   </ItemGroup>
 </Project>

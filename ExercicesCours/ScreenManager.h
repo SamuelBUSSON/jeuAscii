@@ -104,7 +104,7 @@ public:
 	void HighlightLineAtCoords(COORD coords);
 
 	void WriteInfoPanel(InfoPanel *_infoPanel);
-	void WriteLineAtCoords(int x, int y, struct Line const &line);
+	void WriteLineAtCoords(int x, int y, InfoLine const &line);
 	void SetDescription(std::string infos);
 	void SetInventory(std::list<LootObject *> inventory);
 
