@@ -227,6 +227,7 @@ void GameManager::Update()
 		mousePosition = InputRecord.Event.MouseEvent.dwMousePosition;
 
 		HighlightGameObjectAtCoords(mousePosition);
+		ScreenManager::instance().HighlightLineAtCoords(mousePosition);
 
 		//ScreenManager::instance().SetInfo("x : " + std::to_string(InputRecord.Event.MouseEvent.dwMousePosition.X) + " y : " + std::to_string(InputRecord.Event.MouseEvent.dwMousePosition.Y));
 

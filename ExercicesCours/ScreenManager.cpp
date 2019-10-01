@@ -117,12 +117,15 @@ void ScreenManager::SampleDisplay(std::list<GameObject *> gameObjects)
 	WriteInfoPanel(infoPanel);
 
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
-
-	infoPanel->HighlightLineAtCoords(0, 5);
 }
 
 bool ScreenManager::GetExitGame() {
 	return EXITGAME;
+}
+
+void ScreenManager::HighlightLineAtCoords(COORD coords)
+{
+	infoPanel->HighlightLineAtCoords(coords.X - INFO_PANEL_ORIG_X, coords.Y - INFO_PANEL_ORIG_Y);
 }
 
 void ScreenManager::SetTextCoord(int x, int y, char c)

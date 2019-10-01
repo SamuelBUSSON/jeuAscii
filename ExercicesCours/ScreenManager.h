@@ -101,6 +101,7 @@ public:
 	void DisplayGameObjects(std::list<GameObject *> gameObjects);
 	void DisplayGameObject(GameObject *gameObject);
 
+	void HighlightLineAtCoords(COORD coords);
 
 	void WriteInfoPanel(InfoPanel *_infoPanel);
 	void WriteLineAtCoords(int x, int y, struct Line const &line);

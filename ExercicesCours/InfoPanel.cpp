@@ -2,6 +2,7 @@
 #include "InfoPanel.h"
 
 #include <map>
+#include <iostream>
 
 
 InfoPanel::InfoPanel()
@@ -94,6 +95,8 @@ void InfoPanel::HighlightLineAtCoords(int x, int y)
 			}
 		}
 	}
+
+	RemoveHighlight();
 }
 
 /*
