@@ -19,6 +19,7 @@ struct Panel {
 
 	std::list<struct Line *> text;
 	int defaultColor;
+	int defaultHighlight;
 	struct Line header;
 
 	void clear() {

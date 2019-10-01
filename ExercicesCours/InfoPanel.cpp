@@ -10,6 +10,7 @@ InfoPanel::InfoPanel()
 	descriptionPanel.origX = 0;
 	descriptionPanel.origY = 0;
 	descriptionPanel.defaultColor = 0x08;
+	descriptionPanel.defaultHighlight = 0x05;
 	descriptionPanel.header.color = 0x07;
 	descriptionPanel.header.text = "Description :";
 	struct Line *emptyLine = new struct Line({ "", descriptionPanel.defaultColor });
@@ -19,6 +20,7 @@ InfoPanel::InfoPanel()
 	inventoryPanel.origX = 0;
 	inventoryPanel.origY = 3;
 	inventoryPanel.defaultColor = 0x08;
+	inventoryPanel.defaultHighlight = 0x05;
 	inventoryPanel.header.color = 0x07;
 	inventoryPanel.header.text = "Inventory :";
 	panels.push_back(&inventoryPanel);
@@ -72,6 +74,8 @@ void InfoPanel::SetInventory(std::list<LootObject *> inventory) {
 void InfoPanel::HighlightLineAtCoords(int x, int y)
 {
 	int countLines = 0;
+	int linePadding = 0;
+	std::string::iterator itrLine;
 
 	for (Panel *panel : panels) {
 		countLines++; //Pour le header
@@ -80,13 +84,19 @@ void InfoPanel::HighlightLineAtCoords(int x, int y)
 		/* Si la ligne selectionnee se situe dans le panel parcouru alors on compte jusqu'a trouver la bonne ligne*/
 		if (y <= countLines + panel->text.size()) {
 			for (Line *line : panel->text) {
-				if (y == countLines) {
+
+				/* Compte le nombre d'espaces se situant à l'avant de la ligne */
+				itrLine = line->text.begin();
+				linePadding = 0;
+				while (itrLine != line->text.end() && *(itrLine++) == ' ') linePadding++;
+
+				if (y == countLines && x >= linePadding && x < line->text.length()) {
 					if (highlightedLine != line) {
 						RemoveHighlight();
 						/* On garde en memoire la ligne pour pouvoir retablir son ancienne couleur plus tard */
 						highlightedLine = line;
 						oldColorHighlightedLine = line->color;
-						line->color = 0x06;
+						line->color = panel->defaultHighlight;
 					}
 					return;
 				}
