@@ -2,6 +2,7 @@
 #include "InfoPanel.h"
 #include "ItemInfoLine.h"
 
+
 #include <map>
 #include <iostream>
 
@@ -48,25 +49,25 @@ void InfoPanel::SetDescription(std::string str)
 void InfoPanel::SetInventory(std::list<LootObject *> inventory) {
 	inventoryPanel.clear();
 
-	/* Pour ne pas avoir de duplicata dans l'inventaire ; TODO : compter dans la classe ItemInfoLine */
-	/*
-	std::map<std::string, int> countNames;
+	/* Pour ne pas avoir de doublons dans l'inventaire */
+	std::map<std::string, std::list<LootObject*>> countLoot;
 	for (LootObject *loot : inventory) {
-		countNames[loot->GetName()]++;
+		countLoot[loot->GetName()].push_back(loot);
 	}
 
-	for (std::pair<std::string, int> name : countNames) {
+	for (std::pair<std::string, std::list<LootObject*>> loot : countLoot) {
 		ItemInfoLine *newItemLine = new ItemInfoLine(
-			"    + " + name.first + ((name.second == 1) ? "" : " x" + std::to_string(name.second)),
+			"+ " + loot.first + ((loot.second.size() == 1) ? "" : " x" + std::to_string(loot.second.size())),
 			descriptionPanel.defaultColor,
-
+			loot.second
 		);
 
 		inventoryPanel.text.push_back(newItemLine);
 	}
-	*/
+	
 
-	for (LootObject* lootObject : inventory) {
+
+	/*for (LootObject* lootObject : inventory) {
 		ItemInfoLine *newItemLine = new ItemInfoLine(
 			"+ " + lootObject->GetName(),
 			descriptionPanel.defaultColor,
@@ -74,7 +75,7 @@ void InfoPanel::SetInventory(std::list<LootObject *> inventory) {
 		);
 
 		inventoryPanel.text.push_back(newItemLine);
-	}
+	}*/
 }
 
 /*
