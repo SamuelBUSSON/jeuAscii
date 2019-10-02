@@ -8,20 +8,17 @@
 
 InfoPanel::InfoPanel()
 {
-	descriptionPanel.origX = 0;
-	descriptionPanel.origY = 0;
-	descriptionPanel.defaultColor = 0x08;
-	descriptionPanel.defaultHighlight = 0x05;
+	descriptionPanel.marginX = 0;
+	descriptionPanel.marginY = 0;
 	descriptionPanel.header = new InfoLine("Description :", 0x07);
 	InfoLine *emptyLine = new InfoLine("", descriptionPanel.defaultColor);
 	descriptionPanel.text.push_back(emptyLine);
 	panels.push_back(&descriptionPanel);
 
-	inventoryPanel.origX = 0;
-	inventoryPanel.origY = 3;
-	inventoryPanel.defaultColor = 0x08;
-	inventoryPanel.defaultHighlight = 0x05;
+	inventoryPanel.marginX = 0;
+	inventoryPanel.marginY = 3;
 	inventoryPanel.header = new InfoLine("Inventory :", 0x07);
+	inventoryPanel.padding = 4;
 	panels.push_back(&inventoryPanel);
 
 	highlightedLine = nullptr;
@@ -71,7 +68,7 @@ void InfoPanel::SetInventory(std::list<LootObject *> inventory) {
 
 	for (LootObject* lootObject : inventory) {
 		ItemInfoLine *newItemLine = new ItemInfoLine(
-			"    + " + lootObject->GetName(),
+			"+ " + lootObject->GetName(),
 			descriptionPanel.defaultColor,
 			lootObject
 		);
@@ -87,23 +84,16 @@ void InfoPanel::SetInventory(std::list<LootObject *> inventory) {
 void InfoPanel::HighlightLineAtCoords(int x, int y)
 {
 	int countLines = 0;
-	int linePadding = 0;
-	std::string::iterator itrLine;
 
 	for (Panel *panel : panels) {
 		countLines++; //Pour le header
-		countLines += panel->origY; //Pour le padding entre chaque panel
+		countLines += panel->marginY; //Pour le padding entre chaque panel
 		
 		/* Si la ligne selectionnee se situe dans le panel parcouru alors on compte jusqu'a trouver la bonne ligne*/
 		if (y <= countLines + panel->text.size()) {
 			for (InfoLine *line : panel->text) {
 
-				/* Compte le nombre d'espaces se situant à l'avant de la ligne */
-				itrLine = line->text.begin();
-				linePadding = 0;
-				while (itrLine != line->text.end() && *(itrLine++) == ' ') linePadding++;
-
-				if (y == countLines && x >= linePadding && x < line->text.length()) {
+				if (y == countLines && x >= panel->padding && x < panel->padding + line->text.length()) {
 					if (highlightedLine != line) {
 						RemoveHighlight();
 						/* On garde en memoire la ligne pour pouvoir retablir son ancienne couleur plus tard */

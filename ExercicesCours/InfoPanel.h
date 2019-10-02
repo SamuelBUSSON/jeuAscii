@@ -10,13 +10,15 @@
 #include <list>
 
 struct Panel {
-	int origX;
-	int origY;
+	int marginX;
+	int marginY;
 
 	std::list<InfoLine *> text;
-	int defaultColor;
-	int defaultHighlight;
+	int defaultColor = 0x08;
+	int defaultHighlight = 0x05;
 	InfoLine *header;
+
+	int padding = 0;
 
 	void clear() {
 		for (InfoLine* InfoLine : text) {

@@ -320,9 +320,9 @@ void ScreenManager::WriteInfoPanel(InfoPanel *_infoPanel) {
 	int lineJump = 0;
 
 	for (struct Panel *panel : _infoPanel->panels) {
-		WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->origX, INFO_PANEL_ORIG_Y + panel->origY + lineJump, *(panel->header));
+		WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->marginX, INFO_PANEL_ORIG_Y + panel->marginY + lineJump, *(panel->header));
 		for (InfoLine *line : panel->text) {
-			WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->origX, INFO_PANEL_ORIG_Y + panel->origY + 1 + lineJump, *line);
+			WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->marginX + panel->padding, INFO_PANEL_ORIG_Y + panel->marginY + 1 + lineJump, *line);
 			lineJump++;
 		}
 	}
