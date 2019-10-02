@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "AppleLootObject.h"
+#include "GameManager.h"
 
 
 AppleLootObject::AppleLootObject(int x, int y, std::string spriteFile, std::string mapLink)
@@ -11,4 +12,11 @@ AppleLootObject::AppleLootObject(int x, int y, std::string spriteFile, std::stri
 
 AppleLootObject::~AppleLootObject()
 {
+}
+
+void AppleLootObject::OnUse()
+{
+	if (GameManager::instance().Heal(heal)) {
+		GameManager::instance().RemoveLootFromInventory(this);
+	}
 }

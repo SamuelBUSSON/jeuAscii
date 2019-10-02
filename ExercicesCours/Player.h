@@ -3,8 +3,8 @@
 #ifndef DEF_PLAYER
 #define DEF_PLAYER
 
-#define PLAYER_HEALTH 10
-#define PLAYER_FOOD 10
+#define PLAYER_MAX_HEALTH 10
+#define PLAYER_MAX_FOOD 10
 
 #include "GameObject.h"
 
@@ -24,6 +24,8 @@ public:
 	void MoveUp();
 	void MoveDown();
 	void DrawPos();
+
+	bool Heal(int healValue);
 };
 
 #endif

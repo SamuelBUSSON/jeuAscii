@@ -74,6 +74,11 @@ GameManager::~GameManager() {
 	}
 	gameObjects.clear();
 
+	for (LootObject *loot : inventory) {
+		delete loot;
+	}
+	inventory.clear();
+
 	delete screenManager;
 }
 
@@ -235,6 +240,7 @@ void GameManager::Update()
 		{
 			if (!isClicking) {
 				ClickOnCoords(mousePosition.X, mousePosition.Y);
+				
 				isClicking = true;
 			}
 		}
@@ -288,6 +294,17 @@ void GameManager::AddLootToInventory(LootObject *lootObject) {
 	ScreenManager::instance().SetInventory(inventory);
 }
 
+void GameManager::RemoveLootFromInventory(LootObject *lootObject)
+{
+	std::list<LootObject *>::iterator it = std::find(inventory.begin(), inventory.end(), lootObject);
+
+	if (it != inventory.end()) {
+		delete *it;
+		inventory.erase(it);
+	}
+
+	ScreenManager::instance().SetInventory(inventory);
+}
 
 /*
 	Retourne l'objet situé à la position [x, y]
@@ -357,5 +374,17 @@ void GameManager::ClickOnCoords(int x, int y) {
 
 	if (gameObject != nullptr) {
 		gameObject->OnClick();
+		return;
 	}
+
+	ScreenManager::instance().ClickOnCoords(x, y);
+}
+
+
+/* STATS */
+
+//Redonne de la vie au joueur ; si sa vie est déjà au maximum retourne faux (sinon vrai)
+bool GameManager::Heal(int healValue)
+{
+	return player->Heal(healValue);
 }

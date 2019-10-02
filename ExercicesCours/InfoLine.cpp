@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "InfoLine.h"
+#include "ScreenManager.h"
 
 
 InfoLine::InfoLine(std::string _text, int _color)
@@ -22,4 +23,5 @@ void InfoLine::OnHighlight()
 
 void InfoLine::OnLeaveHighlight()
 {
+	ScreenManager::instance().SetDescription("");
 }

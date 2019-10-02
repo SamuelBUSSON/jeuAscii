@@ -12,6 +12,6 @@ public:
 
 	virtual void OnClick();
 	virtual void OnHighlight();
-	virtual void OnLeaveHighlight();
+	void OnLeaveHighlight();
 };
 

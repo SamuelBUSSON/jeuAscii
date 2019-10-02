@@ -15,14 +15,10 @@ ItemInfoLine::~ItemInfoLine()
 
 void ItemInfoLine::OnClick()
 {
+	lootObject->OnUse();
 }
 
 void ItemInfoLine::OnHighlight()
 {
 	ScreenManager::instance().SetDescription(lootObject->GetDescription());
-}
-
-void ItemInfoLine::OnLeaveHighlight()
-{
-	ScreenManager::instance().SetDescription("");
 }

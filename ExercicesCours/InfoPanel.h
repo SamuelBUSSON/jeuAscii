@@ -15,7 +15,6 @@ struct Panel {
 
 	std::list<InfoLine *> text;
 	int defaultColor = 0x08;
-	int defaultHighlight = 0x05;
 	InfoLine *header;
 
 	int padding = 0;
@@ -42,13 +41,17 @@ public:
 
 	std::list<struct Panel *> panels;
 
+	int defaultHighlight = 0x05;
 	InfoLine *highlightedLine;
 	int oldColorHighlightedLine;
 
 	inline struct Panel GetDescriptionPanel() const { return descriptionPanel; }
 
+
+	InfoLine *FindLineAtCoords(int x, int y);
 	void HighlightLineAtCoords(int x, int y);
 	void RemoveHighlight();
+	void ClickOnCoords(int x, int y);
 
 	void SetDescription(std::string str);
 	void SetInventory(std::list<LootObject *> inventory);

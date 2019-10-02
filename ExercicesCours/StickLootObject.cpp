@@ -12,3 +12,8 @@ StickLootObject::StickLootObject(int x, int y, std::string spriteFile, std::stri
 StickLootObject::~StickLootObject()
 {
 }
+
+void StickLootObject::OnUse()
+{
+
+}

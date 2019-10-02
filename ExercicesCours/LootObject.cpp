@@ -16,3 +16,7 @@ void LootObject::OnClick() {
 	GameManager::instance().AddLootToInventory(this);
 	GameManager::instance().DestroyLootObject(this);
 }
+
+void LootObject::OnUse()
+{
+}

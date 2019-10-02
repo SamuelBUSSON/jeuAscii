@@ -77,37 +77,47 @@ void InfoPanel::SetInventory(std::list<LootObject *> inventory) {
 	}
 }
 
-
 /*
-	Change la couleur de la ligne se situant aux coordonnees [x, y]
+	Retourne la ligne de texte se situant aux coordonnees [x, y]
 */
-void InfoPanel::HighlightLineAtCoords(int x, int y)
+InfoLine *InfoPanel::FindLineAtCoords(int x, int y)
 {
 	int countLines = 0;
 
 	for (Panel *panel : panels) {
 		countLines++; //Pour le header
 		countLines += panel->marginY; //Pour le padding entre chaque panel
-		
+
 		/* Si la ligne selectionnee se situe dans le panel parcouru alors on compte jusqu'a trouver la bonne ligne*/
 		if (y <= countLines + panel->text.size()) {
 			for (InfoLine *line : panel->text) {
-
 				if (y == countLines && x >= panel->padding && x < panel->padding + line->text.length()) {
-					if (highlightedLine != line) {
-						RemoveHighlight();
-						/* On garde en memoire la ligne pour pouvoir retablir son ancienne couleur plus tard */
-						highlightedLine = line;
-						oldColorHighlightedLine = line->color;
-						line->color = panel->defaultHighlight;
-						line->OnHighlight();
-					}
-					return;
+					return line;
 				}
-				
 				countLines++;
 			}
 		}
+	}
+
+	return nullptr;
+}
+
+/*
+	Change la couleur de la ligne se situant aux coordonnees [x, y]
+*/
+void InfoPanel::HighlightLineAtCoords(int x, int y)
+{
+	InfoLine *line = FindLineAtCoords(x, y);
+	if (line != nullptr) {
+		if (highlightedLine != line) {
+			RemoveHighlight();
+			/* On garde en memoire la ligne pour pouvoir retablir son ancienne couleur plus tard */
+			highlightedLine = line;
+			oldColorHighlightedLine = line->color;
+			line->color = defaultHighlight;
+			line->OnHighlight();
+		}
+		return;
 	}
 
 	RemoveHighlight();
@@ -123,4 +133,17 @@ void InfoPanel::RemoveHighlight() {
 	}
 
 	highlightedLine = nullptr;
+}
+
+
+/*
+	Declenche le OnClick de la ligne situee aux coordonnees [x, y]
+*/
+void InfoPanel::ClickOnCoords(int x, int y)
+{
+	InfoLine *line = FindLineAtCoords(x, y);
+
+	if (line != nullptr) {
+		line->OnClick();
+	}
 }

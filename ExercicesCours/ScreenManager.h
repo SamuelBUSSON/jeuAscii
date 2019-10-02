@@ -102,6 +102,7 @@ public:
 	void DisplayGameObject(GameObject *gameObject);
 
 	void HighlightLineAtCoords(COORD coords);
+	void ClickOnCoords(int x, int y);
 
 	void WriteInfoPanel(InfoPanel *_infoPanel);
 	void WriteLineAtCoords(int x, int y, InfoLine const &line);

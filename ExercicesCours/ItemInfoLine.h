@@ -13,6 +13,5 @@ public:
 
 	void OnClick() override;
 	void OnHighlight() override;
-	void OnLeaveHighlight() override;
 };
 

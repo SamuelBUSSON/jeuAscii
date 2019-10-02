@@ -128,6 +128,11 @@ void ScreenManager::HighlightLineAtCoords(COORD coords)
 	infoPanel->HighlightLineAtCoords(coords.X - INFO_PANEL_ORIG_X, coords.Y - INFO_PANEL_ORIG_Y);
 }
 
+void ScreenManager::ClickOnCoords(int x, int y)
+{
+	infoPanel->ClickOnCoords(x - INFO_PANEL_ORIG_X, y - INFO_PANEL_ORIG_Y);
+}
+
 void ScreenManager::SetTextCoord(int x, int y, char c)
 {
 /*	x = x - cameraPosX;
@@ -335,6 +340,7 @@ void ScreenManager::SetDescription(std::string desc) {
 void ScreenManager::SetInventory(std::list<LootObject *> inventory) {
 	infoPanel->SetInventory(inventory);
 }
+
 
 void ScreenManager::WriteLineAtCoords(int x, int y, InfoLine const &line) {
 	for (size_t i = 0; i < line.text.length(); i++) {

@@ -12,3 +12,7 @@ RockLootObject::RockLootObject(int x, int y, std::string spriteFile, std::string
 RockLootObject::~RockLootObject()
 {
 }
+
+void RockLootObject::OnUse()
+{
+}

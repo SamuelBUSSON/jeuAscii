@@ -64,6 +64,7 @@ public:
 	void DestroyLootObject(GameObject *gameObject);
 
 	void AddLootToInventory(LootObject *lootObject);
+	void RemoveLootFromInventory(LootObject *lootObject);
 
 	GameObject* GetGameObjectAtCoords(int x, int y);
 	GameObject * GetGameObjectAtCoordsOnMap(int x, int y);
@@ -79,6 +80,9 @@ public:
 	inline GameObject* GetHighlightGameObject() { return highlightedGameObject; }
 	inline bool IsClicking() { return isClicking; }
 	inline GameObject* GetPlayer() { return player; }
+
+	//Stats
+	bool Heal(int healValue);
 
 	static GameManager& instance()
 	{
