@@ -96,18 +96,19 @@ public:
 
 	inline std::string GetCurrentMap() const { return currentMap.currentMapName; }
 
-
-
 	void DisplayGameObjects(std::list<GameObject *> gameObjects);
 	void DisplayGameObject(GameObject *gameObject);
 
 	void HighlightLineAtCoords(COORD coords);
 	void ClickOnCoords(int x, int y);
 
-	void WriteInfoPanel(InfoPanel *_infoPanel);
-	void WriteLineAtCoords(int x, int y, InfoLine const &line);
 	void SetDescription(std::string infos);
 	void SetInventory(std::list<LootObject *> inventory);
+	void WriteInfoPanel(InfoPanel *_infoPanel);
+	void WriteLineAtCoords(int x, int y, InfoLine const &line);
+
+	inline void SetHealthBarValue(int health) { infoPanel->healthBar.value = health; }
+	void DisplayTextBar(struct TextBar &textBar);
 
 };
 

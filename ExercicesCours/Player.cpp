@@ -6,7 +6,7 @@
 
 Player::Player(int x, int y, std::string spriteFile)
 : GameObject(x, y, spriteFile) {
-	health = PLAYER_MAX_HEALTH - 4;
+	health = PLAYER_MAX_HEALTH - 6;
 	food = PLAYER_MAX_FOOD;
 	description = "it's you !";
 }
@@ -42,5 +42,6 @@ bool Player::Heal(int healValue)
 
 	health += healValue;
 	if (health > PLAYER_MAX_HEALTH) health = PLAYER_MAX_HEALTH;
+
 	return true;
 }

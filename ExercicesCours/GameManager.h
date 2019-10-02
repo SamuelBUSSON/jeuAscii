@@ -79,7 +79,7 @@ public:
 
 	inline GameObject* GetHighlightGameObject() { return highlightedGameObject; }
 	inline bool IsClicking() { return isClicking; }
-	inline GameObject* GetPlayer() { return player; }
+	inline Player* GetPlayer() { return player; }
 
 	//Stats
 	bool Heal(int healValue);

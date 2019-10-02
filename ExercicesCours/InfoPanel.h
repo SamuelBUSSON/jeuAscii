@@ -9,6 +9,7 @@
 #include <string>
 #include <list>
 
+//TODO faire de ceci une classe
 struct Panel {
 	int marginX;
 	int marginY;
@@ -28,6 +29,15 @@ struct Panel {
 	}
 };
 
+struct TextBar {
+	int origX;
+	int origY;
+	InfoLine *label;
+	int value;
+	int color;
+	char unit = ' ';
+};
+
 class InfoPanel
 {
 private:
@@ -40,6 +50,8 @@ public:
 	~InfoPanel();
 
 	std::list<struct Panel *> panels;
+	struct TextBar healthBar;
+
 
 	int defaultHighlight = 0x05;
 	InfoLine *highlightedLine;

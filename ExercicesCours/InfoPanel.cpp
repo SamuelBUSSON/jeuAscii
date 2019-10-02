@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "InfoPanel.h"
 #include "ItemInfoLine.h"
+#include "GameManager.h"
 
 
 #include <map>
@@ -24,6 +25,12 @@ InfoPanel::InfoPanel()
 
 	highlightedLine = nullptr;
 	oldColorHighlightedLine = 0;
+
+	healthBar.origX = 0;
+	healthBar.origY = SCREEN_HEIGHT - 5;
+	healthBar.label = new InfoLine("Health :", 0x07);
+	healthBar.color = 0xc0;
+	healthBar.value = GameManager::instance().GetPlayer()->GetHealth();
 }
 
 

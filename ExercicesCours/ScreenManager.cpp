@@ -331,6 +331,8 @@ void ScreenManager::WriteInfoPanel(InfoPanel *_infoPanel) {
 			lineJump++;
 		}
 	}
+
+	DisplayTextBar(_infoPanel->healthBar);
 }
 
 void ScreenManager::SetDescription(std::string desc) {
@@ -341,10 +343,36 @@ void ScreenManager::SetInventory(std::list<LootObject *> inventory) {
 	infoPanel->SetInventory(inventory);
 }
 
-
 void ScreenManager::WriteLineAtCoords(int x, int y, InfoLine const &line) {
 	for (size_t i = 0; i < line.text.length(); i++) {
 		buffer[(x + i) + (y * SCREEN_WIDTH)].Char.UnicodeChar = line.text[i];
 		buffer[(x + i) + (y * SCREEN_WIDTH)].Attributes = line.color;
 	}
+}
+
+void ScreenManager::DisplayTextBar(struct TextBar &textBar)
+{
+	int x = textBar.origX + INFO_PANEL_ORIG_X;
+	int y = textBar.origY + INFO_PANEL_ORIG_Y;
+	int padding = textBar.label->text.length();
+
+	WriteLineAtCoords(x, y, *(textBar.label));
+
+
+	buffer[(x + padding) + (y * SCREEN_WIDTH)].Char.UnicodeChar = ' ';
+	buffer[(x + padding) + (y * SCREEN_WIDTH)].Attributes = 0x00;
+	buffer[(x + 1 + padding) + (y * SCREEN_WIDTH)].Char.UnicodeChar = ' ';
+	buffer[(x + 1 + padding) + (y * SCREEN_WIDTH)].Attributes = 0x00;
+	buffer[(x + 2 + padding) + (y * SCREEN_WIDTH)].Char.UnicodeChar = '<';
+	buffer[(x + 2 + padding) + (y * SCREEN_WIDTH)].Attributes = 0x07;
+
+	for (size_t i = padding + 3; i < padding + (textBar.value * 2) + 3; i += 2) {
+		buffer[(x + i) + (y * SCREEN_WIDTH)].Char.UnicodeChar = textBar.unit;
+		buffer[(x + i) + (y * SCREEN_WIDTH)].Attributes = textBar.color;
+		buffer[(x + i + 1) + (y * SCREEN_WIDTH)].Char.UnicodeChar = textBar.unit;
+		buffer[(x + i + 1) + (y * SCREEN_WIDTH)].Attributes = textBar.color;
+	}
+
+	buffer[(x + padding + (PLAYER_MAX_HEALTH * 2) + 3) + (y * SCREEN_WIDTH)].Char.UnicodeChar = '>';
+	buffer[(x + padding + (PLAYER_MAX_HEALTH * 2) + 3) + (y * SCREEN_WIDTH)].Attributes = 0x07;
 }
