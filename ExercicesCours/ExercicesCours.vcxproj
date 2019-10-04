@@ -180,7 +180,7 @@
   <ItemGroup>
     <ClCompile Include="AppleLootObject.cpp" />
     <ClCompile Include="BreakableObject.cpp" />
-    <ClCompile Include="ExercicesCours.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="FireCamp.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
