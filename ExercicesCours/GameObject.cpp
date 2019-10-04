@@ -105,35 +105,13 @@ void GameObject::DrawCollider()
 			ScreenManager::instance().SetTextCoord(x, y, ' ', BACKGROUND_BLUE);
 		}
 	}
-
-
 }
 
-void GameObject::Shake()
+void  GameObject::SetSpriteFile(std::string spriteFile) 
 {
-	shakeCounter++;
-	
-	switch (shakeCounter)
-	{
-	case 1:
-		posY++;
-		break;
 
-	case 2:
-		posY -= 2;
-		break;
-
-	case 3:
-		posY += 2;
-		break;
-
-	case 4:
-		posY--;
-		shakeCounter = 0;
-		ScreenManager::instance().SetShakeObject(nullptr);
-		break;
-	default:
-		break;
-	}
+	sprite = LoadSpriteFile(spriteFile);
 }
+
+
 

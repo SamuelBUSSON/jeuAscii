@@ -8,8 +8,10 @@
 #include "InputManager.h"
 #include "Player.h"
 #include "LootObject.h"
+#include "MonsterObject.h"
 #include "Node.h"
 #include "Graph.h"
+
 
 #include <list>
 #include <map>
@@ -19,6 +21,9 @@
 
 #define XDOORLEFT 29
 #define XDOORRIGHT 40
+
+
+#define FRAMERATE 60.0
 
 struct ZIndexComparison {
 	inline bool const operator()(const GameObject *objectA, const GameObject *objectB) {
@@ -32,6 +37,7 @@ class GameManager {
 private:
 	ScreenManager* screenManager;
 	std::list<GameObject *> gameObjects;
+	std::list<MonsterObject *> monsterObjects;
 
 	InputManager* inputManager;
 	COORD mousePosition;
@@ -71,6 +77,7 @@ public:
 
 
 	void AddGameObject(GameObject *gameObject);
+	void AddMonsterObject(MonsterObject * monster);
 	void DestroyGameObject(GameObject *gameObject);
 	void DestroyLootObject(GameObject *gameObject);
 

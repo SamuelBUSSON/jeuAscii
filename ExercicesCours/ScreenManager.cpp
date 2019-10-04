@@ -56,10 +56,9 @@ int GetColorByChar(char const c)
 }
 
 
-ScreenManager::ScreenManager() {
+ScreenManager::ScreenManager() : display_state(Menu) {
 
 	writeHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	currentMap.currentMapName = "Sprite/Maps/Map1.txt";
 
 	infoPanel = new InfoPanel();
 }
@@ -89,23 +88,27 @@ void ScreenManager::ClearScreen() {
 
 void ScreenManager::SampleDisplay(std::list<GameObject *> gameObjects) 
 {
-	//cameraPosX = playerPosX - CAM_WIDTH / 2;
-	//cameraPosY = playerPosY - CAM_HEIGHT / 2;
-	
-	ReadMap();
-
-	if (shakeObject) 
+	switch (display_state)
 	{
-		shakeObject->Shake();
+	case Menu:
+		ShowMenu();
+		break;
+	case Game:
+			ReadMap();
+
+			if (shakeObject)
+			{
+				shakeObject->Shake();
+			}
+
+			DisplayGameObjects(gameObjects);
+			DrawBorder();
+
+			WriteInfoPanel(infoPanel);
+		break;
+	default:
+		break;
 	}
-
-	DisplayGameObjects(gameObjects);
-	DrawBorder();
-
-	WriteInfoPanel(infoPanel);
-
-
-
 
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
 
@@ -317,5 +320,25 @@ void ScreenManager::WriteLineAtCoords(int x, int y, std::string text, int color)
 	for (size_t i = 0; i < text.length(); i++) {
 		buffer[(x + i) + (y * SCREEN_WIDTH)].Char.UnicodeChar = text[i];
 		buffer[(x + i) + (y * SCREEN_WIDTH)].Attributes = color;
+	}
+}
+
+void ScreenManager::ShowMenu()
+{
+	std::ifstream inFile;
+	inFile.open("Sprite/Menu.txt");
+	std::string line;
+
+	int numberLine = 0;
+	while (getline(inFile, line)) {
+			for (int x = 0; x < line.length(); x++)
+			{
+				SetTextCoord(x, numberLine, line[x], FOREGROUND_RED);
+			}
+		numberLine++;
+	}
+
+	if (inFile) {
+		inFile.close();
 	}
 }

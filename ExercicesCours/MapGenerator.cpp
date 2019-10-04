@@ -10,6 +10,7 @@
 #include "GameManager.h"
 #include "TreeObject.h"
 #include "StoneObject.h"
+#include "MonsterObject.h"
 #include "Utiles.h"
 
 
@@ -110,29 +111,30 @@ std::string MapGenerator::CreateMap()
 	{
 		object_chanceSpawn = rand() % 100;
 
+		//50% of object is Tree
 		if (object_chanceSpawn < 50) 
 		{
 			x = rand() % (MAP_WIDTH - 18) + 2;
-			y = rand() % (MAP_HEIGHT - 9) + 4;
+			y = rand() % (MAP_HEIGHT - 18) + 4;
 			GameManager::Instance().AddGameObject(new TreeObject(x, y, "Sprite/Tree.txt", returnValue));
 		}
-		if (object_chanceSpawn >= 50 && object_chanceSpawn < 85 )
+
+		//35% of object is Stone
+		if (object_chanceSpawn >= 50 && object_chanceSpawn < 80 )
 		{
 			x = rand() % (MAP_WIDTH - 10) + 2;
-			y = rand() % (MAP_HEIGHT - 5) + 4;
+			y = rand() % (MAP_HEIGHT - 10) + 4;
 			GameManager::Instance().AddGameObject(new StoneObject(x, y, "Sprite/Stone.txt", returnValue));
 		}
 
-		if (object_chanceSpawn >= 85)
+		//15% of object is Monster
+		if (object_chanceSpawn >= 80)
 		{
-			x = rand() % (MAP_WIDTH - 9) + 2;
-			y = rand() % (MAP_HEIGHT - 5) + 4;
-			GameManager::Instance().AddGameObject(new GameObject(x, y, "Sprite/Monster.txt", returnValue));
+			x = rand() % (MAP_WIDTH/2) + 2;
+			y = rand() % (MAP_HEIGHT/2) + 4;
+			GameManager::Instance().AddMonsterObject(new MonsterObject(x, y, "Sprite/Monster.txt", returnValue));
 		}
-
 	}
-
-	
 
 	//SetCharAtCoord(x, y, map, 'T');
 

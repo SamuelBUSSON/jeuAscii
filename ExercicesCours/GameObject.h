@@ -44,8 +44,7 @@ public:
 
 	void DrawCollider();
 
-	void Shake();
-
+	void SetSpriteFile(std::string c);
 
 	inline int GetX() const { return posX; }
 	inline int GetY() const { return posY; }

@@ -17,6 +17,7 @@ public:
 
 	virtual void UpdateDescription() = 0;
 	virtual void OnClick() override;
+	void Shake();
 	virtual void OnBreak() = 0;
 };
 

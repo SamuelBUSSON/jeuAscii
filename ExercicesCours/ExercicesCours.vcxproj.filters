@@ -21,6 +21,8 @@
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Utiles.cpp" />
+    <ClCompile Include="MonsterStates.cpp" />
+    <ClCompile Include="MonsterObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
@@ -43,6 +45,10 @@
     <ClInclude Include="Node.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Utiles.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="MonsterStates.h" />
+    <ClInclude Include="MonsterObject.h" />
+    <ClInclude Include="StateMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ExercicesCours.rc" />

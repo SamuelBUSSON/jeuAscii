@@ -6,6 +6,9 @@
 #include "FireCamp.h"
 #include "StoneObject.h"
 
+
+#include "PrecisionTimer.h"
+
 #include <algorithm>
 #include <string>
 #include <iostream>
@@ -234,26 +237,9 @@ void GameManager::InitTest()
 
 	RemoveMaps();
 
-	//allMapsGraph = new Graph();
-
-	//Folder where all maps are
-	std::string path = "Sprite/MapTest/";
-	int fileCount = 0;
-	//Count Line of file
-	int numberLine(0);
-	//Browse the folder and get each file
-	for (const auto & entry : std::filesystem::directory_iterator(path))
-	{
-		fileCount++;
-	}
-
-	if (fileCount == 0) 
-	{
-		SetCurrentNode(new Node(MapGenerator::Instance().CreateMap()));
-		current_node->SetGraphPos(Vector2({ 0, 0 }));
-		allMapsGraph->AddNode(0, 0, current_node);
-		
-	}
+	SetCurrentNode(new Node(MapGenerator::Instance().CreateMap()));
+	current_node->SetGraphPos(Vector2({ 0, 0 }));
+	allMapsGraph->AddNode(0, 0, current_node);	
 	
 
 	gameObjects.push_front(player);
@@ -270,9 +256,10 @@ void GameManager::Run() {
 
 	while (!exit_game)
 	{
-		ScreenManager::instance().ClearScreen();
-		ScreenManager::instance().SampleDisplay(GetGameObjects());
-		Update();
+			ScreenManager::instance().ClearScreen();
+			ScreenManager::instance().SampleDisplay(GetGameObjects());
+			Update();
+	
 	}
 }
 
@@ -290,8 +277,13 @@ std::list<GameObject *> GameManager::GetGameObjects() {
 **/
 void GameManager::Update()
 {
-	
-	
+
+
+	for (auto it : monsterObjects)
+	{
+		it->Update();
+	}
+
 	if (inputManager->IsInput()) {
 		INPUT_RECORD InputRecord = inputManager->GetInputEvent();
 
@@ -307,7 +299,7 @@ void GameManager::Update()
 					break;
 
 				case VK_SPACE:
-
+					ScreenManager::instance().SetDisplayState(Game);
 					break;
 
 
@@ -389,6 +381,15 @@ void GameManager::Update()
 **/
 void GameManager::AddGameObject(GameObject *gameObject) {
 	gameObjects.push_front(gameObject);
+}
+
+/**
+* @brief : Add Game object to the game
+* @param gameObject : The gameObject to add
+**/
+void GameManager::AddMonsterObject(MonsterObject *monster) {
+	gameObjects.push_front(monster);
+	monsterObjects.push_front(monster);
 }
 
 /**
@@ -505,6 +506,5 @@ void GameManager::ClickOnCoords(int x, int y) {
 
 	if (gameObject != nullptr) {
 		gameObject->OnClick();
-		ScreenManager::instance().SetShakeObject(gameObject);
 	}
 }

@@ -8,6 +8,7 @@
 #include <list>
 
 #include "GameObject.h"
+#include "BreakableObject.h"
 #include "InfoPanel.h"
 
 #define SCREEN_WIDTH 120
@@ -18,6 +19,12 @@
 
 #define INFO_PANEL_ORIG_X 75
 #define INFO_PANEL_ORIG_Y 1
+
+enum Display_value
+{
+	Menu,
+	Game
+};
 
 
 struct TileMap {
@@ -54,9 +61,11 @@ private:
 
 	InfoPanel *infoPanel;
 
-	GameObject *shakeObject;
+	BreakableObject *shakeObject;
 
 	ScreenManager();
+
+	Display_value display_state;
 
 public:
 
@@ -93,8 +102,10 @@ public:
 	bool BottomMap();
 
 	inline std::string GetCurrentMap() const { return currentMap.currentMapName; }
-	inline void SetShakeObject(GameObject* g) { shakeObject = g; }
-	inline GameObject* GetShakeObject() {return shakeObject; }
+	inline void SetShakeObject(BreakableObject* g) { shakeObject = g; }
+	inline BreakableObject* GetShakeObject() {return shakeObject; }
+
+	inline void SetDisplayState(Display_value new_display) { display_state = new_display; }
 
 
 	void DisplayGameObjects(std::list<GameObject *> gameObjects);
@@ -103,6 +114,7 @@ public:
 
 	void WriteInfoPanel(InfoPanel *_infoPanel);
 	void WriteLineAtCoords(int x, int y, std::string text, int color);
+	void ShowMenu();
 	void SetDescription(std::string infos);
 	void SetInventory(std::list<LootObject *> inventory);
 };
