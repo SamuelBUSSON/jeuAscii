@@ -8,6 +8,5 @@ public:
 	~RockLootObject();
 
 	void OnUse() override;
-	inline std::string GetName() const override { return "rock"; }
 };
 

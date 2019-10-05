@@ -108,6 +108,7 @@ public:
 	void WriteLineAtCoords(int x, int y, InfoLine const &line);
 
 	inline void SetHealthBarValue(int health) { infoPanel->healthBar.value = health; }
+	inline void SetFoodBarValue(int food) { infoPanel->foodBar.value = food; }
 	void DisplayTextBar(struct TextBar &textBar);
 
 };

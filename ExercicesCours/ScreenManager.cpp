@@ -333,6 +333,7 @@ void ScreenManager::WriteInfoPanel(InfoPanel *_infoPanel) {
 	}
 
 	DisplayTextBar(_infoPanel->healthBar);
+	DisplayTextBar(_infoPanel->foodBar);
 }
 
 void ScreenManager::SetDescription(std::string desc) {
@@ -354,7 +355,7 @@ void ScreenManager::DisplayTextBar(struct TextBar &textBar)
 {
 	int x = textBar.origX + INFO_PANEL_ORIG_X;
 	int y = textBar.origY + INFO_PANEL_ORIG_Y;
-	int padding = textBar.label->text.length();
+	int padding = textBar.label->text.length() > 10 ? textBar.label->text.length() : 10;
 
 	WriteLineAtCoords(x, y, *(textBar.label));
 
@@ -373,6 +374,6 @@ void ScreenManager::DisplayTextBar(struct TextBar &textBar)
 		buffer[(x + i + 1) + (y * SCREEN_WIDTH)].Attributes = textBar.color;
 	}
 
-	buffer[(x + padding + (PLAYER_MAX_HEALTH * 2) + 3) + (y * SCREEN_WIDTH)].Char.UnicodeChar = '>';
-	buffer[(x + padding + (PLAYER_MAX_HEALTH * 2) + 3) + (y * SCREEN_WIDTH)].Attributes = 0x07;
+	buffer[(x + padding + (textBar.maxValue * 2) + 3) + (y * SCREEN_WIDTH)].Char.UnicodeChar = '>';
+	buffer[(x + padding + (textBar.maxValue * 2) + 3) + (y * SCREEN_WIDTH)].Attributes = 0x07;
 }

@@ -81,9 +81,6 @@ public:
 	inline bool IsClicking() { return isClicking; }
 	inline Player* GetPlayer() { return player; }
 
-	//Stats
-	bool Heal(int healValue);
-
 	static GameManager& instance()
 	{
 		static GameManager INSTANCE;

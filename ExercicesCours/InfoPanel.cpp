@@ -31,6 +31,14 @@ InfoPanel::InfoPanel()
 	healthBar.label = new InfoLine("Health :", 0x07);
 	healthBar.color = 0xc0;
 	healthBar.value = GameManager::instance().GetPlayer()->GetHealth();
+	healthBar.maxValue = GameManager::instance().GetPlayer()->GetMaxHealth();
+
+	foodBar.origX = 0;
+	foodBar.origY = healthBar.origY + 2;
+	foodBar.label = new InfoLine("Food :", 0x07);
+	foodBar.color = 0x20;
+	foodBar.value = GameManager::instance().GetPlayer()->GetFood();
+	foodBar.maxValue = GameManager::instance().GetPlayer()->GetMaxFood();
 }
 
 

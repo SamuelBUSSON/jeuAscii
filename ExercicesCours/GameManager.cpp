@@ -379,14 +379,3 @@ void GameManager::ClickOnCoords(int x, int y) {
 
 	ScreenManager::instance().ClickOnCoords(x, y);
 }
-
-
-/* STATS */
-
-//Redonne de la vie au joueur ; si sa vie est déjà au maximum retourne faux (sinon vrai)
-bool GameManager::Heal(int healValue)
-{
-	bool update = player->Heal(healValue);
-	if (update) ScreenManager::instance().SetHealthBarValue(player->GetHealth());
-	return update;
-}

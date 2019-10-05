@@ -33,7 +33,8 @@ struct TextBar {
 	int origX;
 	int origY;
 	InfoLine *label;
-	int value;
+	unsigned int value;
+	unsigned int maxValue;
 	int color;
 	char unit = ' ';
 };
@@ -51,6 +52,7 @@ public:
 
 	std::list<struct Panel *> panels;
 	struct TextBar healthBar;
+	struct TextBar foodBar;
 
 
 	int defaultHighlight = 0x05;
