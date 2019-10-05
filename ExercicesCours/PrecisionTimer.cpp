@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "PrecisionTimer.h"
 
 //---------------------- default constructor ------------------------------
@@ -68,65 +69,4 @@ void PrecisionTimer::Start()
 	m_NextTime = m_LastTime + m_FrameTime;
 
 	return;
-}
-
-//-------------------------ReadyForNextFrame()-------------------------------
-//
-//  returns true if it is time to move on to the next frame step. To be used if
-//  FPS is set.
-//
-//----------------------------------------------------------------------------
-inline bool PrecisionTimer::ReadyForNextFrame()
-{
-	assert(m_NormalFPS && "PrecisionTimer::ReadyForNextFrame<No FPS set in timer>");
-
-	QueryPerformanceCounter((LARGE_INTEGER*)&m_CurrentTime);
-
-	if (m_CurrentTime > m_NextTime)
-	{
-		m_TimeElapsed = (m_CurrentTime - m_LastTime) * m_TimeScale;
-		m_LastTime = m_CurrentTime;
-
-		//update time to render next frame
-		m_NextTime = m_CurrentTime + m_FrameTime;
-
-		return true;
-	}
-
-	return false;
-}
-
-//--------------------------- TimeElapsed --------------------------------
-//
-//  returns time elapsed since last call to this function.
-//-------------------------------------------------------------------------
-inline double PrecisionTimer::TimeElapsed()
-{
-	m_LastTimeElapsed = m_TimeElapsed;
-
-	QueryPerformanceCounter((LARGE_INTEGER*)&m_CurrentTime);
-
-	m_TimeElapsed = (m_CurrentTime - m_LastTimeInTimeElapsed) * m_TimeScale;
-
-	m_LastTimeInTimeElapsed = m_CurrentTime;
-
-	const double Smoothness = 5.0;
-
-	if (m_bSmoothUpdates)
-	{
-		if (m_TimeElapsed < (m_LastTimeElapsed * Smoothness))
-		{
-			return m_TimeElapsed;
-		}
-
-		else
-		{
-			return 0.0;
-		}
-	}
-
-	else
-	{
-		return m_TimeElapsed;
-	}
 }

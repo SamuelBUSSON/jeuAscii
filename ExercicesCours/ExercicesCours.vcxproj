@@ -174,6 +174,7 @@
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="StickLootObject.h" />
     <ClInclude Include="StoneObject.h" />
+    <ClInclude Include="PrecisionTimer.h" />
     <ClInclude Include="TreeObject.h" />
     <ClInclude Include="Utiles.h" />
   </ItemGroup>
@@ -199,6 +200,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PrecisionTimer.cpp" />
     <ClCompile Include="RockLootObject.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="StickLootObject.cpp" />

@@ -1,11 +1,9 @@
 #include "pch.h"
 #include "GameManager.h"
 
-
 #include "TreeObject.h"
 #include "FireCamp.h"
 #include "StoneObject.h"
-
 
 #include "PrecisionTimer.h"
 
@@ -252,13 +250,23 @@ void GameManager::InitTest()
 /**
 * @brief : Run The game (Game Loop)
 **/
-void GameManager::Run() {
+void GameManager::Run() 
+{
+
+	//create a timer
+	PrecisionTimer timer(FRAMERATE);
+
+	//start the timer
+	timer.Start();
 
 	while (!exit_game)
 	{
+		if (timer.ReadyForNextFrame()) 
+		{
 			ScreenManager::instance().ClearScreen();
 			ScreenManager::instance().SampleDisplay(GetGameObjects());
 			Update();
+		}
 	
 	}
 }

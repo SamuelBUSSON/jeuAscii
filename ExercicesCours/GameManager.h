@@ -51,6 +51,7 @@ private:
 
 	Player* player;
 
+
 	std::list<LootObject *> inventory;
 
 	std::map<int, std::list<GameObject *>> gameObjectsMap;

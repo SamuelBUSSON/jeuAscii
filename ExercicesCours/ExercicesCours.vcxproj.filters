@@ -23,6 +23,7 @@
     <ClCompile Include="MonsterStates.cpp" />
     <ClCompile Include="MonsterObject.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PrecisionTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
@@ -49,6 +50,7 @@
     <ClInclude Include="MonsterStates.h" />
     <ClInclude Include="MonsterObject.h" />
     <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="PrecisionTimer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ExercicesCours.rc" />
