@@ -267,7 +267,6 @@ void GameManager::Run()
 			ScreenManager::instance().SampleDisplay(GetGameObjects());
 			Update();
 		}
-	
 	}
 }
 

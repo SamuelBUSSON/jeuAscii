@@ -23,7 +23,7 @@
 #define XDOORRIGHT 40
 
 
-#define FRAMERATE 60.0
+#define FRAMERATE 40.0
 
 struct ZIndexComparison {
 	inline bool const operator()(const GameObject *objectA, const GameObject *objectB) {

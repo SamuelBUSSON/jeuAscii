@@ -73,6 +73,20 @@ void ChasePlayer::Execute(MonsterObject * monster)
 
 	GameObject* p = GameManager::Instance().GetPlayer();
 
+	if (p->GetX() != monster->GetCenterX()) 
+	{
+		//TODO : Create Move X To detect collision and object position on map
+		monster->SetX(monster->GetX() + (p->GetX() > monster->GetCenterX() ? 1 : -1) );
+	}
+	else {
+		if (p->GetY() != monster->GetCenterY())
+		{
+			//TODO : Create Move Y To detect collision and object position on map
+			monster->SetY(monster->GetY() + (p->GetY() > monster->GetCenterY() ? 1 : -1));
+		}
+	}
+
+
 	if (!monster->IsInRange(p->GetX(), p->GetY()))
 	{
 		monster->GetFSM()->ChangeState(SeekPlayer::Instance());

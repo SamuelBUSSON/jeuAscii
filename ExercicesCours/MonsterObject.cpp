@@ -3,23 +3,26 @@
 
 
 MonsterObject::MonsterObject(int x, int y, std::string spriteFile)
-	: BreakableObject(x, y, spriteFile, MONSTER_HEALTH) {
+	: BreakableObject(x, y, spriteFile, MONSTER_HEALTH), brain_timer(BRAIN_FRAMERATE){
 	description = "A Monster !!";
 
 	//set up state machine
 	stateMachine = new StateMachine<MonsterObject>(this);
+	brain_timer.Start();
 
 	stateMachine->SetCurrentState(SeekPlayer::Instance());
 }
 
 MonsterObject::MonsterObject(int x, int y, std::string spriteFile, std::string mapName)
-	: BreakableObject(x, y, spriteFile, MONSTER_HEALTH, mapName) {
+	: BreakableObject(x, y, spriteFile, MONSTER_HEALTH, mapName), brain_timer(BRAIN_FRAMERATE) {
 	description = "A Monster !!";
 
 	//set up state machine
 	stateMachine = new StateMachine<MonsterObject>(this);
 
+	brain_timer.Start();
 	stateMachine->SetCurrentState(SeekPlayer::Instance());
+
 
 
 }
@@ -46,7 +49,10 @@ void MonsterObject::OnBreak()
 
 void MonsterObject::Update()
 {
-	stateMachine->Update();
+	if (brain_timer.ReadyForNextFrame()) 
+	{
+		stateMachine->Update();
+	}
 }
 
 int MonsterObject::GetCenterX()

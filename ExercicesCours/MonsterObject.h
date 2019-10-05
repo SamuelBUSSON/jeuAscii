@@ -6,17 +6,20 @@
 #include "BreakableObject.h"
 
 
+#include "PrecisionTimer.h"
 #include "MonsterStates.h"
 #include "StateMachine.h"
 
 #define MONSTER_HEALTH 5
 #define MONSTER_RANGE_DETECTION 20
+#define BRAIN_FRAMERATE 15
 
 class MonsterObject : public BreakableObject
 {
 
 private:
-	StateMachine<MonsterObject>*  stateMachine;
+	StateMachine<MonsterObject>*  stateMachine;	
+	PrecisionTimer brain_timer;
 
 public:
 	MonsterObject(int x, int y, std::string spriteFile);
