@@ -284,6 +284,7 @@ void GameManager::DestroyGameObject(GameObject *gameObject) {
 void GameManager::AddItemToInventory(Item *item) {
 	inventory.push_front(item);
 	ScreenManager::instance().SetInventory(inventory);
+	ScreenManager::instance().SetCrafts(crafts);
 }
 
 void GameManager::RemoveItemFromInventory(Item *item)
@@ -296,6 +297,7 @@ void GameManager::RemoveItemFromInventory(Item *item)
 	}
 
 	ScreenManager::instance().SetInventory(inventory);
+	ScreenManager::instance().SetCrafts(crafts);
 }
 
 void GameManager::UnlockCraft(CraftableItem *item)
@@ -310,8 +312,32 @@ void GameManager::UnlockCraft(CraftableItem *item)
 
 	if (!alreadyUnlocked) {
 		crafts.push_back(item);
+		item->OnUnlock();
 		ScreenManager::instance().SetCrafts(crafts);
 	}
+	else {
+		delete item;
+	}
+}
+
+bool GameManager::CanCraft(CraftableItem *craftableItem)
+{
+	std::map<std::string, std::list<Item*>> countItems;
+	for (Item *item : craftableItem->GetNeededItems()) {
+		countItems[item->GetName()].push_back(item);
+	}
+
+	std::map<std::string, std::list<Item*>> countItemsInventory;
+	for (Item *item : inventory) {
+		countItemsInventory[item->GetName()].push_back(item);
+	}
+
+	size_t enoughItems = 0;
+	for (std::pair<std::string, std::list<Item*>> item : countItems) {
+		if (countItemsInventory[item.first].size() >= item.second.size()) enoughItems++;
+	}
+
+	return (enoughItems == countItems.size());
 }
 
 /*

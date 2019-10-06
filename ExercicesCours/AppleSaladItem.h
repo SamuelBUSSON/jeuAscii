@@ -11,6 +11,7 @@ public:
 	AppleSaladItem();
 	~AppleSaladItem();
 
+	void OnUnlock() override;
 	void OnCraft() override;
 
 	static bool isUnlocked;

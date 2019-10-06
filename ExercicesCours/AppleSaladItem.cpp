@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "AppleSaladItem.h"
 #include "GameManager.h"
+#include "AppleItem.h"
+#include "RockItem.h"
 
 AppleSaladItem::AppleSaladItem()
 {
@@ -11,6 +13,17 @@ AppleSaladItem::AppleSaladItem()
 
 AppleSaladItem::~AppleSaladItem()
 {
+}
+
+void AppleSaladItem::OnUnlock()
+{
+
+	itemsNeededToCraft.push_back(new AppleItem());
+	itemsNeededToCraft.push_back(new AppleItem());
+	itemsNeededToCraft.push_back(new AppleItem());
+	itemsNeededToCraft.push_back(new RockItem());
+
+	AppendDescriptionWithNeededItems();
 }
 
 void AppleSaladItem::OnCraft()

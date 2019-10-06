@@ -81,6 +81,7 @@ public:
 	inline bool IsClicking() { return isClicking; }
 	inline Player* GetPlayer() { return player; }
 
+	bool CanCraft(CraftableItem *item);
 	void UnlockCraft(CraftableItem *item);
 
 	static GameManager& instance()

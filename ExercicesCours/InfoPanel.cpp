@@ -114,10 +114,12 @@ void InfoPanel::SetInventory(std::list<Item *> inventory) {
 
 void InfoPanel::SetCrafts(std::list<CraftableItem *> items)
 {
+	craftPanel.clear();
+
 	for (CraftableItem *item : items) {
 		craftPanel.text.push_back(new ItemInfoLine(
 			"+ " + item->GetName(),
-			craftPanel.defaultColor,
+			(GameManager::instance().CanCraft(item) ? 0x0a : craftPanel.defaultColor),
 			item
 		));
 	}
