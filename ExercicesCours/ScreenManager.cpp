@@ -325,9 +325,12 @@ void ScreenManager::WriteInfoPanel(InfoPanel *_infoPanel) {
 	int lineJump = 0;
 
 	for (struct Panel *panel : _infoPanel->panels) {
-		WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->marginX, INFO_PANEL_ORIG_Y + panel->marginY + lineJump, *(panel->header));
+		lineJump += panel->marginY;
+		WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->marginX, INFO_PANEL_ORIG_Y + lineJump, *(panel->header));
+		lineJump++;
+
 		for (InfoLine *line : panel->text) {
-			WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->marginX + panel->padding, INFO_PANEL_ORIG_Y + panel->marginY + 1 + lineJump, *line);
+			WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->marginX + panel->padding, INFO_PANEL_ORIG_Y + lineJump, *line);
 			lineJump++;
 		}
 	}
@@ -340,7 +343,7 @@ void ScreenManager::SetDescription(std::string desc) {
 	infoPanel->SetDescription(desc);
 }
 
-void ScreenManager::SetInventory(std::list<LootObject *> inventory) {
+void ScreenManager::SetInventory(std::list<Item *> inventory) {
 	infoPanel->SetInventory(inventory);
 }
 

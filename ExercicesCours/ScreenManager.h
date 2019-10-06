@@ -103,7 +103,7 @@ public:
 	void ClickOnCoords(int x, int y);
 
 	void SetDescription(std::string infos);
-	void SetInventory(std::list<LootObject *> inventory);
+	void SetInventory(std::list<Item *> inventory);
 	void WriteInfoPanel(InfoPanel *_infoPanel);
 	void WriteLineAtCoords(int x, int y, InfoLine const &line);
 

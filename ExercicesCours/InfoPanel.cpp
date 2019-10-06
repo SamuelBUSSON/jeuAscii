@@ -23,6 +23,12 @@ InfoPanel::InfoPanel()
 	inventoryPanel.padding = 4;
 	panels.push_back(&inventoryPanel);
 
+	craftPanel.marginX = 0;
+	craftPanel.marginY = 3;
+	craftPanel.header = new InfoLine("Craft :", 0x07);
+	craftPanel.padding = 4;
+	panels.push_back(&craftPanel);
+
 	highlightedLine = nullptr;
 	oldColorHighlightedLine = 0;
 
@@ -61,36 +67,24 @@ void InfoPanel::SetDescription(std::string str)
 }
 
 
-void InfoPanel::SetInventory(std::list<LootObject *> inventory) {
+void InfoPanel::SetInventory(std::list<Item *> inventory) {
 	inventoryPanel.clear();
 
 	/* Pour ne pas avoir de doublons dans l'inventaire */
-	std::map<std::string, std::list<LootObject*>> countLoot;
-	for (LootObject *loot : inventory) {
-		countLoot[loot->GetName()].push_back(loot);
+	std::map<std::string, std::list<Item*>> countItems;
+	for (Item *item : inventory) {
+		countItems[item->GetName()].push_back(item);
 	}
 
-	for (std::pair<std::string, std::list<LootObject*>> loot : countLoot) {
+	for (std::pair<std::string, std::list<Item*>> item : countItems) {
 		ItemInfoLine *newItemLine = new ItemInfoLine(
-			"+ " + loot.first + ((loot.second.size() == 1) ? "" : " x" + std::to_string(loot.second.size())),
+			"+ " + item.first + ((item.second.size() == 1) ? "" : " x" + std::to_string(item.second.size())),
 			descriptionPanel.defaultColor,
-			loot.second
+			item.second
 		);
 
 		inventoryPanel.text.push_back(newItemLine);
 	}
-	
-
-
-	/*for (LootObject* lootObject : inventory) {
-		ItemInfoLine *newItemLine = new ItemInfoLine(
-			"+ " + lootObject->GetName(),
-			descriptionPanel.defaultColor,
-			lootObject
-		);
-
-		inventoryPanel.text.push_back(newItemLine);
-	}*/
 }
 
 /*
@@ -98,13 +92,13 @@ void InfoPanel::SetInventory(std::list<LootObject *> inventory) {
 */
 InfoLine *InfoPanel::FindLineAtCoords(int x, int y)
 {
-	int countLines = 0;
+	size_t countLines = 0;
 
 	for (Panel *panel : panels) {
 		countLines++; //Pour le header
 		countLines += panel->marginY; //Pour le padding entre chaque panel
 
-		/* Si la ligne selectionnee se situe dans le panel parcouru alors on compte jusqu'a trouver la bonne ligne*/
+		/* Si la ligne selectionnee se situe dans le panel parcouru alors on compte jusqu'a trouver la bonne ligne */
 		if (y <= countLines + panel->text.size()) {
 			for (InfoLine *line : panel->text) {
 				if (y == countLines && x >= panel->padding && x < panel->padding + line->text.length()) {
@@ -112,6 +106,9 @@ InfoLine *InfoPanel::FindLineAtCoords(int x, int y)
 				}
 				countLines++;
 			}
+		}
+		else {
+			countLines += panel->text.size();
 		}
 	}
 

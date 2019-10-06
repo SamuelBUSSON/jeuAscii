@@ -7,7 +7,7 @@
 #include "GameObject.h"
 #include "InputManager.h"
 #include "Player.h"
-#include "LootObject.h"
+#include "Item.h"
 
 #include <list>
 #include <map>
@@ -43,7 +43,7 @@ private:
 
 	Player* player;
 
-	std::list<LootObject *> inventory;
+	std::list<Item *> inventory;
 
 	std::map<int, std::list<GameObject *>> gameObjectsMap;
 	//TODO :
@@ -61,10 +61,9 @@ public:
 
 	void AddGameObject(GameObject *gameObject);
 	void DestroyGameObject(GameObject *gameObject);
-	void DestroyLootObject(GameObject *gameObject);
 
-	void AddLootToInventory(LootObject *lootObject);
-	void RemoveLootFromInventory(LootObject *lootObject);
+	void AddItemToInventory(Item *Item);
+	void RemoveItemFromInventory(Item *Item);
 
 	GameObject* GetGameObjectAtCoords(int x, int y);
 	GameObject * GetGameObjectAtCoordsOnMap(int x, int y);

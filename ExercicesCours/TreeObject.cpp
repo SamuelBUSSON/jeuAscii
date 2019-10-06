@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "TreeObject.h"
 #include "GameManager.h"
-#include "LootObject.h"
+#include "Item.h"
 #include "AppleLootObject.h"
 #include "StickLootObject.h"
 

@@ -5,6 +5,7 @@
 
 LootObject::LootObject(int x, int y, std::string spriteFile, std::string mapLink)
 : GameObject(x, y, spriteFile, mapLink) {
+	lootItem = nullptr;
 }
 
 
@@ -13,10 +14,8 @@ LootObject::~LootObject()
 }
 
 void LootObject::OnClick() {
-	GameManager::instance().AddLootToInventory(this);
-	GameManager::instance().DestroyLootObject(this);
-}
-
-void LootObject::OnUse()
-{
+	if (lootItem != nullptr) {
+		GameManager::instance().AddItemToInventory(lootItem);
+	}
+	GameManager::instance().DestroyGameObject(this);
 }

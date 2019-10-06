@@ -3,8 +3,8 @@
 #include "ScreenManager.h"
 
 
-ItemInfoLine::ItemInfoLine(std::string _text, int _color, std::list<LootObject *> _lootObjects)
-	:InfoLine(_text, _color), lootObjects(_lootObjects)
+ItemInfoLine::ItemInfoLine(std::string _text, int _color, std::list<Item *> _items)
+	:InfoLine(_text, _color), items(_items)
 {
 }
 
@@ -15,10 +15,10 @@ ItemInfoLine::~ItemInfoLine()
 
 void ItemInfoLine::OnClick()
 {
-	lootObjects.front()->OnUse();
+	items.front()->OnUse();
 }
 
 void ItemInfoLine::OnHighlight()
 {
-	ScreenManager::instance().SetDescription(lootObjects.front()->GetDescription());
+	ScreenManager::instance().SetDescription(items.front()->GetDescription());
 }

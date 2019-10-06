@@ -5,6 +5,7 @@
 #include "FireCamp.h"
 #include "Player.h"
 #include "StoneObject.h"
+#include "Item.h"
 
 #include <algorithm>
 #include <string>
@@ -74,7 +75,7 @@ GameManager::~GameManager() {
 	}
 	gameObjects.clear();
 
-	for (LootObject *loot : inventory) {
+	for (Item *loot : inventory) {
 		delete loot;
 	}
 	inventory.clear();
@@ -280,23 +281,14 @@ void GameManager::DestroyGameObject(GameObject *gameObject) {
 	}
 }
 
-void GameManager::DestroyLootObject(GameObject *gameObject) {
-	std::list<GameObject *>::iterator it = std::find(gameObjects.begin(), gameObjects.end(), gameObject);
-
-	if (it != gameObjects.end()) {
-		gameObjects.erase(it);
-	}
-}
-
-
-void GameManager::AddLootToInventory(LootObject *lootObject) {
-	inventory.push_front(lootObject);
+void GameManager::AddItemToInventory(Item *item) {
+	inventory.push_front(item);
 	ScreenManager::instance().SetInventory(inventory);
 }
 
-void GameManager::RemoveLootFromInventory(LootObject *lootObject)
+void GameManager::RemoveItemFromInventory(Item *item)
 {
-	std::list<LootObject *>::iterator it = std::find(inventory.begin(), inventory.end(), lootObject);
+	std::list<Item *>::iterator it = std::find(inventory.begin(), inventory.end(), item);
 
 	if (it != inventory.end()) {
 		delete *it;

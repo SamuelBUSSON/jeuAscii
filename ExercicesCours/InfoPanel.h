@@ -3,7 +3,7 @@
 #ifndef DEF_INFOPANEL
 #define DEF_INFOPANEL
 
-#include "LootObject.h"
+#include "Item.h"
 #include "InfoLine.h"
 
 #include <string>
@@ -45,6 +45,7 @@ private:
 	
 	struct Panel descriptionPanel;
 	struct Panel inventoryPanel;
+	struct Panel craftPanel;
 
 public:
 	InfoPanel();
@@ -68,7 +69,7 @@ public:
 	void ClickOnCoords(int x, int y);
 
 	void SetDescription(std::string str);
-	void SetInventory(std::list<LootObject *> inventory);
+	void SetInventory(std::list<Item *> inventory);
 };
 
 #endif
