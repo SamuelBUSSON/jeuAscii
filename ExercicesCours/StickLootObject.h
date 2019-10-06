@@ -6,5 +6,7 @@ class StickLootObject :
 public:
 	StickLootObject(int x, int y, std::string spriteFile, std::string mapLink);
 	~StickLootObject();
+
+	void SetLootItem() override;
 };
 

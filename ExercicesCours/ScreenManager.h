@@ -104,6 +104,8 @@ public:
 
 	void SetDescription(std::string infos);
 	void SetInventory(std::list<Item *> inventory);
+	void SetCrafts(std::list<CraftableItem *> items);
+
 	void WriteInfoPanel(InfoPanel *_infoPanel);
 	void WriteLineAtCoords(int x, int y, InfoLine const &line);
 

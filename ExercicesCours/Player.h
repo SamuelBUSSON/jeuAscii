@@ -9,9 +9,9 @@
 class Player : public GameObject
 {
 private:
-	const unsigned int MAX_HEALTH = 12;
-	const unsigned int MAX_FOOD = 12;
-	const unsigned int FOOD_BONUS = 4;
+	const unsigned int MAX_HEALTH = 24;
+	const unsigned int MAX_FOOD = 24;
+	const unsigned int FOOD_BONUS = 8;
 
 
 	unsigned int health;

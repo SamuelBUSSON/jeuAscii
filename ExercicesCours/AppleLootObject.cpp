@@ -7,11 +7,15 @@
 AppleLootObject::AppleLootObject(int x, int y, std::string spriteFile, std::string mapLink)
 	: LootObject(x, y, spriteFile, mapLink)
 {
-	lootItem = new AppleItem();
 	description = "a red apple";
 }
 
 
 AppleLootObject::~AppleLootObject()
 {
+}
+
+void AppleLootObject::SetLootItem()
+{
+	lootItem = new AppleItem();
 }

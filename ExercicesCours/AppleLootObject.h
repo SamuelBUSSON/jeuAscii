@@ -6,5 +6,7 @@ class AppleLootObject :
 public:
 	AppleLootObject(int x, int y, std::string spriteFile, std::string mapLink);
 	~AppleLootObject();
+
+	void SetLootItem() override;
 };
 

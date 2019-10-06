@@ -12,4 +12,6 @@ public:
 	~LootObject();
 	void OnClick() override;
 	const std::string GetName() const { return name; }
+
+	virtual void SetLootItem() = 0;
 };

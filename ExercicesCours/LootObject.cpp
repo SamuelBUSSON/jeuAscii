@@ -14,6 +14,7 @@ LootObject::~LootObject()
 }
 
 void LootObject::OnClick() {
+	SetLootItem();
 	if (lootItem != nullptr) {
 		GameManager::instance().AddItemToInventory(lootItem);
 	}

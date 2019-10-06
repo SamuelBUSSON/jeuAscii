@@ -4,8 +4,8 @@ class AppleItem :
 	public Item
 {
 private:
-	int heal = 1;
-	int food = 2;
+	unsigned int heal = 1;
+	unsigned int food = 2;
 
 public:
 	AppleItem();

@@ -10,6 +10,7 @@ private:
 
 public:
 	ItemInfoLine(std::string _text, int _color, std::list<Item *> _items);
+	ItemInfoLine(std::string _text, int _color, Item *_item);
 	~ItemInfoLine();
 
 	void OnClick() override;

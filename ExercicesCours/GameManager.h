@@ -44,6 +44,7 @@ private:
 	Player* player;
 
 	std::list<Item *> inventory;
+	std::list<CraftableItem *> crafts;
 
 	std::map<int, std::list<GameObject *>> gameObjectsMap;
 	//TODO :
@@ -79,6 +80,8 @@ public:
 	inline GameObject* GetHighlightGameObject() { return highlightedGameObject; }
 	inline bool IsClicking() { return isClicking; }
 	inline Player* GetPlayer() { return player; }
+
+	void UnlockCraft(CraftableItem *item);
 
 	static GameManager& instance()
 	{

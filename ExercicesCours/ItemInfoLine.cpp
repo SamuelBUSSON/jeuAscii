@@ -8,6 +8,12 @@ ItemInfoLine::ItemInfoLine(std::string _text, int _color, std::list<Item *> _ite
 {
 }
 
+ItemInfoLine::ItemInfoLine(std::string _text, int _color, Item * _item)
+	: InfoLine(_text, _color)
+{
+	items = std::list<Item *>();
+	items.push_back(_item);
+}
 
 ItemInfoLine::~ItemInfoLine()
 {

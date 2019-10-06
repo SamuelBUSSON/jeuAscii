@@ -5,6 +5,7 @@
 
 #include "Item.h"
 #include "InfoLine.h"
+#include "CraftableItem.h"
 
 #include <string>
 #include <list>
@@ -70,6 +71,7 @@ public:
 
 	void SetDescription(std::string str);
 	void SetInventory(std::list<Item *> inventory);
+	void SetCrafts(std::list<CraftableItem *> items);
 };
 
 #endif

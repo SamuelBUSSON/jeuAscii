@@ -273,11 +273,11 @@ void GameManager::AddGameObject(GameObject *gameObject) {
 }
 
 void GameManager::DestroyGameObject(GameObject *gameObject) {
-	std::list<GameObject *>::iterator it = std::find(gameObjects.begin(), gameObjects.end(), gameObject);
+	std::list<GameObject *>::iterator itr = std::find(gameObjects.begin(), gameObjects.end(), gameObject);
 
-	if (it != gameObjects.end()) {
-		delete * it;
-		gameObjects.erase(it);
+	if (itr != gameObjects.end()) {
+		delete * itr;
+		gameObjects.erase(itr);
 	}
 }
 
@@ -288,14 +288,30 @@ void GameManager::AddItemToInventory(Item *item) {
 
 void GameManager::RemoveItemFromInventory(Item *item)
 {
-	std::list<Item *>::iterator it = std::find(inventory.begin(), inventory.end(), item);
+	std::list<Item *>::iterator itr = std::find(inventory.begin(), inventory.end(), item);
 
-	if (it != inventory.end()) {
-		delete *it;
-		inventory.erase(it);
+	if (itr != inventory.end()) {
+		delete *itr;
+		inventory.erase(itr);
 	}
 
 	ScreenManager::instance().SetInventory(inventory);
+}
+
+void GameManager::UnlockCraft(CraftableItem *item)
+{
+	bool alreadyUnlocked = false;
+	for (CraftableItem *craft : crafts) {
+		if (craft->GetName() == item->GetName()) {
+			alreadyUnlocked = true;
+			break;
+		}
+	}
+
+	if (!alreadyUnlocked) {
+		crafts.push_back(item);
+		ScreenManager::instance().SetCrafts(crafts);
+	}
 }
 
 /*

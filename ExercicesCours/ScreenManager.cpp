@@ -325,7 +325,7 @@ void ScreenManager::WriteInfoPanel(InfoPanel *_infoPanel) {
 	int lineJump = 0;
 
 	for (struct Panel *panel : _infoPanel->panels) {
-		lineJump += panel->marginY;
+		lineJump = panel->marginY;
 		WriteLineAtCoords(INFO_PANEL_ORIG_X + panel->marginX, INFO_PANEL_ORIG_Y + lineJump, *(panel->header));
 		lineJump++;
 
@@ -346,6 +346,12 @@ void ScreenManager::SetDescription(std::string desc) {
 void ScreenManager::SetInventory(std::list<Item *> inventory) {
 	infoPanel->SetInventory(inventory);
 }
+
+void ScreenManager::SetCrafts(std::list<CraftableItem *> items)
+{
+	infoPanel->SetCrafts(items);
+}
+
 
 void ScreenManager::WriteLineAtCoords(int x, int y, InfoLine const &line) {
 	for (size_t i = 0; i < line.text.length(); i++) {
@@ -370,13 +376,11 @@ void ScreenManager::DisplayTextBar(struct TextBar &textBar)
 	buffer[(x + 2 + padding) + (y * SCREEN_WIDTH)].Char.UnicodeChar = '<';
 	buffer[(x + 2 + padding) + (y * SCREEN_WIDTH)].Attributes = 0x07;
 
-	for (size_t i = padding + 3; i < padding + (textBar.value * 2) + 3; i += 2) {
+	for (size_t i = padding + 3; i < padding + textBar.value + 3; i ++) {
 		buffer[(x + i) + (y * SCREEN_WIDTH)].Char.UnicodeChar = textBar.unit;
 		buffer[(x + i) + (y * SCREEN_WIDTH)].Attributes = textBar.color;
-		buffer[(x + i + 1) + (y * SCREEN_WIDTH)].Char.UnicodeChar = textBar.unit;
-		buffer[(x + i + 1) + (y * SCREEN_WIDTH)].Attributes = textBar.color;
 	}
 
-	buffer[(x + padding + (textBar.maxValue * 2) + 3) + (y * SCREEN_WIDTH)].Char.UnicodeChar = '>';
-	buffer[(x + padding + (textBar.maxValue * 2) + 3) + (y * SCREEN_WIDTH)].Attributes = 0x07;
+	buffer[(x + padding + textBar.maxValue + 3) + (y * SCREEN_WIDTH)].Char.UnicodeChar = '>';
+	buffer[(x + padding + textBar.maxValue + 3) + (y * SCREEN_WIDTH)].Attributes = 0x07;
 }

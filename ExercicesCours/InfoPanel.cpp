@@ -13,18 +13,17 @@ InfoPanel::InfoPanel()
 	descriptionPanel.marginX = 0;
 	descriptionPanel.marginY = 0;
 	descriptionPanel.header = new InfoLine("Description :", 0x07);
-	InfoLine *emptyLine = new InfoLine("", descriptionPanel.defaultColor);
-	descriptionPanel.text.push_back(emptyLine);
+	descriptionPanel.text.push_back(new InfoLine("", descriptionPanel.defaultColor));
 	panels.push_back(&descriptionPanel);
 
 	inventoryPanel.marginX = 0;
-	inventoryPanel.marginY = 3;
+	inventoryPanel.marginY = 8;
 	inventoryPanel.header = new InfoLine("Inventory :", 0x07);
 	inventoryPanel.padding = 4;
 	panels.push_back(&inventoryPanel);
 
 	craftPanel.marginX = 0;
-	craftPanel.marginY = 3;
+	craftPanel.marginY = 18;
 	craftPanel.header = new InfoLine("Craft :", 0x07);
 	craftPanel.padding = 4;
 	panels.push_back(&craftPanel);
@@ -62,8 +61,20 @@ void InfoPanel::SetDescription(std::string str)
 { 
 	descriptionPanel.clear();
 
-	InfoLine *newLine = new InfoLine(str, descriptionPanel.defaultColor);
-	descriptionPanel.text.push_front(newLine);
+	int strSize = str.size();
+	int strBeginCut = 0;
+	int strCutSize = SCREEN_WIDTH - (descriptionPanel.padding + descriptionPanel.marginX + INFO_PANEL_ORIG_X);
+
+	do  {
+		descriptionPanel.text.push_back(
+			new InfoLine(
+				str.substr(strBeginCut, strCutSize),
+				descriptionPanel.defaultColor
+			)
+		);
+		strSize -= strCutSize;
+		strBeginCut = strCutSize;
+	} while (strSize > 0);
 }
 
 
@@ -87,6 +98,18 @@ void InfoPanel::SetInventory(std::list<Item *> inventory) {
 	}
 }
 
+
+void InfoPanel::SetCrafts(std::list<CraftableItem *> items)
+{
+	for (CraftableItem *item : items) {
+		craftPanel.text.push_back(new ItemInfoLine(
+			"+ " + item->GetName(),
+			craftPanel.defaultColor,
+			item
+		));
+	}
+}
+
 /*
 	Retourne la ligne de texte se situant aux coordonnees [x, y]
 */
@@ -95,20 +118,15 @@ InfoLine *InfoPanel::FindLineAtCoords(int x, int y)
 	size_t countLines = 0;
 
 	for (Panel *panel : panels) {
-		countLines++; //Pour le header
-		countLines += panel->marginY; //Pour le padding entre chaque panel
-
 		/* Si la ligne selectionnee se situe dans le panel parcouru alors on compte jusqu'a trouver la bonne ligne */
-		if (y <= countLines + panel->text.size()) {
+		if (y <= panel->marginY + panel->text.size()) {
+			countLines = panel->marginY + 1; //Pour le margin entre chaque panel et le header
 			for (InfoLine *line : panel->text) {
 				if (y == countLines && x >= panel->padding && x < panel->padding + line->text.length()) {
 					return line;
 				}
 				countLines++;
 			}
-		}
-		else {
-			countLines += panel->text.size();
 		}
 	}
 

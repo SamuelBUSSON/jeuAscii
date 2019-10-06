@@ -154,7 +154,9 @@
   <ItemGroup>
     <ClInclude Include="AppleItem.h" />
     <ClInclude Include="AppleLootObject.h" />
+    <ClInclude Include="AppleSaladItem.h" />
     <ClInclude Include="BreakableObject.h" />
+    <ClInclude Include="CraftableItem.h" />
     <ClInclude Include="FireCamp.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
@@ -177,7 +179,9 @@
   <ItemGroup>
     <ClCompile Include="AppleItem.cpp" />
     <ClCompile Include="AppleLootObject.cpp" />
+    <ClCompile Include="AppleSaladItem.cpp" />
     <ClCompile Include="BreakableObject.cpp" />
+    <ClCompile Include="CraftableItem.cpp" />
     <ClCompile Include="ExercicesCours.cpp" />
     <ClCompile Include="FireCamp.cpp" />
     <ClCompile Include="GameManager.cpp" />
