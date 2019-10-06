@@ -5,7 +5,7 @@
 AppleSaladItem::AppleSaladItem()
 {
 	name = "apple salad";
-	description = "just a couple of sliced apples (+" + std::to_string(heal) + " health, +" + std::to_string(food) + " food)";
+	description = "it's just a couple of sliced apples (+" + std::to_string(heal) + " health, +" + std::to_string(food) + " food)";
 }
 
 

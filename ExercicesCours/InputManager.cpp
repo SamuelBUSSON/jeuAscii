@@ -8,8 +8,8 @@
 #include <iostream>
 #include <string>
 
-#define SCREEN_WIDTH 200
-#define SCREEN_HEIGHT 60
+#define GAME_SCREEN_WIDTH 200
+#define GAME_SCREEN_HEIGHT 60
 
 InputManager::InputManager()
 {

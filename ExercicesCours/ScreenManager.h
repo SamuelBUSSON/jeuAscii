@@ -14,8 +14,8 @@
 #include "GameObject.h"
 #include "InfoPanel.h"
 
-#define SCREEN_WIDTH 120
-#define SCREEN_HEIGHT 40
+#define GAME_SCREEN_WIDTH 120
+#define GAME_SCREEN_HEIGHT 40
 
 #define CAM_WIDTH 70
 #define CAM_HEIGHT 40
@@ -42,11 +42,11 @@ private:
 	HANDLE readHandle;
 
 
-	CHAR_INFO buffer[SCREEN_WIDTH * SCREEN_HEIGHT];
+	CHAR_INFO buffer[GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT];
 
-	COORD bufferSize = { SCREEN_WIDTH, SCREEN_HEIGHT };
+	COORD bufferSize = { GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT };
 	COORD initialBufferCoord = { 0, 0 };
-	SMALL_RECT bufferArea = { 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1 };
+	SMALL_RECT bufferArea = { 0, 0, GAME_SCREEN_WIDTH - 1, GAME_SCREEN_HEIGHT - 1 };
 
 	int playerPosX = CAM_WIDTH /2;
 	int playerPosY = CAM_HEIGHT/2;

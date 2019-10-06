@@ -95,9 +95,9 @@ void ScreenManager::Init() {
 }
 
 void ScreenManager::ClearScreen() {
-	for (int x = 0; x < SCREEN_WIDTH; x++)
+	for (int x = 0; x < GAME_SCREEN_WIDTH; x++)
 	{
-		for (int y = 0; y < SCREEN_HEIGHT; y++)
+		for (int y = 0; y < GAME_SCREEN_HEIGHT; y++)
 		{
 			SetTextCoord(x, y, ' ', 0);
 		}
@@ -138,46 +138,46 @@ void ScreenManager::SetTextCoord(int x, int y, char c)
 /*	x = x - cameraPosX;
 	y = y - cameraPosY;*/
 
-	if (x + y * SCREEN_WIDTH <= SCREEN_WIDTH * SCREEN_HEIGHT) {
-		buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
+	if (x + y * GAME_SCREEN_WIDTH <= GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT) {
+		buffer[x + y * GAME_SCREEN_WIDTH].Char.UnicodeChar = c;
 	}
 }
 
 char ScreenManager::GetTextCoord(int x, int y)
 {
-	return buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar;
+	return buffer[x + y * GAME_SCREEN_WIDTH].Char.UnicodeChar;
 }
 
 void ScreenManager::SetTextCoord(int x, int y, char c, int color)
 {
-	if (x + y * SCREEN_WIDTH <= SCREEN_WIDTH * SCREEN_HEIGHT) {
-		buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
-		buffer[x + y * SCREEN_WIDTH].Attributes = color;
+	if (x + y * GAME_SCREEN_WIDTH <= GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT) {
+		buffer[x + y * GAME_SCREEN_WIDTH].Char.UnicodeChar = c;
+		buffer[x + y * GAME_SCREEN_WIDTH].Attributes = color;
 	}
 
 }
 
 void ScreenManager::SetTextCoordFixed(int x, int y, char c, int color)
 {
-	buffer[x + y * SCREEN_WIDTH].Char.UnicodeChar = c;
-	buffer[x + y * SCREEN_WIDTH].Attributes = color;
+	buffer[x + y * GAME_SCREEN_WIDTH].Char.UnicodeChar = c;
+	buffer[x + y * GAME_SCREEN_WIDTH].Attributes = color;
 }
 
 
 void ScreenManager::SetTextColor(int x, int y, int color)
 {
 
-	if (x + y * SCREEN_WIDTH <= SCREEN_WIDTH * SCREEN_HEIGHT) {
-		buffer[x + y * SCREEN_WIDTH].Attributes = color;
+	if (x + y * GAME_SCREEN_WIDTH <= GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT) {
+		buffer[x + y * GAME_SCREEN_WIDTH].Attributes = color;
 	}
 
 }
 
 void ScreenManager::Clear() 
 {
-	for (int currentX = 0; currentX < SCREEN_WIDTH; currentX++) {
-		for (int currentY = 0; currentY < SCREEN_HEIGHT; currentY++) {
-			buffer[currentX + currentY * SCREEN_WIDTH].Char.UnicodeChar = 0x2588;
+	for (int currentX = 0; currentX < GAME_SCREEN_WIDTH; currentX++) {
+		for (int currentY = 0; currentY < GAME_SCREEN_HEIGHT; currentY++) {
+			buffer[currentX + currentY * GAME_SCREEN_WIDTH].Char.UnicodeChar = 0x2588;
 		}
 	}
 }
@@ -355,8 +355,8 @@ void ScreenManager::SetCrafts(std::list<CraftableItem *> items)
 
 void ScreenManager::WriteLineAtCoords(int x, int y, InfoLine const &line) {
 	for (size_t i = 0; i < line.text.length(); i++) {
-		buffer[(x + i) + (y * SCREEN_WIDTH)].Char.UnicodeChar = line.text[i];
-		buffer[(x + i) + (y * SCREEN_WIDTH)].Attributes = line.color;
+		buffer[(x + i) + (y * GAME_SCREEN_WIDTH)].Char.UnicodeChar = line.text[i];
+		buffer[(x + i) + (y * GAME_SCREEN_WIDTH)].Attributes = line.color;
 	}
 }
 
@@ -369,18 +369,18 @@ void ScreenManager::DisplayTextBar(struct TextBar &textBar)
 	WriteLineAtCoords(x, y, *(textBar.label));
 
 
-	buffer[(x + padding) + (y * SCREEN_WIDTH)].Char.UnicodeChar = ' ';
-	buffer[(x + padding) + (y * SCREEN_WIDTH)].Attributes = 0x00;
-	buffer[(x + 1 + padding) + (y * SCREEN_WIDTH)].Char.UnicodeChar = ' ';
-	buffer[(x + 1 + padding) + (y * SCREEN_WIDTH)].Attributes = 0x00;
-	buffer[(x + 2 + padding) + (y * SCREEN_WIDTH)].Char.UnicodeChar = '<';
-	buffer[(x + 2 + padding) + (y * SCREEN_WIDTH)].Attributes = 0x07;
+	buffer[(x + padding) + (y * GAME_SCREEN_WIDTH)].Char.UnicodeChar = ' ';
+	buffer[(x + padding) + (y * GAME_SCREEN_WIDTH)].Attributes = 0x00;
+	buffer[(x + 1 + padding) + (y * GAME_SCREEN_WIDTH)].Char.UnicodeChar = ' ';
+	buffer[(x + 1 + padding) + (y * GAME_SCREEN_WIDTH)].Attributes = 0x00;
+	buffer[(x + 2 + padding) + (y * GAME_SCREEN_WIDTH)].Char.UnicodeChar = '<';
+	buffer[(x + 2 + padding) + (y * GAME_SCREEN_WIDTH)].Attributes = 0x07;
 
 	for (size_t i = padding + 3; i < padding + textBar.value + 3; i ++) {
-		buffer[(x + i) + (y * SCREEN_WIDTH)].Char.UnicodeChar = textBar.unit;
-		buffer[(x + i) + (y * SCREEN_WIDTH)].Attributes = textBar.color;
+		buffer[(x + i) + (y * GAME_SCREEN_WIDTH)].Char.UnicodeChar = textBar.unit;
+		buffer[(x + i) + (y * GAME_SCREEN_WIDTH)].Attributes = textBar.color;
 	}
 
-	buffer[(x + padding + textBar.maxValue + 3) + (y * SCREEN_WIDTH)].Char.UnicodeChar = '>';
-	buffer[(x + padding + textBar.maxValue + 3) + (y * SCREEN_WIDTH)].Attributes = 0x07;
+	buffer[(x + padding + textBar.maxValue + 3) + (y * GAME_SCREEN_WIDTH)].Char.UnicodeChar = '>';
+	buffer[(x + padding + textBar.maxValue + 3) + (y * GAME_SCREEN_WIDTH)].Attributes = 0x07;
 }

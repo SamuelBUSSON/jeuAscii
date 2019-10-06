@@ -32,7 +32,7 @@ InfoPanel::InfoPanel()
 	oldColorHighlightedLine = 0;
 
 	healthBar.origX = 0;
-	healthBar.origY = SCREEN_HEIGHT - 5;
+	healthBar.origY = GAME_SCREEN_HEIGHT - 5;
 	healthBar.label = new InfoLine("Health :", 0x07);
 	healthBar.color = 0xc0;
 	healthBar.value = GameManager::instance().GetPlayer()->GetHealth();
@@ -63,17 +63,30 @@ void InfoPanel::SetDescription(std::string str)
 
 	int strSize = str.size();
 	int strBeginCut = 0;
-	int strCutSize = SCREEN_WIDTH - (descriptionPanel.padding + descriptionPanel.marginX + INFO_PANEL_ORIG_X);
+	int strCutSize = GAME_SCREEN_WIDTH - (descriptionPanel.padding + descriptionPanel.marginX + INFO_PANEL_ORIG_X + 1);
+	std::string hyphen = "";
+	do {
+		if (str.size() > strCutSize &&
+			strSize > strCutSize &&
+			str.substr(strBeginCut + strCutSize - 1, 1).compare(" ") != 0)
+		{
+			if (str.substr(strBeginCut + strCutSize - 2, 1).compare(" ") == 0) {
+				hyphen = " ";
+			}
+			else {
+				hyphen = "-";
+			}
+		}
 
-	do  {
 		descriptionPanel.text.push_back(
 			new InfoLine(
-				str.substr(strBeginCut, strCutSize),
+				str.substr(strBeginCut, strCutSize - hyphen.size()) + hyphen,
 				descriptionPanel.defaultColor
 			)
 		);
-		strSize -= strCutSize;
-		strBeginCut = strCutSize;
+		strSize -= strCutSize - hyphen.size();
+		strBeginCut += strCutSize - hyphen.size();
+		hyphen = "";
 	} while (strSize > 0);
 }
 

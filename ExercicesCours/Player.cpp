@@ -7,7 +7,7 @@
 Player::Player(int x, int y, std::string spriteFile)
 : GameObject(x, y, spriteFile) {
 	health = MAX_HEALTH - 6;
-	food = MAX_FOOD + FOOD_BONUS - 6;
+	food = MAX_FOOD + FOOD_BONUS - 12;
 	description = "it's you !";
 }
 
