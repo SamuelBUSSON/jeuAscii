@@ -64,7 +64,7 @@ public:
 	void DestroyGameObject(GameObject *gameObject);
 
 	void AddItemToInventory(Item *Item);
-	void RemoveItemFromInventory(Item *Item);
+	void RemoveItemFromInventory(Item *Item, bool update = true);
 
 	GameObject* GetGameObjectAtCoords(int x, int y);
 	GameObject * GetGameObjectAtCoordsOnMap(int x, int y);
@@ -82,6 +82,7 @@ public:
 	inline Player* GetPlayer() { return player; }
 
 	bool CanCraft(CraftableItem *item);
+	bool Craft(CraftableItem *item);
 	void UnlockCraft(CraftableItem *item);
 
 	static GameManager& instance()

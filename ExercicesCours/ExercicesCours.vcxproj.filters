@@ -24,6 +24,7 @@
     <ClCompile Include="RockItem.cpp" />
     <ClCompile Include="WoodItem.cpp" />
     <ClCompile Include="CraftableItem.cpp" />
+    <ClCompile Include="AppleSaladCraftableItem.cpp" />
     <ClCompile Include="AppleSaladItem.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +50,7 @@
     <ClInclude Include="RockItem.h" />
     <ClInclude Include="WoodItem.h" />
     <ClInclude Include="CraftableItem.h" />
+    <ClInclude Include="AppleSaladCraftableItem.h" />
     <ClInclude Include="AppleSaladItem.h" />
   </ItemGroup>
 </Project>

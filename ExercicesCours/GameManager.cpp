@@ -287,7 +287,7 @@ void GameManager::AddItemToInventory(Item *item) {
 	ScreenManager::instance().SetCrafts(crafts);
 }
 
-void GameManager::RemoveItemFromInventory(Item *item)
+void GameManager::RemoveItemFromInventory(Item *item, bool update)
 {
 	std::list<Item *>::iterator itr = std::find(inventory.begin(), inventory.end(), item);
 
@@ -296,8 +296,10 @@ void GameManager::RemoveItemFromInventory(Item *item)
 		inventory.erase(itr);
 	}
 
-	ScreenManager::instance().SetInventory(inventory);
-	ScreenManager::instance().SetCrafts(crafts);
+	if (update) {
+		ScreenManager::instance().SetInventory(inventory);
+		ScreenManager::instance().SetCrafts(crafts);
+	}
 }
 
 void GameManager::UnlockCraft(CraftableItem *item)
@@ -317,6 +319,32 @@ void GameManager::UnlockCraft(CraftableItem *item)
 	}
 	else {
 		delete item;
+	}
+}
+
+bool GameManager::Craft(CraftableItem *craftableItem)
+{
+	if (CanCraft(craftableItem)) {
+		for (Item *neededItem : craftableItem->GetNeededItems()) {
+			for (Item *inventoryItem : inventory) {
+				if (inventoryItem->GetName().compare(neededItem->GetName()) == 0) {
+					RemoveItemFromInventory(inventoryItem, false);
+					break;
+				}
+			}
+		}
+
+		for (Item *itemToCraft : craftableItem->GetItemsToCraft()) {
+			inventory.push_back(itemToCraft);
+		}
+
+		ScreenManager::instance().SetInventory(inventory);
+		ScreenManager::instance().SetCrafts(crafts);
+		
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 

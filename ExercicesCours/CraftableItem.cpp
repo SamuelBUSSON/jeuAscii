@@ -40,8 +40,3 @@ void CraftableItem::AppendDescriptionWithNeededItems()
 		description += " to make";
 	}
 }
-
-void CraftableItem::OnCraft()
-{
-
-}

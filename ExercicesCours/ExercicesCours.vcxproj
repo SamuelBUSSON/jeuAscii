@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="AppleItem.h" />
     <ClInclude Include="AppleLootObject.h" />
+    <ClInclude Include="AppleSaladCraftableItem.h" />
     <ClInclude Include="AppleSaladItem.h" />
     <ClInclude Include="BreakableObject.h" />
     <ClInclude Include="CraftableItem.h" />
@@ -179,6 +180,7 @@
   <ItemGroup>
     <ClCompile Include="AppleItem.cpp" />
     <ClCompile Include="AppleLootObject.cpp" />
+    <ClCompile Include="AppleSaladCraftableItem.cpp" />
     <ClCompile Include="AppleSaladItem.cpp" />
     <ClCompile Include="BreakableObject.cpp" />
     <ClCompile Include="CraftableItem.cpp" />

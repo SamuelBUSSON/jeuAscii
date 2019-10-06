@@ -1,14 +1,14 @@
 #include "pch.h"
 #include "AppleItem.h"
 #include "GameManager.h"
-#include "AppleSaladItem.h"
+#include "AppleSaladCraftableItem.h"
 
 
 AppleItem::AppleItem()
 {
 	name = "apple";
 	description = "a red apple (+" + std::to_string(heal) + " health, +" + std::to_string(food) + " food)";
-	GameManager::instance().UnlockCraft(new AppleSaladItem());
+	GameManager::instance().UnlockCraft(new AppleSaladCraftableItem());
 }
 
 

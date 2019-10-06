@@ -1,19 +1,15 @@
 #pragma once
-#include "CraftableItem.h"
+#include "Item.h"
 class AppleSaladItem :
-	public CraftableItem
+	public Item
 {
-private:
-	unsigned int heal = 4;
-	unsigned int food = 8;
-
 public:
 	AppleSaladItem();
 	~AppleSaladItem();
 
-	void OnUnlock() override;
-	void OnCraft() override;
+	void OnUse() override;
 
-	static bool isUnlocked;
+	static const unsigned int heal = 4;
+	static const unsigned int food = 8;
 };
 
