@@ -39,6 +39,13 @@ public:
 	int GetCenterY();
 
 	bool IsInRange(int x, int y);
+
+	bool CanMove(int x, int y);
+
+	void MoveEast();
+	void MoveWest();
+	void MoveNorth();
+	void MoveSouth();
 	
 };
 

@@ -58,8 +58,9 @@ public:
 
 	inline void IncreaseShake() { shakeCounter++; }
 
-	inline void SetX(int x) { posX = x; }
-	inline void SetY(int y) { posY = y; }
+	void SetX(int x);
+	void SetY(int y);
+
 	inline void SetMapLink(std::string mapName) { map_link = mapName; }
 };
 

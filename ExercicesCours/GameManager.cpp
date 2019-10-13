@@ -18,7 +18,6 @@
 
 void RemoveMaps() 
 {
-
 	//Folder where all maps are
 	std::string path = "Sprite/MapTest/";
 
@@ -27,17 +26,6 @@ void RemoveMaps()
 	{
 		remove((entry.path().generic_string()).c_str());
 	}
-
-	/*
-	//Folder where all maps are	
-	std::string path = "Sprite/MapTest/Map";
-	std::string s = "";
-
-	for (int i = 0; i < MapGenerator::Instance().GetNumberOfMap(); i++)
-	{
-		s = path +  std::to_string(i) + ".txt";
-		remove(s.c_str());
-	}*/
 
 	system("exec rm -r Sprite/MapTest/*");
 }
@@ -100,9 +88,9 @@ void GameManager::CheckPlayerPositionTest()
 			}
 			SetCurrentNode(current_node->GetNodeAdjacent(East));
 			v.x++;
-			player->SetX(3);
+			player->SetX(2);
 		}
-		if (player->GetX() <= 2)
+		if (player->GetX() <= 1)
 		{
 			//LEFT
 			if (current_node->GetNodeAdjacent(West) == nullptr) {
@@ -141,6 +129,8 @@ void GameManager::CheckPlayerPositionTest()
 		}
 	}
 
+	player->SetMapLink(current_node->GetMapName());
+
 	allMapsGraph->AddNode(v.x, v.y, current_node);
 
 	current_node->CheckMapAround();
@@ -151,7 +141,6 @@ void GameManager::CheckPlayerPositionTest()
 
 GameManager::GameManager() {
 	inputManager = new InputManager();
-
 	player = new Player(CAM_WIDTH / 2, CAM_HEIGHT /2, "Sprite/Player.txt");
 }
 
@@ -284,8 +273,6 @@ std::list<GameObject *> GameManager::GetGameObjects() {
 **/
 void GameManager::Update()
 {
-
-
 	for (auto it : monsterObjects)
 	{
 		it->Update();
@@ -310,8 +297,8 @@ void GameManager::Update()
 					break;
 
 
-				case VK_RETURN:
-
+				case VK_F1:
+					ScreenManager::instance().ShowCollider();
 					break;
 
 				case VK_LEFT:

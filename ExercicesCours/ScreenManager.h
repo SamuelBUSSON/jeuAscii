@@ -41,6 +41,8 @@ class ScreenManager {
 private:
 	bool EXITGAME = false;
 
+	bool showCollider = false;
+
 	HANDLE writeHandle;
 	HANDLE readHandle;
 
@@ -109,6 +111,7 @@ public:
 
 
 	void DisplayGameObjects(std::list<GameObject *> gameObjects);
+	void ShowCollider();
 	void DisplayGameObject(GameObject *gameObject);
 
 

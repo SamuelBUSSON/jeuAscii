@@ -77,10 +77,10 @@ Sprite GameObject::LoadSpriteFile(std::string spriteFile)
 		width = stoi(v[0]);
 		height = stoi(v[1]);
 
-		colliderStartX = posX + stoi(v[2]) - 1;
-		colliderStartY = posY + stoi(v[3]) - 1;
-		colliderEndX = posX + stoi(v[4]) - 1;
-		colliderEndY = posY + stoi(v[5]) - 1;
+		colliderStartX = posX + stoi(v[2]);
+		colliderStartY = posY + stoi(v[3]) + 1;
+		colliderEndX = posX + stoi(v[4]);
+		colliderEndY = posY + stoi(v[5]) + 1;
 	}
 
 
@@ -111,6 +111,22 @@ void  GameObject::SetSpriteFile(std::string spriteFile)
 {
 
 	sprite = LoadSpriteFile(spriteFile);
+}
+
+void GameObject::SetX(int x)
+{
+	colliderStartX -= posX - x;
+	colliderEndX -= posX - x;
+
+	posX = x;
+}
+
+void GameObject::SetY(int y)
+{
+	colliderStartY -= posY - y;
+	colliderEndY -= posY - y;
+
+	posY = y;
 }
 
 

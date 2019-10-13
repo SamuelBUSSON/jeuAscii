@@ -1,4 +1,4 @@
-Sprite/MapTest/Map1.txt , ,Sprite/MapTest/Map2.txt , ,x : 0 y : 0
+Sprite/MapTest/Map6.txt , ,Sprite/MapTest/Map8.txt , ,x : 0 y : -6
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM          MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 M                                                                    M
 M                                                                    M

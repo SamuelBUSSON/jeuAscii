@@ -173,8 +173,6 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 	std::string line;
 	int y = 0;
 
-	SetTextCoord(gameObject->GetX() + 1, gameObject->GetY(), ' ');
-
 	char c;
 	while (getline(inFile, line))
 	{
@@ -182,7 +180,6 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 		{
 				for (int x = 0; x < line.length(); x++)
 				{
-
 					if (y < gameObject->GetHeight() + 1)
 					{
 						if (line[x] != 'W')
@@ -196,8 +193,7 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 						{
 							if (GameManager::Instance().GetHighlightGameObject() && GameManager::Instance().GetHighlightGameObject() == gameObject)
 							{
-
-									SetTextColor(gameObject->GetX() + x, gameObject->GetY() + y - gameObject->GetHeight(), GetColorByChar(line[x]) + 0x80);
+								SetTextColor(gameObject->GetX() + x, gameObject->GetY() + y - gameObject->GetHeight(), GetColorByChar(line[x]) + 0x80);
 							}
 							else 
 							{
@@ -291,9 +287,16 @@ void ScreenManager::DisplayGameObjects(std::list<GameObject *> gameObjects) {
 		if (object->GetMapLink() == GameManager::Instance().GetCurrentNode()->GetMapName() || object == GameManager::Instance().GetPlayer())
 		{
 			DisplayGameObject(object);
-			//object->DrawCollider();			
+			if (showCollider) {
+				object->DrawCollider();		
+			}
+	
 		}
 	}
+}
+
+void ScreenManager::ShowCollider() {
+	showCollider = !showCollider;
 }
 
 void ScreenManager::WriteInfoPanel(InfoPanel *_infoPanel) {

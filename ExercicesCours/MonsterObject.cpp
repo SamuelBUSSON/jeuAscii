@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "MonsterObject.h"
+#include "GameManager.h"
 
 
 MonsterObject::MonsterObject(int x, int y, std::string spriteFile)
@@ -22,9 +23,6 @@ MonsterObject::MonsterObject(int x, int y, std::string spriteFile, std::string m
 
 	brain_timer.Start();
 	stateMachine->SetCurrentState(SeekPlayer::Instance());
-
-
-
 }
 
 
@@ -67,8 +65,60 @@ int MonsterObject::GetCenterY()
 
 bool MonsterObject::IsInRange(int x, int y)
 {
-	if ( (x > GetCenterX() - MONSTER_RANGE_DETECTION && x < GetCenterX() + MONSTER_RANGE_DETECTION) && (y < GetCenterY() + MONSTER_RANGE_DETECTION/2 && y > GetCenterY() - MONSTER_RANGE_DETECTION/2)) {
+	if ( (x > GetCenterX() - MONSTER_RANGE_DETECTION && x < GetCenterX() + MONSTER_RANGE_DETECTION) && (y < GetCenterY() + MONSTER_RANGE_DETECTION/2 && y > GetCenterY() - MONSTER_RANGE_DETECTION/2))
+	{
 		return true;
 	}
 	return false;
+}
+
+bool MonsterObject::CanMove(int x, int y)
+{
+	int deltaX = x - posX;
+	int deltaY = y - posY;
+
+	for (int i = colliderStartX + deltaX; i < colliderEndX + 1 + deltaX; i++)
+	{
+		for (int j = colliderStartY + deltaY; j < colliderEndY + 1 +deltaY; j++)
+		{
+			if ((GameManager::Instance().GetGameObjectColliderAtCoordsOnMap(i, j) && GameManager::Instance().GetGameObjectColliderAtCoordsOnMap(i, j) != this ) || ScreenManager::instance().GetTextCoord(i, j) == 'M')
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
+void MonsterObject::MoveEast()
+{
+	if (CanMove(posX + 1, posY))
+	{
+		SetX(GetX() + 1);
+	}
+}
+
+void MonsterObject::MoveWest()
+{
+	if (CanMove(posX - 1, posY))
+	{
+		SetX(GetX() - 1);
+	}
+}
+
+void MonsterObject::MoveNorth()
+{
+	if (CanMove(posX, posY - 1))
+	{
+		SetY(GetY() - 1);
+	}
+}
+
+void MonsterObject::MoveSouth()
+{
+	if (CanMove(posX, posY + 1))
+	{
+		SetY(GetY() + 1);
+	}
 }
