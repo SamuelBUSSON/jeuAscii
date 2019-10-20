@@ -1,34 +1,16 @@
 #include "pch.h"
 #include "ScreenManager.h"
 
-
-#include <iomanip>
 #include <fstream>
 #include <windows.h>
-#include <iostream>
 #include <string>
 #include <vector>
 
 #include "GameManager.h"
 #include "InfoPanel.h"
 
+
 using namespace std;
-
-
-const vector<string> explode(const string& s, const char& c)
-{
-	string buff{ "" };
-	vector<string> v;
-
-	for (auto n : s)
-	{
-		if (n != c) buff += n; else
-			if (n == c && buff != "") { v.push_back(buff); buff = ""; }
-	}
-	if (buff != "") v.push_back(buff);
-
-	return v;
-}
 
 int GetColorByChar(char const c) 
 {
@@ -74,10 +56,9 @@ int GetColorByChar(char const c)
 }
 
 
-ScreenManager::ScreenManager() {
+ScreenManager::ScreenManager() : display_state(Menu) {
 
 	writeHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	currentMap.currentMapName = "Sprite/Maps/Map1.txt";
 
 	infoPanel = new InfoPanel();
 }
@@ -107,14 +88,27 @@ void ScreenManager::ClearScreen() {
 
 void ScreenManager::SampleDisplay(std::list<GameObject *> gameObjects) 
 {
-	//cameraPosX = playerPosX - CAM_WIDTH / 2;
-	//cameraPosY = playerPosY - CAM_HEIGHT / 2;
+	switch (display_state)
+	{
+	case Menu:
+		ShowMenu();
+		break;
+	case Game:
+			ReadMap();
 
-	ReadMap();
-	DisplayGameObjects(gameObjects);
-	DrawBorder();
+			if (shakeObject)
+			{
+				shakeObject->Shake();
+			}
 
-	WriteInfoPanel(infoPanel);
+			DisplayGameObjects(gameObjects);
+			DrawBorder();
+
+			WriteInfoPanel(infoPanel);
+		break;
+	default:
+		break;
+	}
 
 	WriteConsoleOutput(writeHandle, buffer, bufferSize, initialBufferCoord, &bufferArea);
 }
@@ -206,10 +200,9 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 					{
 						if (line[x] != 'W') 
 						{
-							if (GameManager::instance().GetHighlightGameObject() && GameManager::instance().GetHighlightGameObject() == gameObject)
+							if (GameManager::Instance().GetHighlightGameObject() && GameManager::Instance().GetHighlightGameObject() == gameObject)
 							{
-
-									SetTextColor(gameObject->GetX() + x, gameObject->GetY() + y - gameObject->GetHeight(), GetColorByChar(line[x]) + 0x80);
+								SetTextColor(gameObject->GetX() + x, gameObject->GetY() + y - gameObject->GetHeight(), GetColorByChar(line[x]) + 0x80);
 							}
 							else 
 							{
@@ -228,28 +221,14 @@ void ScreenManager::DisplayGameObject(GameObject *gameObject) {
 
 void ScreenManager::ReadMap()
 {	
-	
 	std::ifstream inFile;
-	inFile.open(currentMap.currentMapName);
+	inFile.open(GameManager::Instance().GetCurrentNode()->GetMapName());
+	//inFile.open(currentMap.currentMapName);
 	std::string line;
 
 	int numberLine = 0;	
-
-	while (getline(inFile, line)) {	
-
-		if (numberLine == 0) 
-		{
-			vector<string> v = explode(line, ',');
-			if (v.size() >= 4) {
-				currentMap.topMap = v[0];
-				currentMap.rightMap = v[1];
-				currentMap.bottomMap = v[2];
-				currentMap.leftMap = v[3];
-
-			}
-		}
-		else 
-		{
+	while (getline(inFile, line)) {
+		if (numberLine > 0){
 			for (int x = 0; x < line.length(); x++)
 			{
 				SetTextCoord(x + 1, numberLine, line[x], line[x] == 'M' ? 0x22 : FOREGROUND_GREEN);
@@ -311,14 +290,22 @@ bool ScreenManager::BottomMap() {
 	return false;
 }
 
+
 void ScreenManager::DisplayGameObjects(std::list<GameObject *> gameObjects) {
 	for (GameObject* object : gameObjects) {
-		if (object->GetMapLink() == currentMap.currentMapName || object == GameManager::instance().GetPlayer())
+		if (object->GetMapLink() == GameManager::Instance().GetCurrentNode()->GetMapName() || object == GameManager::Instance().GetPlayer())
 		{
 			DisplayGameObject(object);
-			//object->DrawCollider();			
+			if (showCollider) {
+				object->DrawCollider();		
+			}
+	
 		}
 	}
+}
+
+void ScreenManager::ShowCollider() {
+	showCollider = !showCollider;
 }
 
 void ScreenManager::WriteInfoPanel(InfoPanel *_infoPanel) {
@@ -361,6 +348,7 @@ void ScreenManager::WriteLineAtCoords(int x, int y, InfoLine const &line) {
 	}
 }
 
+
 void ScreenManager::DisplayTextBar(struct TextBar &textBar)
 {
 	int x = textBar.origX + INFO_PANEL_ORIG_X;
@@ -377,11 +365,32 @@ void ScreenManager::DisplayTextBar(struct TextBar &textBar)
 	buffer[(x + 2 + padding) + (y * GAME_SCREEN_WIDTH)].Char.UnicodeChar = '<';
 	buffer[(x + 2 + padding) + (y * GAME_SCREEN_WIDTH)].Attributes = 0x07;
 
-	for (size_t i = padding + 3; i < padding + textBar.value + 3; i ++) {
+	for (size_t i = padding + 3; i < padding + textBar.value + 3; i++) {
 		buffer[(x + i) + (y * GAME_SCREEN_WIDTH)].Char.UnicodeChar = textBar.unit;
 		buffer[(x + i) + (y * GAME_SCREEN_WIDTH)].Attributes = textBar.color;
 	}
 
 	buffer[(x + padding + textBar.maxValue + 3) + (y * GAME_SCREEN_WIDTH)].Char.UnicodeChar = '>';
 	buffer[(x + padding + textBar.maxValue + 3) + (y * GAME_SCREEN_WIDTH)].Attributes = 0x07;
+}
+
+
+void ScreenManager::ShowMenu()
+{
+	std::ifstream inFile;
+	inFile.open("Sprite/Menu.txt");
+	std::string line;
+
+	int numberLine = 0;
+	while (getline(inFile, line)) {
+			for (int x = 0; x < line.length(); x++)
+			{
+				SetTextCoord(x, numberLine, line[x], FOREGROUND_RED);
+			}
+		numberLine++;
+	}
+
+	if (inFile) {
+		inFile.close();
+	}
 }

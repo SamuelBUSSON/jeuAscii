@@ -162,20 +162,30 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InfoLine.h" />
+    <ClInclude Include="Graph.h" />
     <ClInclude Include="InfoPanel.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemInfoLine.h" />
     <ClInclude Include="LootObject.h" />
+    <ClInclude Include="MapGenerator.h" />
+    <ClInclude Include="MonsterObject.h" />
+    <ClInclude Include="MonsterStates.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RockItem.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="RockLootObject.h" />
     <ClInclude Include="ScreenManager.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="StickLootObject.h" />
     <ClInclude Include="StoneObject.h" />
+    <ClInclude Include="PrecisionTimer.h" />
     <ClInclude Include="TreeObject.h" />
     <ClInclude Include="WoodItem.h" />
+    <ClInclude Include="Utiles.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppleItem.cpp" />
@@ -184,16 +194,21 @@
     <ClCompile Include="AppleSaladItem.cpp" />
     <ClCompile Include="BreakableObject.cpp" />
     <ClCompile Include="CraftableItem.cpp" />
-    <ClCompile Include="ExercicesCours.cpp" />
     <ClCompile Include="FireCamp.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+	<ClCompile Include="Graph.cpp" />
     <ClCompile Include="InfoLine.cpp" />
     <ClCompile Include="InfoPanel.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemInfoLine.cpp" />
     <ClCompile Include="LootObject.cpp" />
+	<ClCompile Include="main.cpp" />
+    <ClCompile Include="MapGenerator.cpp" />
+    <ClCompile Include="MonsterObject.cpp" />
+    <ClCompile Include="MonsterStates.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -202,12 +217,17 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RockItem.cpp" />
+    <ClCompile Include="PrecisionTimer.cpp" />
     <ClCompile Include="RockLootObject.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="StickLootObject.cpp" />
     <ClCompile Include="StoneObject.cpp" />
     <ClCompile Include="TreeObject.cpp" />
     <ClCompile Include="WoodItem.cpp" />
+    <ClCompile Include="Utiles.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ExercicesCours.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

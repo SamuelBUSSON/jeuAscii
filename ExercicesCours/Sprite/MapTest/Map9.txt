@@ -1,0 +1,38 @@
+Sprite/MapTest/Map10.txt , ,Sprite/MapTest/Map8.txt , ,x : 2 y : 4
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM          MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+                                                                      
+                                                                      
+                                                                      
+                                                                      
+                                                                      
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+M                                                                    M
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM          MMMMMMMMMMMMMMMMMMMMMMMMMMMMM

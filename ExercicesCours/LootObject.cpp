@@ -16,7 +16,7 @@ LootObject::~LootObject()
 void LootObject::OnClick() {
 	SetLootItem();
 	if (lootItem != nullptr) {
-		GameManager::instance().AddItemToInventory(lootItem);
+		GameManager::Instance().AddItemToInventory(lootItem);
 	}
-	GameManager::instance().DestroyGameObject(this);
+	GameManager::Instance().DestroyGameObject(this);
 }

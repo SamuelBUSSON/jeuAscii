@@ -16,10 +16,10 @@ AppleSaladItem::~AppleSaladItem()
 
 void AppleSaladItem::OnUse()
 {
-	bool hasHealed = GameManager::instance().GetPlayer()->Heal(heal);
-	bool hasEaten = GameManager::instance().GetPlayer()->Eat(food);
+	bool hasHealed = GameManager::Instance().GetPlayer()->Heal(heal);
+	bool hasEaten = GameManager::Instance().GetPlayer()->Eat(food);
 
 	if (hasEaten || hasHealed) {
-		GameManager::instance().RemoveItemFromInventory(this);
+		GameManager::Instance().RemoveItemFromInventory(this);
 	}
 }

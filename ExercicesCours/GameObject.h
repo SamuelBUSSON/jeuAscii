@@ -23,6 +23,8 @@ protected:
 	int colliderEndX;
 	int colliderEndY;
 
+	int shakeCounter;
+
 	std::string map_link;
 
 	std::string description;
@@ -42,6 +44,7 @@ public:
 
 	void DrawCollider();
 
+	void SetSpriteFile(std::string c);
 
 	inline int GetX() const { return posX; }
 	inline int GetY() const { return posY; }
@@ -52,8 +55,12 @@ public:
 
 	inline std::string GetSpriteFileName() const { return sprite.spriteFile; }
 
-	inline void SetX(int x) { posX = x; }
-	inline void SetY(int y) { posY = y; }
+
+	inline void IncreaseShake() { shakeCounter++; }
+
+	void SetX(int x);
+	void SetY(int y);
+
 	inline void SetMapLink(std::string mapName) { map_link = mapName; }
 };
 

@@ -5,29 +5,18 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include <utility>
 #include "ScreenManager.h"
 
-std::vector<std::string> explode(std::string const & s, char delim)
-{
-	std::vector<std::string> result;
-	std::istringstream iss(s);
 
-	for (std::string token; std::getline(iss, token, delim); )
-	{
-		result.push_back(std::move(token));
-	}
+#include "Utiles.h"
 
-	return result;
-}
-
-GameObject::GameObject(int x, int y, std::string spriteFile) {
+GameObject::GameObject(int x, int y, std::string spriteFile)  : shakeCounter(0){
 	posX = x;
 	posY = y;
 	sprite = LoadSpriteFile(spriteFile);
 }
 
-GameObject::GameObject(int x, int y, std::string spriteFile, std::string mapName)
+GameObject::GameObject(int x, int y, std::string spriteFile, std::string mapName) : shakeCounter(0)
 {
 	posX = x;
 	posY = y;
@@ -88,10 +77,10 @@ Sprite GameObject::LoadSpriteFile(std::string spriteFile)
 		width = stoi(v[0]);
 		height = stoi(v[1]);
 
-		colliderStartX = posX + stoi(v[2]) - 1;
-		colliderStartY = posY + stoi(v[3]) - 1;
-		colliderEndX = posX + stoi(v[4]) - 1;
-		colliderEndY = posY + stoi(v[5]) - 1;
+		colliderStartX = posX + stoi(v[2]);
+		colliderStartY = posY + stoi(v[3]) + 1;
+		colliderEndX = posX + stoi(v[4]);
+		colliderEndY = posY + stoi(v[5]) + 1;
 	}
 
 
@@ -113,10 +102,32 @@ void GameObject::DrawCollider()
 	{
 		for (int y = colliderStartY; y <= colliderEndY; y++)
 		{
-			ScreenManager::instance().SetTextCoord(x, y, ' ', BACKGROUND_BLUE);
+			ScreenManager::Instance().SetTextCoord(x, y, ' ', BACKGROUND_BLUE);
 		}
 	}
-
-
 }
+
+void  GameObject::SetSpriteFile(std::string spriteFile) 
+{
+
+	sprite = LoadSpriteFile(spriteFile);
+}
+
+void GameObject::SetX(int x)
+{
+	colliderStartX -= posX - x;
+	colliderEndX -= posX - x;
+
+	posX = x;
+}
+
+void GameObject::SetY(int y)
+{
+	colliderStartY -= posY - y;
+	colliderEndY -= posY - y;
+
+	posY = y;
+}
+
+
 

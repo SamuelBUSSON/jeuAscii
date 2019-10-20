@@ -3,15 +3,12 @@
 #ifndef DEF_SCREENMANAGER
 #define DEF_SCREENMANAGER
 
-#include <iomanip>
-#include <fstream>
-
 #include <windows.h>
-#include <iostream>
 #include <string>
 #include <list>
 
 #include "GameObject.h"
+#include "BreakableObject.h"
 #include "InfoPanel.h"
 
 #define GAME_SCREEN_WIDTH 120
@@ -22,6 +19,12 @@
 
 #define INFO_PANEL_ORIG_X 75
 #define INFO_PANEL_ORIG_Y 1
+
+enum Display_value
+{
+	Menu,
+	Game
+};
 
 
 struct TileMap {
@@ -37,6 +40,8 @@ class ScreenManager {
 
 private:
 	bool EXITGAME = false;
+
+	bool showCollider = false;
 
 	HANDLE writeHandle;
 	HANDLE readHandle;
@@ -58,11 +63,15 @@ private:
 
 	InfoPanel *infoPanel;
 
+	BreakableObject *shakeObject;
+
 	ScreenManager();
+
+	Display_value display_state;
 
 public:
 
-	static ScreenManager& instance()
+	static ScreenManager& Instance()
 	{
 		static ScreenManager INSTANCE;
 		return INSTANCE;
@@ -95,12 +104,21 @@ public:
 	bool BottomMap();
 
 	inline std::string GetCurrentMap() const { return currentMap.currentMapName; }
+	inline void SetShakeObject(BreakableObject* g) { shakeObject = g; }
+	inline BreakableObject* GetShakeObject() {return shakeObject; }
+
+
+	inline void SetDisplayState(Display_value new_display) { display_state = new_display; }
+
 
 	void DisplayGameObjects(std::list<GameObject *> gameObjects);
+	void ShowCollider();
 	void DisplayGameObject(GameObject *gameObject);
 
 	void HighlightLineAtCoords(COORD coords);
 	void ClickOnCoords(int x, int y);
+
+	void ShowMenu();
 
 	void SetDescription(std::string infos);
 	void SetInventory(std::list<Item *> inventory);

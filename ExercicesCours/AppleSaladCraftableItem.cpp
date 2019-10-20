@@ -28,7 +28,7 @@ void AppleSaladCraftableItem::OnUnlock()
 
 void AppleSaladCraftableItem::OnUse()
 {
-	GameManager::instance().Craft(this);
+	GameManager::Instance().Craft(this);
 }
 
 std::list<Item *> AppleSaladCraftableItem::GetItemsToCraft() 

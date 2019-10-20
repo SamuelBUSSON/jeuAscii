@@ -8,7 +8,7 @@ AppleItem::AppleItem()
 {
 	name = "apple";
 	description = "a red apple (+" + std::to_string(heal) + " health, +" + std::to_string(food) + " food)";
-	GameManager::instance().UnlockCraft(new AppleSaladCraftableItem());
+	GameManager::Instance().UnlockCraft(new AppleSaladCraftableItem());
 }
 
 
@@ -18,10 +18,10 @@ AppleItem::~AppleItem()
 
 void AppleItem::OnUse()
 {
-	bool hasHealed = GameManager::instance().GetPlayer()->Heal(heal);
-	bool hasEaten = GameManager::instance().GetPlayer()->Eat(food);
+	bool hasHealed = GameManager::Instance().GetPlayer()->Heal(heal);
+	bool hasEaten = GameManager::Instance().GetPlayer()->Eat(food);
 
 	if (hasEaten || hasHealed) {
-		GameManager::instance().RemoveItemFromInventory(this);
+		GameManager::Instance().RemoveItemFromInventory(this);
 	}
 }

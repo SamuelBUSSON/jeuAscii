@@ -3,15 +3,8 @@
 #ifndef DEF_INPUTMANAGER
 #define DEF_INPUTMANAGER
 
-#include <iomanip>
-#include <fstream>
-
 #include <windows.h>
 #include "ScreenManager.h"
-
-#include <iostream>
-#include <string>
-
 
 class InputManager
 {
@@ -31,6 +24,7 @@ public:
 	~InputManager();
 
 	void Init();
+	bool IsInput();
 	inline COORD GetMousePosition() const { return mousePosition; }
 	INPUT_RECORD GetInputEvent();
 

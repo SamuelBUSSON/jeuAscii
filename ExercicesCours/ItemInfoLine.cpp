@@ -26,5 +26,5 @@ void ItemInfoLine::OnClick()
 
 void ItemInfoLine::OnHighlight()
 {
-	ScreenManager::instance().SetDescription(items.front()->GetDescription());
+	ScreenManager::Instance().SetDescription(items.front()->GetDescription());
 }

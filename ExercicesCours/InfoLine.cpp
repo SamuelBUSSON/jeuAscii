@@ -23,5 +23,5 @@ void InfoLine::OnHighlight()
 
 void InfoLine::OnLeaveHighlight()
 {
-	ScreenManager::instance().SetDescription("");
+	ScreenManager::Instance().SetDescription("");
 }
