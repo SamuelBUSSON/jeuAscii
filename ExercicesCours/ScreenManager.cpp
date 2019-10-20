@@ -349,6 +349,7 @@ void ScreenManager::SetInventory(std::list<Item *> inventory) {
 
 void ScreenManager::SetCrafts(std::list<CraftableItem *> items)
 {
+	infoPanel->RemoveHighlight();
 	infoPanel->SetCrafts(items);
 }
 
