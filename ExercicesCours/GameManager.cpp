@@ -158,6 +158,11 @@ GameManager::~GameManager() {
 	}
 	inventory.clear();
 
+	for (CraftableItem *craft : crafts) {
+		delete craft;
+	}
+	crafts.clear();
+
 	delete screenManager;
 }
 /**
@@ -416,7 +421,7 @@ void GameManager::RemoveItemFromInventory(Item *item, bool update)
 	if (itr != inventory.end()) {
 		delete *itr;
 		inventory.erase(itr);
-	}
+	}  
 
 	if (update) {
 		ScreenManager::Instance().SetInventory(inventory);
