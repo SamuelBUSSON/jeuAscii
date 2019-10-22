@@ -16,7 +16,6 @@ SeekPlayer * SeekPlayer::Instance()
 void SeekPlayer::Enter(MonsterObject * monster)
 {
 	monster->SetSpriteFile("Sprite/Monster.txt");
-
 }
 
 void SeekPlayer::Execute(MonsterObject * monster)
@@ -27,9 +26,6 @@ void SeekPlayer::Execute(MonsterObject * monster)
 	{
 		monster->GetFSM()->ChangeState(ChasePlayer::Instance());
 	}
-
-
-
 }
 
 void SeekPlayer::Exit(MonsterObject * monster)
@@ -46,14 +42,33 @@ FightPlayer * FightPlayer::Instance()
 
 void FightPlayer::Enter(MonsterObject * monster)
 {
+	monster->SetSpriteFile("Sprite/MonsterAttack1.txt");
+
 }
 
 void FightPlayer::Execute(MonsterObject * monster)
 {
+	Player* p = GameManager::Instance().GetPlayer();
+
+	if (!monster->IsNear(p->GetX(), p->GetY()))
+	{
+		monster->GetFSM()->ChangeState(ChasePlayer::Instance());
+	}
+
+	if (spriteValue % spriteChange == 1)
+	{
+		p->GetDammage(monster->GetDamageValue());
+		spriteValue = 1;
+	}
+
+	spriteValue++;
+
+	monster->SetSpriteFile(spriteValue % spriteChange == 0 ? "Sprite/MonsterAttack2.txt"  : "Sprite/MonsterAttack1.txt");
 }
 
 void FightPlayer::Exit(MonsterObject * monster)
 {
+
 }
 
 ChasePlayer * ChasePlayer::Instance()
@@ -88,6 +103,11 @@ void ChasePlayer::Execute(MonsterObject * monster)
 	if (!monster->IsInRange(p->GetX(), p->GetY()))
 	{
 		monster->GetFSM()->ChangeState(SeekPlayer::Instance());
+	}
+	
+	if (monster->IsNear(p->GetX(), p->GetY()))
+	{
+		monster->GetFSM()->ChangeState(FightPlayer::Instance());
 	}
 }
 

@@ -23,7 +23,8 @@
 enum Display_value
 {
 	Menu,
-	Game
+	Game,
+	PlayerDead
 };
 
 
@@ -119,6 +120,8 @@ public:
 	void ClickOnCoords(int x, int y);
 
 	void ShowMenu();
+
+	void ShowGameOver();
 
 	void SetDescription(std::string infos);
 	void SetInventory(std::list<Item *> inventory);

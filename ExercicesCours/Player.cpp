@@ -58,6 +58,19 @@ bool Player::Heal(int healValue)
 	return true;
 }
 
+//Perdre de la vie  ; si sa vie est déjà à 0 retourne faux (sinon vrai)
+bool Player::GetDammage(int dammageValue)
+{
+	if (health == 0) return false;
+
+	health -= dammageValue;
+	if (health < 0) health = 0;
+
+	ScreenManager::Instance().SetHealthBarValue(GetHealth());
+
+	return true;
+}
+
 //Remonte le niveau de nourriture ; si sa satiete est déjà au maximum retourne faux (sinon vrai)
 bool Player::Eat(int foodValue)
 {

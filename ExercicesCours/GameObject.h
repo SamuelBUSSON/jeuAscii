@@ -49,6 +49,7 @@ public:
 	inline int GetX() const { return posX; }
 	inline int GetY() const { return posY; }
 	inline int GetHeight() const { return sprite.height; }
+	inline int GetWidth() const { return sprite.width; }
 	inline std::string GetMapLink() const { return map_link; }
 
 	inline std::string GetDescription() const { return description; }

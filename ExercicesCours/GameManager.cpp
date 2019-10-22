@@ -251,7 +251,6 @@ void GameManager::InitTest()
 **/
 void GameManager::Run() 
 {
-
 	//create a timer
 	PrecisionTimer timer(FRAMERATE);
 
@@ -278,102 +277,107 @@ std::list<GameObject *> GameManager::GetGameObjects() {
 **/
 void GameManager::Update()
 {
-	for (auto it : monsterObjects)
-	{
-		it->Update();
-	}
-
-	if (inputManager->IsInput()) {
-		INPUT_RECORD InputRecord = inputManager->GetInputEvent();
-
-		switch (InputRecord.EventType)
-		{
-		case KEY_EVENT:
-
-			if (InputRecord.Event.KeyEvent.bKeyDown) {
-				switch (InputRecord.Event.KeyEvent.wVirtualKeyCode)
-				{
-				case VK_ESCAPE:
-					exit_game = true;
-					break;
-
-				case VK_SPACE:
-					ScreenManager::Instance().SetDisplayState(Game);
-					break;
-
-
-				case VK_F1:
-					ScreenManager::Instance().ShowCollider();
-					break;
-
-				case VK_LEFT:
-					player->MoveLeft();
-					break;
-
-				case VK_RIGHT:
-					player->MoveRight();
-					break;
-
-				case VK_UP:
-					player->MoveUp();
-					break;
-
-				case VK_DOWN:
-					player->MoveDown();
-					break;
-
-				default:
-
-
-					break;
-
-				}
-				CheckPlayerPositionTest();
-				//CheckPlayerPosition();
-
-			}//switch
-
-			//---------------------------------------------------------------------------------
-			break;
-
-		case MOUSE_EVENT: // mouse input 
-
-			mousePosition = InputRecord.Event.MouseEvent.dwMousePosition;
-
-
-			HighlightGameObjectAtCoords(mousePosition);
-			ScreenManager::Instance().HighlightLineAtCoords(mousePosition);
-
-			//ScreenManager::instance().SetInfo("x : " + std::to_string(InputRecord.Event.MouseEvent.dwMousePosition.X) + " y : " + std::to_string(InputRecord.Event.MouseEvent.dwMousePosition.Y));
-
-			if (InputRecord.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED) {
-				if (!isClicking) {
-					ClickOnCoords(mousePosition.X, mousePosition.Y);
-
-					isClicking = true;
-				}
-			}
-			else {
-				isClicking = false;
-			}// mouse 
-
-			break;
-
-		case WINDOW_BUFFER_SIZE_EVENT: // scrn buf. resizing 
-			;
-			break;
-
-		case FOCUS_EVENT:  // disregard focus events 
-
-		case MENU_EVENT:   // disregard menu events 
-
-			break;
-
-		default:
-			break;
+		if (player->GetHealth() == 0) {
+			GameOver();
+			ScreenManager::Instance().SetDisplayState(PlayerDead);
 		}
-	}
-	
+		else {
+			for (auto it : monsterObjects)
+			{
+				it->Update();
+			}
+		}
+
+		if (inputManager->IsInput()) {
+			INPUT_RECORD InputRecord = inputManager->GetInputEvent();
+
+			switch (InputRecord.EventType)
+			{
+			case KEY_EVENT:
+
+				if (InputRecord.Event.KeyEvent.bKeyDown) {
+					switch (InputRecord.Event.KeyEvent.wVirtualKeyCode)
+					{
+					case VK_ESCAPE:
+						exit_game = true;
+						break;
+
+					case VK_SPACE:
+						ScreenManager::Instance().SetDisplayState(Game);
+						break;
+
+
+					case VK_F1:
+						ScreenManager::Instance().ShowCollider();
+						break;
+
+					case VK_LEFT:
+						player->MoveLeft();
+						break;
+
+					case VK_RIGHT:
+						player->MoveRight();
+						break;
+
+					case VK_UP:
+						player->MoveUp();
+						break;
+
+					case VK_DOWN:
+						player->MoveDown();
+						break;
+
+					default:
+
+
+						break;
+
+					}
+					CheckPlayerPositionTest();
+					//CheckPlayerPosition();
+
+				}//switch
+
+				//---------------------------------------------------------------------------------
+				break;
+
+			case MOUSE_EVENT: // mouse input 
+
+				mousePosition = InputRecord.Event.MouseEvent.dwMousePosition;
+
+
+				HighlightGameObjectAtCoords(mousePosition);
+				ScreenManager::Instance().HighlightLineAtCoords(mousePosition);
+
+				//ScreenManager::instance().SetInfo("x : " + std::to_string(InputRecord.Event.MouseEvent.dwMousePosition.X) + " y : " + std::to_string(InputRecord.Event.MouseEvent.dwMousePosition.Y));
+
+				if (InputRecord.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED) {
+					if (!isClicking) {
+						ClickOnCoords(mousePosition.X, mousePosition.Y);
+
+						isClicking = true;
+					}
+				}
+				else {
+					isClicking = false;
+				}// mouse 
+
+				break;
+
+			case WINDOW_BUFFER_SIZE_EVENT: // scrn buf. resizing 
+				;
+				break;
+
+			case FOCUS_EVENT:  // disregard focus events 
+
+			case MENU_EVENT:   // disregard menu events 
+
+				break;
+
+			default:
+				break;
+			}
+		}	
 }
 
 /**

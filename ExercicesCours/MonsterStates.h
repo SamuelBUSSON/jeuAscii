@@ -55,6 +55,9 @@ class FightPlayer : public State<MonsterObject>
 {
 private:
 
+	int spriteValue = 0;
+	int spriteChange = 8;
+
 	FightPlayer() {}
 
 	//copy ctor and assignment should be private

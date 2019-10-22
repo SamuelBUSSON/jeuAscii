@@ -21,6 +21,8 @@ private:
 	StateMachine<MonsterObject>*  stateMachine;	
 	PrecisionTimer brain_timer;
 
+	int atkDamage = 1;
+
 public:
 	MonsterObject(int x, int y, std::string spriteFile);
 	MonsterObject(int x, int y, std::string spriteFile, std::string mapName);
@@ -40,12 +42,16 @@ public:
 
 	bool IsInRange(int x, int y);
 
+	bool IsNear(int x, int y);
+
 	bool CanMove(int x, int y);
 
 	void MoveEast();
 	void MoveWest();
 	void MoveNorth();
 	void MoveSouth();
+
+	inline int GetDamageValue() { return atkDamage; }
 	
 };
 

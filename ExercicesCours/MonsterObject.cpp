@@ -72,6 +72,15 @@ bool MonsterObject::IsInRange(int x, int y)
 	return false;
 }
 
+bool MonsterObject::IsNear(int x, int y)
+{
+	if ((x > GetCenterX() - GetWidth() && x < GetCenterX() + GetWidth()/2 + 1) && (y < GetCenterY() + GetHeight() / 2 + 1 && y > GetCenterY() - GetHeight()))
+	{
+		return true;
+	}
+	return false;
+}
+
 bool MonsterObject::CanMove(int x, int y)
 {
 	int deltaX = x - posX;

@@ -46,6 +46,7 @@ private:
 	COORD mousePosition;
 	bool isClicking = false;
 	bool exit_game = false;
+	bool game_over = false;
 
 	GameObject *highlightedGameObject;
 	int highlightedGameObjectOldColor;
@@ -108,6 +109,7 @@ public:
 
 	inline Node*  GetCurrentNode() { return current_node; }
 	inline void  SetCurrentNode(Node* n) { current_node = n; }
+	inline void  GameOver() { game_over = true; }
 
 	inline Graph*  GetGraph() { return allMapsGraph; }
 	

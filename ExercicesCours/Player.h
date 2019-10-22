@@ -36,6 +36,7 @@ public:
 	inline unsigned const int GetMaxFood() const { return MAX_FOOD; }
 
 	bool Heal(int healValue);
+	bool GetDammage(int dammageValue);
 	bool Eat(int foodValue);
 };
 

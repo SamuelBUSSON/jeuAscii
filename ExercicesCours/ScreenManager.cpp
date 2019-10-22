@@ -106,6 +106,9 @@ void ScreenManager::SampleDisplay(std::list<GameObject *> gameObjects)
 
 			WriteInfoPanel(infoPanel);
 		break;
+	case PlayerDead:
+		ShowGameOver();
+		break;
 	default:
 		break;
 	}
@@ -387,6 +390,26 @@ void ScreenManager::ShowMenu()
 			{
 				SetTextCoord(x, numberLine, line[x], FOREGROUND_RED);
 			}
+		numberLine++;
+	}
+
+	if (inFile) {
+		inFile.close();
+	}
+}
+
+void ScreenManager::ShowGameOver()
+{
+	std::ifstream inFile;
+	inFile.open("Sprite/GameOver.txt");
+	std::string line;
+
+	int numberLine = 0;
+	while (getline(inFile, line)) {
+		for (int x = 0; x < line.length(); x++)
+		{
+			SetTextCoord(x, numberLine, line[x], FOREGROUND_RED);
+		}
 		numberLine++;
 	}
 
