@@ -38,6 +38,7 @@ public:
 	bool Heal(int healValue);
 	bool GetDammage(int dammageValue);
 	bool Eat(int foodValue);
+	bool LooseFood(int foodValue);
 };
 
 #endif

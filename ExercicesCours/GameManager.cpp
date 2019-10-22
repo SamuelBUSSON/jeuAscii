@@ -261,6 +261,21 @@ void GameManager::Run()
 	{
 		if (timer.ReadyForNextFrame()) 
 		{
+			timeInSecond = (int)timer.CurrentTime() + 0.5 - (timer.CurrentTime() < 0);
+			if (timeInSecond % LOOSE_FOOD_TIME == 0)
+			{
+				if (!loose_food) 
+				{
+					player->LooseFood(1);
+					loose_food = true;
+				}
+
+			}
+			else
+			{
+				loose_food = false;
+			}
+
 			ScreenManager::Instance().ClearScreen();
 			ScreenManager::Instance().SampleDisplay(GetGameObjects());
 			Update();

@@ -27,6 +27,7 @@
 
 
 #define FRAMERATE 40.0
+#define LOOSE_FOOD_TIME 15
 
 struct ZIndexComparison {
 	inline bool const operator()(const GameObject *objectA, const GameObject *objectB) {
@@ -50,6 +51,9 @@ private:
 
 	GameObject *highlightedGameObject;
 	int highlightedGameObjectOldColor;
+
+	int timeInSecond = 0;
+	bool loose_food = false;
 
 	GameManager();
 

@@ -64,6 +64,7 @@ bool Player::GetDammage(int dammageValue)
 	if (health == 0) return false;
 
 	health -= dammageValue;
+
 	if (health < 0) health = 0;
 
 	ScreenManager::Instance().SetHealthBarValue(GetHealth());
@@ -81,5 +82,17 @@ bool Player::Eat(int foodValue)
 
 	ScreenManager::Instance().SetFoodBarValue(GetFood());
 
+	return true;
+}
+
+bool Player::LooseFood(int foodValue)
+{
+	if (food == 0) {
+		GetDammage(1);
+		return false;
+	}
+
+	food -= foodValue;
+	ScreenManager::Instance().SetFoodBarValue(GetFood());
 	return true;
 }

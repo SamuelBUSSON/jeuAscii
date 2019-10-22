@@ -63,12 +63,12 @@ void FightPlayer::Execute(MonsterObject * monster)
 
 	spriteValue++;
 
-	monster->SetSpriteFile(spriteValue % spriteChange == 0 ? "Sprite/MonsterAttack2.txt"  : "Sprite/MonsterAttack1.txt");
+	monster->SetSpriteFile(spriteValue % spriteChange == 1 ? "Sprite/MonsterAttack2.txt"  : "Sprite/MonsterAttack1.txt");
 }
 
 void FightPlayer::Exit(MonsterObject * monster)
 {
-
+	spriteValue = 1;
 }
 
 ChasePlayer * ChasePlayer::Instance()
